@@ -1,0 +1,1 @@
+export const API = "https://api.reviewninjapro.com/api"
