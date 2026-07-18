@@ -11,6 +11,8 @@ import './index.css';
 import ForgotPassword from './pages/ForgotPassword';
 import CreatePassword from './pages/CreatePassword';
 import HomeLanding from './pages/Home.jsx';
+import TermsAndCondition from './pages/TermsAndCondition.jsx'
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 
 // Protected route — redirect to /login if not authenticated
 const PrivateRoute = ({ children }) => {
@@ -35,6 +37,24 @@ function AppRoutes() {
         path='/'
         element={
           <HomeLanding/>
+        }
+        />
+
+      <Route
+        path='/terms-and-condition'
+       element={
+          <PublicRoute>
+          <TermsAndCondition/>
+          </PublicRoute>
+        }
+        />
+
+        <Route
+        path='/privacy-policy'
+         element={
+          <PublicRoute>
+            <PrivacyPolicy/>
+          </PublicRoute>
         }
         />
 

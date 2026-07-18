@@ -276,7 +276,7 @@ const ReviewPage = () => {
       <div className="footer-brand">
         <span>{T.poweredBy}</span>
         <img src={logo} alt="" style={{ height: "30px", width: "30px" }} />
-        <span className="brand-name">{T.brandName}</span>
+        <span className="ninja-pro">{T.brandName}</span>
       </div>
     </div>
   );

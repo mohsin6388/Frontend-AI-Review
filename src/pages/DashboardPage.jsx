@@ -33,7 +33,10 @@ const DashboardPage = () => {
   const [bizLoading, setBizLoading] = useState(true);
   const [outLoading, setOutLoading] = useState(false);
   const [showPlaceIdHelp, setShowPlaceIdHelp] = useState(false);
-  
+
+  // Mobile sidebar toggle
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
 
   // QR Create form
   const [form, setForm] = useState({
@@ -100,8 +103,17 @@ const DashboardPage = () => {
   }, [activeTab, user]);
 
 
+  // Close mobile menu automatically if screen is resized to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 992) {
+        setMobileMenuOpen(false);
+      }
+    };
 
-
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
 
   const handleLogout = async () => {
@@ -187,6 +199,12 @@ const DashboardPage = () => {
     link.click();
   };
 
+  // Helper to switch tabs and close mobile menu together
+  const goToTab = (tab) => {
+    setActiveTab(tab);
+    setMobileMenuOpen(false);
+  };
+
 
   return (
     <div className="dash-page-wrapper">
@@ -195,6 +213,16 @@ const DashboardPage = () => {
 
       {/* ── Top Navbar ── */}
       <header className="dash-navbar">
+        <button
+          className="hamburger-btn"
+          onClick={() => setMobileMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          <span className={`hamburger-line ${mobileMenuOpen ? "line1-open" : ""}`} />
+          <span className={`hamburger-line ${mobileMenuOpen ? "line2-open" : ""}`} />
+          <span className={`hamburger-line ${mobileMenuOpen ? "line3-open" : ""}`} />
+        </button>
+
         <div className="dash-brand">
           <span className="dash-brand-icon">
             {" "}
@@ -228,7 +256,7 @@ const DashboardPage = () => {
             onClick={handleLogout}
             disabled={loading}
           >
-          
+
             {outLoading ? (
               <span
                 style={{ display: "flex", alignItems: "center", gap: "8px" }}
@@ -244,23 +272,48 @@ const DashboardPage = () => {
                     animation: "spin 1s linear infinite",
                   }}
                 />
-                Logging out...
+                <span className="logout-text">Logging out...</span>
               </span>
             ) : (
-              "Logout"
+              <span
+                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                <svg
+                  className="logout-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                <span className="logout-text">Logout</span>
+              </span>
             )}
           </button>
         </div>
       </header>
 
       <div className="dashboard-layout">
+        {/* Mobile overlay - shown behind sidebar when open */}
+        <div
+          className={`sidebar-overlay ${mobileMenuOpen ? "show" : ""}`}
+          onClick={() => setMobileMenuOpen(false)}
+        />
+
         {/* Sidebar */}
-        <aside className="sidebar">
+        <aside className={`sidebar ${mobileMenuOpen ? "open" : ""}`}>
           <div className="sidebar-menu">
             <button
               className={`sidebar-item ${activeTab === "home" ? "active" : ""}`}
               onClick={() => {
-                setActiveTab("home");
+                goToTab("home");
                 setResult(null);
               }}
             >
@@ -269,42 +322,42 @@ const DashboardPage = () => {
 
             <button
               className={`sidebar-item ${activeTab === "create" ? "active" : ""}`}
-              onClick={() => setActiveTab("create")}
+              onClick={() => goToTab("create")}
             >
               New Business
             </button>
 
             <button
               className={`sidebar-item ${activeTab === "payments" ? "active" : ""}`}
-              onClick={() => setActiveTab("payments")}
+              onClick={() => goToTab("payments")}
             >
               Plans & Billing
             </button>
 
             <button
               className={`sidebar-item ${activeTab === "subscription" ? "active" : ""}`}
-              onClick={() => setActiveTab("subscription")}
+              onClick={() => goToTab("subscription")}
             >
               My Subscriptions
             </button>
 
             <button
               className={`sidebar-item ${activeTab === "settings" ? "active" : ""}`}
-              onClick={() => setActiveTab("settings")}
+              onClick={() => goToTab("settings")}
             >
               Contact Us
             </button>
 
             <button
               className={`sidebar-item ${activeTab === "termsConditions" ? "active" : ""}`}
-              onClick={() => setActiveTab("termsConditions")}
+              onClick={() => goToTab("termsConditions")}
             >
               Terms & Condition
             </button>
 
             <button
               className={`sidebar-item ${activeTab === "privacyPolicy" ? "active" : ""}`}
-              onClick={() => setActiveTab("privacyPolicy")}
+              onClick={() => goToTab("privacyPolicy")}
             >
               Privacy Policy
             </button>

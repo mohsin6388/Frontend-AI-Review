@@ -25,22 +25,7 @@ const RegisterPage = () => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  // const handleSubmit = async () => {
-  //   if (!form.name || !form.type || !form.google_place_id) {
-  //     setError('Sab required fields fill karein');
-  //     return;
-  //   }
-  //   setError('');
-  //   setLoading(true);
-  //   try {
-  //     const res = await api.post('/business', form);
-  //     setResult(res.data);
-  //   } catch (err) {
-  //     setError(err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+ 
 
   const handleSubmit = async () => {
   // validation

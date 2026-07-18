@@ -338,6 +338,7 @@
 .error-icon,
 .negative-icon {
   font-size: 54px;
+  color: #fff;
 }
 
 .generating-title,
@@ -347,14 +348,14 @@
 
   font-weight: 800;
 
-  color: #111827;
+  color: #ffffff;
 }
 
 .generating-sub,
 .thankyou-text,
 .error-msg,
 .thankyou-sub {
-  color: #4b5563;
+  color: #fefe0f;
 
   font-size: 14px;
 
@@ -406,6 +407,12 @@
 }
 
 .brand-name {
+  font-weight: 700;
+
+  color: #2563eb;
+}
+
+.ninja-pro{
   font-weight: 700;
 
   color: #2563eb;
