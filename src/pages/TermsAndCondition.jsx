@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import "./TermsAndCondition.css";
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -34,22 +34,10 @@ const SECTIONS = [
     title: "User Accounts",
     body: (
       <ul>
-        <li>
-          You must provide accurate and complete information when creating
-          an account.
-        </li>
-        <li>
-          You are responsible for maintaining the security of your account
-          credentials.
-        </li>
-        <li>
-          We reserve the right to suspend accounts that violate our
-          policies.
-        </li>
-        <li>
-          Each account is for single-business use unless you hold an
-          Enterprise plan.
-        </li>
+        <li>You must provide accurate and complete information when creating an account.</li>
+        <li>You are responsible for maintaining the security of your account credentials.</li>
+        <li>We reserve the right to suspend accounts that violate our policies.</li>
+        <li>Each account is for single-business use unless you hold an Enterprise plan.</li>
       </ul>
     ),
   },
@@ -61,22 +49,10 @@ const SECTIONS = [
       <>
         <p className="terms-lead">Users agree NOT to:</p>
         <ul>
-          <li>
-            Generate fake or misleading reviews for businesses they do not
-            own or operate.
-          </li>
-          <li>
-            Use the service to harm, defame, or misrepresent any person or
-            business.
-          </li>
-          <li>
-            Attempt to reverse-engineer, scrape, or exploit the platform AI
-            systems.
-          </li>
-          <li>
-            Resell or redistribute the service without written
-            authorization.
-          </li>
+          <li>Generate fake or misleading reviews for businesses they do not own or operate.</li>
+          <li>Use the service to harm, defame, or misrepresent any person or business.</li>
+          <li>Attempt to reverse-engineer, scrape, or exploit the platform AI systems.</li>
+          <li>Resell or redistribute the service without written authorization.</li>
         </ul>
       </>
     ),
@@ -87,19 +63,10 @@ const SECTIONS = [
     title: "Subscription and Payments",
     body: (
       <ul>
-        <li>
-          Subscriptions are billed monthly or annually as selected at
-          purchase.
-        </li>
+        <li>Subscriptions are billed monthly or annually as selected at purchase.</li>
         <li>All payments are processed securely via Razorpay/Stripe.</li>
-        <li>
-          Refunds are available within 7 days of purchase for Pro plans and
-          3 days for Enterprise plans.
-        </li>
-        <li>
-          We reserve the right to modify pricing with 30 days advance
-          notice.
-        </li>
+        <li>Refunds are available within 7 days of purchase for Pro plans and 3 days for Enterprise plans.</li>
+        <li>We reserve the right to modify pricing with 30 days advance notice.</li>
       </ul>
     ),
   },
@@ -167,122 +134,41 @@ const SECTIONS = [
   },
 ];
 
-const TermsConditionsPage = () => {
-  const [activeId, setActiveId] = useState(SECTIONS[0].id);
-  const sectionRefs = useRef({});
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-15% 0px -70% 0px", threshold: 0 }
-    );
-
-    Object.values(sectionRefs.current).forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const scrollToSection = (id) => {
-    const el = sectionRefs.current[id];
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
-  return (
-    <div className="terms-page animate-fadeIn">
-      <div className="terms-header-card">
-        <div className="terms-eyebrow">Legal Document</div>
-        <h2 className="terms-title">Terms &amp; Conditions</h2>
-        <p className="terms-subtitle">
-          Please read these terms carefully before using this platform. By
-          continuing, you agree to be bound by these conditions.
-        </p>
-      </div>
-
-      <div className="terms-body-layout">
-        {/* Sticky section nav */}
-        <nav className="terms-nav" aria-label="Terms sections">
-          <div className="terms-nav-label">On this page</div>
-          <ul>
-            {SECTIONS.map((section) => (
-              <li key={section.id}>
-                <button
-                  className={`terms-nav-item ${
-                    activeId === section.id ? "active" : ""
-                  }`}
-                  onClick={() => scrollToSection(section.id)}
-                >
-                  <span className="terms-nav-number">{section.number}</span>
-                  <span>{section.title}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Sections */}
-        <div className="terms-content-card">
-          <p className="terms-doc-name">Terms and Conditions — Review Booster</p>
-
-          {SECTIONS.map((section) => (
-            <section
-              key={section.id}
-              id={section.id}
-              ref={(el) => (sectionRefs.current[section.id] = el)}
-              className="terms-section"
-            >
-              <div className="terms-section-heading">
-                <span className="terms-section-number">
-                  {section.number}
-                </span>
-                <h3>{section.title}</h3>
-              </div>
-              <div className="terms-section-body">{section.body}</div>
-            </section>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-
 function TermsAndCondition() {
   return (
     <div style={{ background: "#050e1c", minHeight: "100vh" }}>
       <Navbar />
 
-      {/* Content area — light background echoes the "How It Works" section
-          on the homepage so it reads as part of the same brand, while still
-          giving the legal text a calm, readable surface. */}
-      <div
-        style={{
-          background: "#F0F5FB",
-          paddingTop: 120,
-          paddingBottom: 80,
-          paddingLeft: "5%",
-          paddingRight: "5%",
-        }}
-      >
-        <TermsConditionsPage />
+      <div className="terms-wrapper">
+        <div className="terms-page">
+          <div className="terms-header-card">
+            <div className="terms-eyebrow">Legal Document</div>
+            <h2 className="terms-title">Terms &amp; Conditions</h2>
+            <p className="terms-subtitle">
+              Please read these terms carefully before using this platform.
+              By continuing, you agree to be bound by these conditions.
+            </p>
+          </div>
+
+          <div className="terms-content-card">
+            <p className="terms-doc-name">Terms and Conditions — Review Booster</p>
+
+            {SECTIONS.map((section) => (
+              <section key={section.id} id={section.id} className="terms-section">
+                <div className="terms-section-heading">
+                  <span className="terms-section-number">{section.number}</span>
+                  <h3>{section.title}</h3>
+                </div>
+                <div className="terms-section-body">{section.body}</div>
+              </section>
+            ))}
+          </div>
+        </div>
       </div>
 
       <Footer />
     </div>
   );
 }
-
-
-
 
 export default TermsAndCondition;

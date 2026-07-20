@@ -11,8 +11,8 @@ import './index.css';
 import ForgotPassword from './pages/ForgotPassword';
 import CreatePassword from './pages/CreatePassword';
 import HomeLanding from './pages/Home.jsx';
-import TermsAndCondition from './pages/TermsAndCondition.jsx'
-import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
+import TermsAndCondition from './pages/TermsAndCondition'
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import AboutUs from './pages/About.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 

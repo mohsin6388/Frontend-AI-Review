@@ -2,6 +2,17 @@ import logo from "../assets/review-booster-logo2.png";
 import { useLanguage } from "../context/LanguageContext";
 import homeContent from "../i18n/homeContent";
 
+
+const FOOTER_LINK_HREFS = {
+  Features: "/#features",
+  "How It Works": "/#how-it-works",
+  Pricing: "/#pricing",
+  "Privacy Policy": "/privacy-policy",
+  "Terms & Condition": "/terms-and-condition",
+  "About Us": "/about-us",
+  "Contact": "/contact-us",
+};
+
 export default function Footer() {
   const { T } = useLanguage(homeContent);
 
@@ -106,7 +117,7 @@ export default function Footer() {
               {col.links.map((l) => (
                 <div key={l} style={{ marginBottom: 9 }}>
                   <a
-                    href="#"
+                     href={FOOTER_LINK_HREFS[l] || "#"}
                     style={{
                       fontSize: 13,
                       color: "rgba(240,245,251,0.45)",

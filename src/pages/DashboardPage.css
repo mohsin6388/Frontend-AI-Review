@@ -663,17 +663,22 @@
 
 }
 
-@media(max-width:400px){
+@media(max-width:500px){
 
   .dash-brand-icon img{
     height:32px !important;
     width:32px !important;
+    
   }
 
   .dash-user-avatar{
     width:26px;
     height:26px;
     font-size:13px;
+  }
+
+  .dash-user-avatar{
+    display: none;
   }
 
 }

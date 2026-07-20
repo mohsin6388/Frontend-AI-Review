@@ -8,7 +8,7 @@ const FOOTER_LINK_HREFS = {
   "How It Works": "/#how-it-works",
   Pricing: "/#pricing",
   "Privacy Policy": "/privacy-policy",
-  Terms: "/terms-and-condition",
+  "Terms & Condition": "/terms-and-condition",
   "About Us": "/about-us",
   "Contact": "/contact-us",
 };
