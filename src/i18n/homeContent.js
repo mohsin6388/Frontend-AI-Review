@@ -238,7 +238,7 @@ const en = {
     columns: [
       { heading: "Product", links: ["Features", "How It Works", "Pricing"] },
       { heading: "Company", links: ["About Us", "Contact"] },
-      { heading: "Legal", links: ["Privacy Policy", "Terms", "GDPR", "Refund Policy"] },
+      { heading: "Legal", links: ["Privacy Policy", "Terms & Condition"] },
     ],
     copyright: "© 2026 Review Ninja Pro. Made with ❤️ in India.",
   },
@@ -481,7 +481,7 @@ const hi = {
     columns: [
       { heading: "Product", links: ["Features", "How It Works", "Pricing"] },
       { heading: "Company", links: ["About Us", "Contact"] },
-      { heading: "Legal", links: ["Privacy Policy", "Terms", "GDPR", "Refund Policy"] },
+      { heading: "Legal", links: ["Privacy Policy", "Terms & Condition",] },
     ],
     copyright: "© 2026 Review Ninja Pro. Made with ❤️ in India.",
   },

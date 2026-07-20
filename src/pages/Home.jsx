@@ -9,6 +9,8 @@ const FOOTER_LINK_HREFS = {
   Pricing: "/#pricing",
   "Privacy Policy": "/privacy-policy",
   Terms: "/terms-and-condition",
+  "About Us": "/about-us",
+  "Contact": "/contact-us",
 };
 
 // Small pill button that switches between English and Hinglish.
@@ -1734,143 +1736,6 @@ export default function ReviewMaterLanding() {
           </div>
         </section>
 
-        {/* FOOTER */}
-        {/* <footer
-          style={{
-            background: "#030810",
-            padding: "50px 5% 28px",
-            borderTop: "1px solid rgba(255,140,66,0.08)",
-          }}
-        >
-          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-            <div
-              className="footer-grid"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "2fr 1fr 1fr 1fr",
-                gap: 40,
-                marginBottom: 40,
-              }}
-            >
-              <div>
-                
-                <div style={{ display: "flex", alignItems: "center", gap: 8, padding: 8 }}>
-                  <div
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: "50%",
-                      // background: "linear-gradient(135deg,#073057,#0a4a8a)",
-                      background: "white",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: 900,
-                      fontSize: 17,
-                      color: "white",
-                      border: "2px solid #FF8C42",
-                    }}
-                  >
-                    <img
-                      src={logo}
-                      alt="logo"
-                      style={{ width: "50px", height: "50px" }}
-                    />
-                  </div>
-
-                  <span
-                    style={{
-                      fontWeight: 800,
-                      fontSize: 19,
-                      fontFamily: "'Sora',sans-serif",
-                      color: "white",
-                    }}
-                  >
-                    Review <span style={{ color: "#FF8C42" }}> Ninja</span> Pro
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontSize: 13,
-                    color: "rgba(240,245,251,0.4)",
-                    lineHeight: 1.8,
-                    maxWidth: 260,
-                    margin: "0 0 16px",
-                    fontFamily: "'Poppins',sans-serif",
-                  }}
-                >
-                  {T.footer.tagline}
-                </p>
-              </div>
-              {T.footer.columns.map((col) => (
-                <div key={col.heading}>
-                  <h4
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 700,
-                      color: "#FF8C42",
-                      letterSpacing: 2,
-                      textTransform: "uppercase",
-                      marginBottom: 14,
-                      fontFamily: "'Poppins',sans-serif",
-                    }}
-                  >
-                    {col.heading}
-                  </h4>
-                  {col.links.map((l) => (
-                    <div key={l} style={{ marginBottom: 9 }}>
-                      <a
-                        href="#"
-                        style={{
-                          fontSize: 13,
-                          color: "rgba(240,245,251,0.45)",
-                          textDecoration: "none",
-                          fontFamily: "'Poppins',sans-serif",
-                        }}
-                      >
-                        {l}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div
-              style={{
-                borderTop: "1px solid rgba(255,255,255,0.05)",
-                paddingTop: 20,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap",
-                gap: 10,
-              }}
-            >
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "rgba(240,245,251,0.25)",
-                  fontFamily: "'Poppins',sans-serif",
-                }}
-              >
-                {T.footer.copyright}
-              </p>
-
-              {/* <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                <GoogleG size={14} />
-                <span
-                  style={{
-                    fontSize: 12,
-                    color: "rgba(240,245,251,0.25)",
-                    fontFamily: "'Poppins',sans-serif",
-                  }}
-                >
-                  Trusted Google Partner
-                </span>
-              </div>
-            </div>
-          </div>
-        </footer> */}
 
 
          <footer

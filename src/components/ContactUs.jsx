@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+const isMobile = window.innerWidth <= 786;
+
+
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,7 +33,8 @@ Name: ${name}
 Email: ${email}
 Phone: ${phone}
 
-Message:
+Message: Enquiry From Review Ninja Pro,  
+
 ${message}
     `;
 
@@ -137,8 +141,9 @@ ${message}
 
 const styles = {
   container: {
-    width: "100%",
+    width: isMobile? "100%": "50%",
     padding: "20px 16px",
+    flex: 1,
   },
 
   card: {

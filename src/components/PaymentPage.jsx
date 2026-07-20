@@ -135,12 +135,6 @@ const PaymentPage = ({user}) => {
   }
 
 
-
-
-  // const isSubscriptionActive =
-  // paymentInfo?.isPaid &&
-  // paymentInfo?.isSubscriptionActive;
-
   return (
     <div className="pricing-page animate-fadeIn">
       <>
@@ -155,7 +149,7 @@ const PaymentPage = ({user}) => {
           <div className="pricing-card">
             <span className="plan-badge">Starter Plan</span>
 
-            <p
+            {/* <p
               style={{
                 color: "#7a818d",
                 fontSize: "12px",
@@ -163,7 +157,7 @@ const PaymentPage = ({user}) => {
               }}
             >
               Setup: ₹999 one-time
-            </p>
+            </p> */}
 
             <h2>
               ₹799
@@ -190,27 +184,13 @@ const PaymentPage = ({user}) => {
                 : "Buy Now"}
             </button>
 
-            {/* <button
-              onClick={() => handlePayment("starter")}
-              className={`buy-btn ${
-                paymentInfo?.data?.plan_name === "starter"
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
-              disabled={
-                paymentInfo?.data?.plan_name ===
-                "starter"
-              }
-            >
-              Buy Now
-            </button> */}
           </div>
 
           {/* PREMIUM CARD */}
           <div className="pricing-card">
             <span className="plan-badge">Premium Plan</span>
 
-            <p
+            {/* <p
               style={{
                 color: "#7a818d",
                 fontSize: "12px",
@@ -218,7 +198,7 @@ const PaymentPage = ({user}) => {
               }}
             >
               Setup: ₹1,499 one-time
-            </p>
+            </p> */}
 
             <h2>
               ₹999
@@ -256,7 +236,7 @@ const PaymentPage = ({user}) => {
           <div className="pricing-card">
             <span className="plan-badge">Enterprise Plan</span>
 
-            <p
+            {/* <p
               style={{
                 color: "#7a818d",
                 fontSize: "12px",
@@ -264,7 +244,7 @@ const PaymentPage = ({user}) => {
               }}
             >
               Min. ₹1,999/month
-            </p>
+            </p> */}
 
             <h2>Custom</h2>
 

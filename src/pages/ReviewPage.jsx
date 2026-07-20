@@ -155,8 +155,8 @@ const ReviewPage = () => {
               <div className="biz-avatar">
                 {business.name.charAt(0).toUpperCase()}
               </div>
-              <div>
-                <h1 className="biz-name">{business.name}</h1>
+              <div className='new-biz'>
+                <h1 className="biz-name">{business.name}</h1> 
                 <p className="biz-type">{business.type}</p>
               </div>
             </div>

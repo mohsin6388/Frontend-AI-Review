@@ -35,7 +35,7 @@ const en = {
   },
   reviewDisplay: {
     title: "Your Reviews are Ready!",
-    subtitle: "AI has crafted multiple reviews for you",
+    subtitle: "Multiple reviews generated.",
     copyBtn: "Copy & Post on Google",
     copiedBtn: "Copied! Opening Google...",
     steps: [
@@ -82,8 +82,8 @@ const hi = {
     hintSub: "(Jo bhi apply ho, sab select karein)",
   },
   reviewDisplay: {
-    title: "Aapke Reviews Ready Hain!",
-    subtitle: "AI ne aapke liye multiple reviews banaye hain",
+    title: "Reviews Ready!",
+    subtitle: "Multiple reviews generate ho chuke hain.",
     copyBtn: "Copy Karke Google Par Post Karein",
     copiedBtn: "Copy ho gaya! Google khul raha hai...",
     steps: [

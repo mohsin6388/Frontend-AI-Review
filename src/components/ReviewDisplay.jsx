@@ -144,9 +144,9 @@ const ReviewDisplay = ({
       </div>
 
       {/* DISCLAIMER */}
-      <p className="disclaimer">
+      {/* <p className="disclaimer">
         {T.disclaimer}
-      </p>
+      </p> */}
     </div>
   );
 };
