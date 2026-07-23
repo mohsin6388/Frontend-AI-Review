@@ -1,106 +1,181 @@
-import React , {useState, useEffect} from 'react'
+
+
+
+import React, { useState, useEffect } from 'react'
 import './PaymentPage.css';
 import api from "../api";
-import { API } from "../utils/api"
 
-const PaymentPage = ({user}) => {
+const PLANS = {
+  starter: {
+    id: "starter",
+    name: "Starter",
+    tagline: "For small shops & solo businesses",
+    monthlyPrice: 999,
+    yearlyPrice: 9999,
+    features: [
+      "1 Location / Business Profile",
+      "Custom QR Code for Google Reviews",
+      "Basic AI Review Suggestions",
+      "WhatsApp/SMS Invites (200–300/mo)",
+      "Basic Review Gate",
+    ],
+  },
+  growth: {
+    id: "growth",
+    name: "Growth / Pro",
+    tagline: "For established businesses & clinics",
+    monthlyPrice: 1999,
+    yearlyPrice: 19999,
+    popular: true,
+    features: [
+      "Everything in Starter",
+      "Smart AI Review Engine (Multi-language)",
+      "Unlimited QR Code Scans",
+      "WhatsApp Auto-Reminders",
+      "Digital Business Card / Microsite",
+      "Auto Social Media Creatives",
+      "Priority Support",
+    ],
+  },
+};
 
+const PaymentPage = ({ user }) => {
   const [paymentInfo, setPaymentInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [paymentError, setPaymentError] = useState("");
+  const [processingPlan, setProcessingPlan] = useState(null);
+  const [billingCycle, setBillingCycle] = useState("monthly"); // "monthly" | "yearly"
 
+  const fetchPaymentStatus = async () => {
+    setLoading(true);
+    try {
+      const { data } = await api.get(`/payment/check-payment/${user.id}`);
+      setPaymentInfo(data);
+
+      // Auto-switch toggle to match user's current plan's billing cycle
+      if (data?.data?.plan_name) {
+        if (data.data.plan_name.endsWith("_yearly")) {
+          setBillingCycle("yearly");
+        } else if (data.data.plan_name.endsWith("_monthly")) {
+          setBillingCycle("monthly");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchPaymentStatus = async () => {
-      setLoading(true)
-      try {
-
-        const { data } = await api.get(
-          `/payment/check-payment/${user.id}`);
-
-
-          
-             setPaymentInfo(data);
-             setLoading(false)
-             console.log("dekho data aa gya hai ==> ", paymentInfo?.data?.plan_name);
-               
-
-       
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (user?.id) {
       fetchPaymentStatus();
     }
   }, [user]);
 
-  const handlePayment = async (id) => {
-  
-    try {
+  const handlePayment = async (planId) => {
+    setPaymentError("");
+    setProcessingPlan(planId);
 
+    try {
       const token = localStorage.getItem("rb_token");
+
+      // plan_name sent to backend includes billing cycle,
+      // e.g. "starter_monthly" or "starter_yearly"
+      const backendPlanName = `${planId}_${billingCycle}`;
 
       const { data } = await api.post(
         "/payment/create-order",
-        {
-          user_id: user.id,
-          // amount: 999,
-          plan_name: id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        { user_id: user.id, plan_name: backendPlanName },
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      console.log(data); /// remove after testing
-
       const options = {
-        key: "rzp_test_SrDMwFfEgXgFpL",
-
+        key: "rzp_live_TEwIhHLXLXjQto",
         amount: data.order.amount,
-
         currency: data.order.currency,
-
         order_id: data.order.id,
-
         name: "Review Ninja Pro",
-
-        description: "Premium Plan",
+        description: "Subscription Plan",
 
         handler: async function (response) {
-          console.log(response); /// remove afetr testing
-          await api.post("/payment/verify-payment", response, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          try {
+            const verifyRes = await api.post(
+              "/payment/verify-payment",
+              response,
+              { headers: { Authorization: `Bearer ${token}` } },
+            );
 
-          alert("Payment Successful");
+            if (verifyRes.data?.success) {
+              setShowSuccess(true);
+              await fetchPaymentStatus();
+            } else {
+              setPaymentError("Payment verify nahi ho paya. Support se contact karein.");
+            }
+          } catch (err) {
+            console.log(err);
+            setPaymentError("Payment verify nahi ho paya. Support se contact karein.");
+          } finally {
+            setProcessingPlan(null);
+          }
         },
 
-        prefill: {
-          name: user.name,
-          email: user.email,
+        modal: {
+          ondismiss: function () {
+            setProcessingPlan(null);
+          },
         },
 
-        theme: {
-          color: "#2563eb",
-        },
+        prefill: { name: user.name, email: user.email },
+        theme: { color: "#2563eb" },
       };
 
       const razor = new window.Razorpay(options);
 
+      razor.on("payment.failed", function (response) {
+        console.log(response.error);
+        setPaymentError("Payment fail ho gaya: " + response.error.description);
+        setProcessingPlan(null);
+      });
+
       razor.open();
     } catch (error) {
       console.log(error);
+      setPaymentError("Order banane mein error aaya. Dobara try karein.");
+      setProcessingPlan(null);
     }
   };
 
+  const renderButtonContent = (planId, label) => {
+    const fullPlanId = `${planId}_${billingCycle}`;
+
+    if (processingPlan === planId) {
+      return (
+        <>
+          <span className="btn-spinner" />
+          Processing...
+        </>
+      );
+    }
+    if (paymentInfo?.data?.plan_name === fullPlanId) {
+      return "✓ Current Plan";
+    }
+    return label;
+  };
+
+  const getButtonClass = (planId) => {
+    const fullPlanId = `${planId}_${billingCycle}`;
+
+    if (paymentInfo?.data?.plan_name === fullPlanId) return "buy-btn current-plan";
+    if (processingPlan === planId) return "buy-btn processing";
+    return "buy-btn";
+  };
+
+  const isButtonDisabled = (planId) => {
+    const fullPlanId = `${planId}_${billingCycle}`;
+    return paymentInfo?.data?.plan_name === fullPlanId || processingPlan === planId;
+  };
 
   if (loading) {
     return (
@@ -125,159 +200,133 @@ const PaymentPage = ({user}) => {
               margin: "0 auto 12px",
             }}
           />
-          <p style={{ color: "#6b7280", fontSize: 14 }}>
-            Loading Terms &amp; Conditions…
-          </p>
+          <p style={{ color: "#6b7280", fontSize: 14 }}>Loading Plans…</p>
           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
         </div>
       </div>
     );
   }
 
-
   return (
     <div className="pricing-page animate-fadeIn">
-      <>
-        <div className="pricing-header">
-          <h1>Choose Your Plan</h1>
+      {paymentError && (
+        <div className="payment-error-banner">{paymentError}</div>
+      )}
 
-          <p>Start collecting more Google reviews with powerful QR tools.</p>
-        </div>
+      <div className="pricing-header">
+        <h1>Choose Your Plan</h1>
+        <p>Start collecting more Google reviews with powerful QR tools.</p>
+      </div>
 
-        <div className="pricing-grid">
-          {/* Starter CARD */}
-          <div className="pricing-card">
-            <span className="plan-badge">Starter Plan</span>
+      {/* ===== BILLING TOGGLE ===== */}
+      <div className="billing-toggle">
+        <button
+          className={billingCycle === "monthly" ? "toggle-btn active" : "toggle-btn"}
+          onClick={() => setBillingCycle("monthly")}
+        >
+          Monthly
+        </button>
+        <button
+          className={billingCycle === "yearly" ? "toggle-btn active" : "toggle-btn"}
+          onClick={() => setBillingCycle("yearly")}
+        >
+          Yearly
+          <span className="save-tag">Save 2 months</span>
+        </button>
+      </div>
 
-            {/* <p
-              style={{
-                color: "#7a818d",
-                fontSize: "12px",
-                paddingBottom: "5px",
-              }}
+      <div className="pricing-grid">
+        {Object.values(PLANS).map((plan) => {
+          const price =
+            billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice;
+
+          return (
+            <div
+              key={plan.id}
+              className={plan.popular ? "pricing-card popular-card" : "pricing-card"}
             >
-              Setup: ₹999 one-time
-            </p> */}
+              {plan.popular && <span className="popular-tag">Most Popular</span>}
 
-            <h2>
-              ₹799
-              <span style={{ color: "#6b7280", fontSize: "15px" }}>/month</span>
-            </h2>
+              <div className="card-top">
+                <span className="plan-badge">{plan.name}</span>
+                <p className="plan-tagline">{plan.tagline}</p>
 
-            {/* <p className="plan-duration">per month</p> */}
+                <h2>
+                  ₹{price.toLocaleString("en-IN")}
+                  <span className="price-period">
+                    /{billingCycle === "monthly" ? "month" : "year"}
+                  </span>
+                </h2>
+                <p className="plan-gst">+ 18% GST</p>
 
-            <div className="plan-features" style={{ paddingTop: "20px" }}>
-              <p>✔ 1 Acrylic QR Standee</p>
-              <p>✔ Basic AI Engine</p>
-              <p>✔ 50 Reviews/month</p>
-              <p>✔ Negative Feedback Filter</p>
-              <p>✔ Email Support</p>
+                <div className="plan-features">
+                  {plan.features.map((f, i) => (
+                    <p key={i}>
+                      <span className="check-icon">✔</span> {f}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => handlePayment(plan.id)}
+                className={getButtonClass(plan.id)}
+                disabled={isButtonDisabled(plan.id)}
+              >
+                {renderButtonContent(plan.id, "Buy Now")}
+              </button>
             </div>
+          );
+        })}
 
-            <button
-              onClick={() => handlePayment("starter")}
-              className={`buy-btn ${paymentInfo?.data?.plan_name === "starter" ? "opacity-50 cursor-not-allowed" : ""}`}
-              disabled={paymentInfo?.data?.plan_name === "starter"}
-            >
-              {paymentInfo?.data?.plan_name === "starter"
-                ? "Current Plan"
-                : "Buy Now"}
-            </button>
-
-          </div>
-
-          {/* PREMIUM CARD */}
-          <div className="pricing-card">
-            <span className="plan-badge">Premium Plan</span>
-
-            {/* <p
-              style={{
-                color: "#7a818d",
-                fontSize: "12px",
-                paddingBottom: "5px",
-              }}
-            >
-              Setup: ₹1,499 one-time
-            </p> */}
-
-            <h2>
-              ₹999
-              <span style={{ color: "#6b7280", fontSize: "15px" }}>/month</span>
-            </h2>
-            {/* <p className="plan-duration">per month</p> */}
-
-            <div className="plan-features" style={{ paddingTop: "20px" }}>
-              <p>✔ 2 Premium Acrylic Standees</p>
-              <p>✔ Unlimited AI Reviews</p>
-              <p>✔ Negative Review Filter</p>
-              <p>✔ Keyword-Rich AI Reviews</p>
-              <p>✔ Priority Support</p>
-            </div>
-
-            <button
-              onClick={() => handlePayment("premium")}
-              className={`buy-btn ${paymentInfo?.data?.plan_name === "premium" ? "opacity-50 cursor-not-allowed" : ""}`}
-              disabled={paymentInfo?.data?.plan_name === "premium"} // ✅ optional chaining lagao
-            >
-              {paymentInfo?.data?.plan_name === "premium"
-                ? "Current Plan"
-                : "Buy Now"}
-            </button>
-
-            {/* <button
-              className="buy-btn"
-              onClick={() => handlePayment("premium")}
-              disabled={paymentInfo?.data.plan_name === "premium"}
-            >
-              Buy Now
-            </button> */}
-          </div>
-
-          <div className="pricing-card">
-            <span className="plan-badge">Enterprise Plan</span>
-
-            {/* <p
-              style={{
-                color: "#7a818d",
-                fontSize: "12px",
-                paddingBottom: "5px",
-              }}
-            >
-              Min. ₹1,999/month
-            </p> */}
+        {/* ================= ENTERPRISE PLAN ================= */}
+        <div className="pricing-card">
+          <div className="card-top">
+            <span className="plan-badge">Enterprise</span>
+            <p className="plan-tagline">Chains, franchises & agencies</p>
 
             <h2>Custom</h2>
+            <p className="plan-gst">₹4,999–₹7,999/mo · up to 5 locations</p>
 
-            {/* <p className="plan-duration">per month</p> */}
-
-            <div className="plan-features" style={{ paddingTop: "20px" }}>
-              <p>✔ Custom Branded Standees</p>
-              <p>✔ Centralized Dashboard</p>
-              <p>✔ Unlimited Reviews & Locations</p>
-              <p>✔ API Access & Integrations</p>
-              <p>✔ Customer Review Analytics</p>
+            <div className="plan-features">
+              <p><span className="check-icon">✔</span> Multi-location Dashboard</p>
+              <p><span className="check-icon">✔</span> White-Label branding</p>
+              <p><span className="check-icon">✔</span> Unlimited Campaigns</p>
+              <p><span className="check-icon">✔</span> Dedicated Account Manager</p>
+              <p><span className="check-icon">✔</span> Sentiment Analysis</p>
             </div>
+          </div>
 
-            <button className="buy-btn">
-              <a
-                href="https://wa.me/918750200899"
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                Contact Now
-              </a>
+          <button className="buy-btn">
+            <a
+              href="https://wa.me/918750200899"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              Contact Now
+            </a>
+          </button>
+        </div>
+      </div>
+
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-modal">
+            <div className="success-icon">✓</div>
+            <h3>Payment Successful</h3>
+            <p>Aapka plan activate ho gaya hai. Confirmation email bhej di gayi hai.</p>
+            <button onClick={() => setShowSuccess(false)} className="success-close-btn">
+              Great!
             </button>
           </div>
         </div>
-      </>
+      )}
     </div>
   );
-
- 
- 
-
-
-
-}
-
+};
 
 export default PaymentPage
+
+
+
+
+

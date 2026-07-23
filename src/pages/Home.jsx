@@ -554,10 +554,214 @@ function TestiCard({ name, biz, text, delay = 0 }) {
   );
 }
 
+// function PricingCard({
+//   plan,
+//   setupPrice,
+//   monthlyPrice,
+//   audience,
+//   features,
+//   highlight = false,
+//   isCustom = false,
+//   delay = 0,
+//   labels = {
+//     bestSeller: "⭐ BEST SELLER",
+//     custom: "Custom",
+//     customNote: "Min ₹1,999/month",
+//     perMonth: "/mo",
+//     ctaDefault: "Get Started →",
+//     ctaCustom: "Contact Sales →",
+//   },
+// }) {
+//   const [ref, vis] = useInView();
+//   return (
+//     <div
+//       ref={ref}
+//       style={{
+//         background: highlight
+//           ? "linear-gradient(145deg,#073057,#0a4a8a)"
+//           : "rgba(255,255,255,0.04)",
+//         border: highlight
+//           ? "1px solid rgba(255,140,66,0.45)"
+//           : "1px solid rgba(255,255,255,0.08)",
+//         borderRadius: 22,
+//         padding: "32px 24px",
+//         position: "relative",
+//         transform: vis ? "translateY(0)" : "translateY(40px)",
+//         opacity: vis ? 1 : 0,
+//         transition: `all 0.5s ease ${delay}ms`,
+//         boxShadow: highlight ? "0 24px 60px rgba(7,48,87,0.4)" : "none",
+//       }}
+//     >
+//       {highlight && (
+//         <div
+//           style={{
+//             position: "absolute",
+//             top: -13,
+//             left: "50%",
+//             transform: "translateX(-50%)",
+//             background: "#FF8C42",
+//             color: "white",
+//             fontSize: 10,
+//             fontWeight: 700,
+//             padding: "3px 14px",
+//             borderRadius: 20,
+//             letterSpacing: 1,
+//             fontFamily: "'Poppins',sans-serif",
+//             whiteSpace: "nowrap",
+//           }}
+//         >
+//           {labels.bestSeller}
+//         </div>
+//       )}
+//       <div
+//         style={{
+//           fontSize: 11,
+//           fontWeight: 700,
+//           color: "#FF8C42",
+//           letterSpacing: 1,
+//           textTransform: "uppercase",
+//           marginBottom: 3,
+//           fontFamily: "'Poppins',sans-serif",
+//         }}
+//       >
+//         {plan}
+//       </div>
+//       <div
+//         style={{
+//           fontSize: 11,
+//           color: "rgba(240,245,251,0.45)",
+//           marginBottom: 14,
+//           fontFamily: "'Poppins',sans-serif",
+//         }}
+//       >
+//         {audience}
+//       </div>
+//       {isCustom ? (
+//         <div style={{ marginBottom: 22 }}>
+//           <div
+//             style={{
+//               fontSize: 26,
+//               fontWeight: 800,
+//               color: "white",
+//               fontFamily: "'Poppins',sans-serif",
+//             }}
+//           >
+//             {labels.custom}
+//           </div>
+//           <div
+//             style={{
+//               fontSize: 11,
+//               color: "rgba(240,245,251,0.45)",
+//               marginTop: 3,
+//               fontFamily: "'Poppins',sans-serif",
+//             }}
+//           >
+//             {labels.customNote}
+//           </div>
+//         </div>
+//       ) : (
+//         <div style={{ marginBottom: 22 }}>
+//           {/* <div
+//             style={{
+//               fontSize: 12,
+//               color: "rgba(240,245,251,0.5)",
+//               fontFamily: "'Poppins',sans-serif",
+//               marginBottom: 2,
+//             }}
+//           >
+//             Setup: <strong style={{ color: "white" }}>₹{setupPrice}</strong>{" "}
+//             one-time
+//           </div> */}
+//           <div style={{ display: "flex", alignItems: "baseline", gap: 3 }}>
+//             <span
+//               style={{
+//                 fontSize: 36,
+//                 fontWeight: 800,
+//                 color: "#FF8C42",
+//                 fontFamily: "'Poppins',sans-serif",
+//               }}
+//             >
+//               ₹{monthlyPrice}
+//             </span>
+//             <span
+//               style={{
+//                 fontSize: 12,
+//                 color: "rgba(240,245,251,0.45)",
+//                 fontFamily: "'Poppins',sans-serif",
+//               }}
+//             >
+//               {labels.perMonth}
+//             </span>
+//           </div>
+//         </div>
+//       )}
+//       <div
+//         style={{
+//           display: "flex",
+//           flexDirection: "column",
+//           gap: 10,
+//           marginBottom: 24,
+//         }}
+//       >
+//         {features.map((f, i) => (
+//           <div
+//             key={i}
+//             style={{ display: "flex", gap: 8, alignItems: "flex-start" }}
+//           >
+//             <span
+//               style={{
+//                 color: "#FF8C42",
+//                 fontSize: 14,
+//                 flexShrink: 0,
+//                 marginTop: 1,
+//               }}
+//             >
+//               ✓
+//             </span>
+//             <span
+//               style={{
+//                 fontSize: 13,
+//                 color: "rgba(240,245,251,0.7)",
+//                 lineHeight: 1.5,
+//                 fontFamily: "'Poppins',sans-serif",
+//               }}
+//             >
+//               {f}
+//             </span>
+//           </div>
+//         ))}
+//       </div>
+
+//       <button
+//         style={{
+//           width: "100%",
+//           padding: "13px 0",
+//           background: highlight ? "#FF8C42" : "rgba(255,140,66,0.12)",
+//           border: highlight ? "none" : "1px solid rgba(255,140,66,0.25)",
+//           borderRadius: 11,
+//           color: "white",
+//           fontSize: 14,
+//           fontWeight: 700,
+//           cursor: "pointer",
+//           fontFamily: "'Poppins',sans-serif",
+//           marginTop: "auto",
+//         }}
+//         onClick={() => (window.location.href = isCustom ? "/contact" : "/login")}
+//       >
+//         {isCustom ? labels.ctaCustom : labels.ctaDefault}
+//       </button>
+
+
+//     </div>
+//   );
+// }
+
 function PricingCard({
   plan,
   setupPrice,
   monthlyPrice,
+  yearlyPrice,
+  billingCycle = "monthly",
   audience,
   features,
   highlight = false,
@@ -568,11 +772,15 @@ function PricingCard({
     custom: "Custom",
     customNote: "Min ₹1,999/month",
     perMonth: "/mo",
+    perYear: "/yr",
     ctaDefault: "Get Started →",
     ctaCustom: "Contact Sales →",
   },
 }) {
   const [ref, vis] = useInView();
+  const price = billingCycle === "monthly" ? monthlyPrice : yearlyPrice;
+  const periodLabel = billingCycle === "monthly" ? labels.perMonth : labels.perYear;
+ 
   return (
     <div
       ref={ref}
@@ -661,17 +869,6 @@ function PricingCard({
         </div>
       ) : (
         <div style={{ marginBottom: 22 }}>
-          {/* <div
-            style={{
-              fontSize: 12,
-              color: "rgba(240,245,251,0.5)",
-              fontFamily: "'Poppins',sans-serif",
-              marginBottom: 2,
-            }}
-          >
-            Setup: <strong style={{ color: "white" }}>₹{setupPrice}</strong>{" "}
-            one-time
-          </div> */}
           <div style={{ display: "flex", alignItems: "baseline", gap: 3 }}>
             <span
               style={{
@@ -681,7 +878,7 @@ function PricingCard({
                 fontFamily: "'Poppins',sans-serif",
               }}
             >
-              ₹{monthlyPrice}
+              ₹{price}
             </span>
             <span
               style={{
@@ -690,7 +887,7 @@ function PricingCard({
                 fontFamily: "'Poppins',sans-serif",
               }}
             >
-              {labels.perMonth}
+              {periodLabel}
             </span>
           </div>
         </div>
@@ -731,7 +928,7 @@ function PricingCard({
           </div>
         ))}
       </div>
-
+ 
       <button
         style={{
           width: "100%",
@@ -746,12 +943,85 @@ function PricingCard({
           fontFamily: "'Poppins',sans-serif",
           marginTop: "auto",
         }}
-        onClick={() => (window.location.href = isCustom ? "/contact" : "/login")}
+        onClick={() => (window.location.href = isCustom ? "/contact-us" : "/login")}
       >
         {isCustom ? labels.ctaCustom : labels.ctaDefault}
       </button>
-
-
+    </div>
+  );
+}
+ 
+ 
+/* -------------------------------------------------------------------------
+   STEP 2 — ADD this new component anywhere near the other small components
+   (e.g. right after PricingCard). This renders the Monthly/Yearly pill toggle,
+   styled to match the dark landing-page theme.
+   ------------------------------------------------------------------------- */
+function BillingToggle({ billingCycle, setBillingCycle, T }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 6,
+        background: "rgba(255,255,255,0.05)",
+        border: "1px solid rgba(255,140,66,0.2)",
+        width: "fit-content",
+        margin: "0 auto 36px",
+        padding: 5,
+        borderRadius: 999,
+      }}
+    >
+      <button
+        onClick={() => setBillingCycle("monthly")}
+        style={{
+          border: "none",
+          background: billingCycle === "monthly" ? "#FF8C42" : "transparent",
+          color: "white",
+          padding: "9px 22px",
+          borderRadius: 999,
+          fontSize: 13,
+          fontWeight: 700,
+          cursor: "pointer",
+          fontFamily: "'Poppins',sans-serif",
+          transition: "all .2s ease",
+        }}
+      >
+        {T.pricing.monthlyLabel}
+      </button>
+      <button
+        onClick={() => setBillingCycle("yearly")}
+        style={{
+          border: "none",
+          background: billingCycle === "yearly" ? "#FF8C42" : "transparent",
+          color: "white",
+          padding: "9px 22px",
+          borderRadius: 999,
+          fontSize: 13,
+          fontWeight: 700,
+          cursor: "pointer",
+          fontFamily: "'Poppins',sans-serif",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          transition: "all .2s ease",
+        }}
+      >
+        {T.pricing.yearlyLabel}
+        <span
+          style={{
+            background: billingCycle === "yearly" ? "rgba(255,255,255,0.25)" : "rgba(255,140,66,0.15)",
+            color: billingCycle === "yearly" ? "white" : "#FF8C42",
+            fontSize: 10,
+            fontWeight: 700,
+            padding: "2px 8px",
+            borderRadius: 999,
+          }}
+        >
+          {T.pricing.saveTag}
+        </span>
+      </button>
     </div>
   );
 }
@@ -898,6 +1168,7 @@ export default function ReviewMaterLanding() {
   const [heroVis, setHeroVis] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { lang, toggleLang, T } = useLanguage(homeContent);
+  const [billingCycle, setBillingCycle] = useState("monthly");
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVis(true), 100);
@@ -1542,7 +1813,86 @@ export default function ReviewMaterLanding() {
         </section>
 
         {/* PRICING */}
+
         <section
+          id="pricing"
+          style={{
+            padding: "80px 5%",
+            background: "#060d1a",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <ParticleBg />
+          <div
+            style={{
+              maxWidth: 1060,
+              margin: "0 auto",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            <SectionHeading
+              badge={T.pricing.badge}
+              title={T.pricing.title}
+              sub={T.pricing.sub}
+            />
+ 
+            <BillingToggle
+              billingCycle={billingCycle}
+              setBillingCycle={setBillingCycle}
+              T={T}
+            />
+ 
+            <div
+              className="pricing-grid"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit,minmax(290px,1fr))",
+                gap: 22,
+              }}
+            >
+              {T.pricing.plans.map((p, i) => (
+                <PricingCard
+                  key={p.plan}
+                  delay={i * 150}
+                  plan={p.plan}
+                  audience={p.audience}
+                  setupPrice={p.setupPrice}
+                  monthlyPrice={p.monthlyPrice}
+                  yearlyPrice={p.yearlyPrice}
+                  billingCycle={billingCycle}
+                  highlight={p.highlight}
+                  isCustom={p.isCustom}
+                  features={p.features}
+                  labels={{
+                    bestSeller: T.pricing.bestSeller,
+                    custom: T.pricing.custom,
+                    customNote: T.pricing.customNote,
+                    perMonth: T.pricing.perMonth,
+                    perYear: T.pricing.perYear,
+                    ctaDefault: T.pricing.ctaDefault,
+                    ctaCustom: T.pricing.ctaCustom,
+                  }}
+                />
+              ))}
+            </div>
+            <p
+              style={{
+                textAlign: "center",
+                marginTop: 24,
+                fontSize: 12,
+                color: "rgba(240,245,251,0.35)",
+                fontFamily: "'Poppins',sans-serif",
+              }}
+            >
+              {T.pricing.note}
+            </p>
+          </div>
+        </section>
+
+
+        {/* <section
           id="pricing"
           style={{
             padding: "80px 5%",
@@ -1607,7 +1957,7 @@ export default function ReviewMaterLanding() {
               {T.pricing.note}
             </p>
           </div>
-        </section>
+        </section> */}
 
         {/* FAQ */}
         <section id="faq" style={{ padding: "80px 5%", background: "#050e1c" }}>

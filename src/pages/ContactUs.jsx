@@ -114,7 +114,7 @@ ${formData.message}`;
 const styles = {
   container: {
     minHeight: "100vh",
-    background: "#f8fafc",
+    background: "#f0f5fb",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

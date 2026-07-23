@@ -1,209 +1,320 @@
 .pricing-page {
-  padding: 40px;
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+  box-sizing: border-box;
 }
 
 .pricing-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 24px;
 }
 
 .pricing-header h1 {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .pricing-header p {
-  font-size: 15px;
   color: #6b7280;
+  font-size: 14px;
 }
 
+.payment-error-banner {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin: 0 auto 16px;
+  max-width: 500px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ===== BILLING TOGGLE ===== */
+.billing-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  background: #eef2f7;
+  width: fit-content;
+  margin: 0 auto 36px;
+  padding: 5px;
+  border-radius: 999px;
+}
+
+.toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.save-tag {
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.toggle-btn.active .save-tag {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* ===== PRICING GRID ===== */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
-  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: stretch;
 }
 
+/* ===== CARD ===== */
 .pricing-card {
   position: relative;
-  background: #fff;
-  border-radius: 24px;
-  padding: 35px;
+  background: #ffffff;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.pricing-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+.card-top {
+  flex: 1;
 }
 
-.active-plan {
+.popular-card {
   border: 2px solid #2563eb;
 }
 
 .popular-tag {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #2563eb;
   color: #fff;
-  padding: 5px 12px;
-  border-radius: 30px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 
 .plan-badge {
   display: inline-block;
-  padding: 6px 14px;
-  border-radius: 30px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #eef2ff;
+  color: #4338ca;
   font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 16px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.plan-tagline {
+  color: #6b7280;
+  font-size: 12.5px;
+  line-height: 1.5;
+  margin: 0 0 14px;
 }
 
 .pricing-card h2 {
-  font-size: 38px;
+  font-size: 30px;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 4px;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.plan-duration {
+.price-period {
+  font-size: 14px;
+  font-weight: 500;
   color: #6b7280;
-  margin-bottom: 22px;
-  font-size: 13px;
 }
 
+.plan-gst {
+  color: #9ca3af;
+  font-size: 12px;
+  margin: 4px 0 18px;
+}
+
+/* ===== FEATURES ===== */
 .plan-features {
-  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .plan-features p {
-  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  font-size: 13.5px;
   color: #374151;
-  font-size: 14px;
-  font-weight: 500;
+  line-height: 1.4;
 }
 
+.check-icon {
+  color: #16a34a;
+  font-size: 12px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ===== BUTTON (always pinned to bottom) ===== */
 .buy-btn {
+  margin-top: 24px;
   width: 100%;
+  padding: 13px;
   border: none;
-  outline: none;
-  border-radius: 12px;
-  padding: 14px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white;
-  font-size: 14px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14.5px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  box-sizing: border-box;
 }
 
-.buy-btn:disabled {
-  background: linear-gradient(135deg, #9ca3af, #6b7280);
-  box-shadow: none;
+.buy-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.buy-btn.current-plan {
+  background: #16a34a;
   cursor: not-allowed;
-  opacity: 0.7;
 }
 
-
-.buy-btn:hover {
-  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+.buy-btn.processing {
+  background: #94a3b8;
+  cursor: not-allowed;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.btn-spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.7s linear infinite;
+  margin-right: 8px;
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease;
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
 }
 
-/* ========================= */
-/* ACTIVE SUBSCRIPTION CARD */
-/* ========================= */
-
-.subscription-card {
-  max-width: 900px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 24px;
-  padding: 35px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.subscription-card h1 {
-  margin-bottom: 24px;
-  color: #111827;
-}
-
-.subscription-details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-}
-
-.subscription-details div {
-  background: #f8fafc;
+/* ===== SUCCESS MODAL ===== */
+.success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
   padding: 20px;
-  border-radius: 14px;
 }
 
-.subscription-details h4 {
-  color: #64748b;
-  font-size: 14px;
-  margin-bottom: 8px;
+.success-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 28px;
+  text-align: center;
+  max-width: 340px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.subscription-details p {
-  font-size: 18px;
-  font-weight: 600;
+.success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 16px;
+}
+
+.success-modal h3 {
+  margin: 0 0 8px;
   color: #111827;
 }
 
-/* ========================= */
-/* MOBILE */
-/* ========================= */
+.success-modal p {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0 0 20px;
+}
 
-@media (max-width: 768px) {
+.success-close-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 480px) {
   .pricing-page {
-    padding: 20px;
+    padding: 24px 14px 40px;
+  }
+
+  .pricing-card {
+    padding: 22px 18px;
   }
 
   .pricing-header h1 {
-    font-size: 26px;
+    font-size: 22px;
   }
 
-  .pricing-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .pricing-card,
-  .subscription-card {
-    padding: 24px;
-  }
-
-  .pricing-card h2 {
-    font-size: 32px;
-  }
-
-  .subscription-details {
-    grid-template-columns: 1fr;
+  .toggle-btn {
+    padding: 8px 14px;
+    font-size: 13px;
   }
 }

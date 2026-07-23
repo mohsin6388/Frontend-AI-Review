@@ -42,11 +42,13 @@ const LoginPage = () => {
       }
     );
 
-    login(res.data.user);
-    navigate("/dashboard");
+    console.log("Response ===>", res)
+
+      login(res.data.user);
+      navigate("/dashboard");
     
     } catch (err) {
-      setError(err.message);
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
