@@ -84,7 +84,7 @@ const hi = {
   reviewDisplay: {
     title: "Reviews Ready!",
     subtitle: "Multiple reviews generate ho chuke hain.",
-    copyBtn: "Copy Karke Google Par Post Karein",
+    copyBtn: "Copy & Post on Google",
     copiedBtn: "Copy ho gaya! Google khul raha hai...",
     steps: [
       "Kisi bhi review ko copy karo",

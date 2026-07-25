@@ -170,7 +170,7 @@
 
 }
 
-.biz-name {
+/* .biz-name {
   font-size: 28px;
 
   font-weight: 800;
@@ -192,7 +192,25 @@
   text-transform: capitalize;
 
   font-weight: 500;
+} */
+
+.biz-name {
+  font-size: 28px;
+  font-weight: 800;
+  color: white;          /* fix: white → dark */
+  padding: 5px 0 10px 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
 }
+
+.biz-type {
+  font-size: 13px;
+  color: #6b7280;           /* fix: near-white → readable gray */
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+
 
 /* DIVIDER */
 
@@ -211,9 +229,32 @@
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  
 }
 
+
+
 .step-title {
+  font-size: 25px;
+  font-weight: 800;
+  color: #ffdc18;           /* fix: yellow → dark */
+  text-align: center;
+  line-height: 1.3;
+}
+
+.step-subtitle {
+  font-size: 15px;
+  color: #a4aab3;            /* fix: white → readable gray */
+  text-align: center;
+  line-height: 1.6;
+  max-width: 320px;
+  margin-top: -4px;
+}
+
+
+
+
+/* .step-title {
   font-size: 25px;
 
   font-weight: 800;
@@ -237,7 +278,7 @@
   max-width: 320px;
 
   margin-top: -4px;
-}
+} */
 
 /* RATING BADGE */
 
@@ -353,6 +394,25 @@
 .thankyou-title,
 .error-title {
   font-size: 28px;
+  font-weight: 800;
+  color: white;            /* fix: white → dark */
+}
+
+.generating-sub,
+.thankyou-text,
+.error-msg,
+.thankyou-sub {
+  color: #ffdc18;            /* fix: near-yellow → readable gray */
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* 
+.generating-title,
+.thankyou-title,
+.error-title {
+  font-size: 28px;
 
   font-weight: 800;
 
@@ -368,7 +428,7 @@
   font-size: 14px;
 
   line-height: 1.7;
-}
+} */
 
 /* TEXTAREA */
 
@@ -479,7 +539,17 @@
     font-size: 28px;
   }
 
-  .biz-name {
+   .biz-name {
+    font-size: 24px;
+    color: #fff;   /* ab ye already default me set hai, yahan optional */
+  }
+
+  .step-title {
+    font-size: 22px;
+    color: #fff;   /* ye bhi ab optional */
+  }
+
+  /* .biz-name {
     font-size: 24px;
     color: #111827;
   }
@@ -487,7 +557,7 @@
   .step-title {
     font-size: 22px;
     color: #111827;
-  }
+  } */
 
   .step-subtitle {
     font-size: 14px;

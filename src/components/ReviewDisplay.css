@@ -1,4 +1,60 @@
 
+/* ==== Self-contained theme (fallbacks so it always renders correctly,
+   even if the global theme CSS isn't loaded on this public/QR page) ==== */
+.review-display {
+  --gold: var(--gold, #FACC15);
+  --gold-dim: var(--gold-dim, rgba(250, 204, 21, 0.15));
+  --border-glow: var(--border-glow, rgba(250, 204, 21, 0.35));
+  --green: var(--green, #10B981);
+  --text-secondary: var(--text-secondary, #4B5563);
+  --text-muted: var(--text-muted, #9CA3AF);
+  --radius-md: var(--radius-md, 12px);
+  --font-display: var(--font-display, 'Poppins', 'Segoe UI', sans-serif);
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-display);
+}
+
+.review-display * {
+  box-sizing: border-box;
+}
+
+/* Fallback animation, in case global keyframes aren't loaded here */
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(40, 101, 232, 0.35); }
+  50% { box-shadow: 0 0 0 8px rgba(40, 101, 232, 0); }
+}
+
+/* ==== Header ==== */
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.review-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.review-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: white
+}
+
+.review-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ==== Steps ==== */
 .review-steps {
   display: flex;
   flex-direction: column;
@@ -37,93 +93,68 @@
   color: var(--text-secondary);
 }
 
-/* .copy-btn {
-  width: 100%;
-  padding: 18px 24px;
-  background: linear-gradient(135deg, #2865E8, #1D4ED8);
-  color: #0a0a1a;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 0.3px;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  animation: pulse-gold 2s ease infinite;
-} */
-
+/* ==== Copy button ==== */
 .copy-btn {
   width: 100%;
   min-height: 52px;
-
   padding: 14px 16px;
-
   background: linear-gradient(135deg, #2865E8, #1D4ED8);
   color: #fff;
-
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 14px;
   line-height: 1.3;
-  letter-spacing: 0;
-
   border: none;
   border-radius: var(--radius-md);
-
   cursor: pointer;
   transition: all 0.2s ease;
-
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
   text-align: center;
-
   animation: pulse-gold 2s ease infinite;
 }
 
 .copy-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(250, 204, 21, 0.4);
+  box-shadow: 0 8px 30px rgba(40, 101, 232, 0.4);
 }
 
-.copy-btn:active { transform: translateY(0); }
+.copy-btn:active {
+  transform: translateY(0);
+}
 
 .copy-btn.copied {
   background: linear-gradient(135deg, var(--green), #059669);
-  color: white;
+  color: #fff;
   animation: none;
 }
 
 .btn-icon {
-  background-color: antiquewhite;
   display: flex;
   align-items: center;
   font-size: medium;
-  font-family: 'Arial';
 }
 
+/* ==== Disclaimer ==== */
 .disclaimer {
   text-align: center;
   font-size: 11px;
   color: var(--text-muted);
   line-height: 1.5;
+  margin-top: 10px;
 }
 
-
+/* ==== Reviews slider ==== */
 .reviews-slider {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 10px;
+  padding: 4px 4px 10px;
   margin-top: 20px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .reviews-slider::-webkit-scrollbar {
@@ -136,17 +167,51 @@
 }
 
 .review-card {
-  min-width: 320px;
+  min-width: 280px;
   max-width: 320px;
+  width: 85vw;
   flex-shrink: 0;
   scroll-snap-align: start;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: var(--radius-md);
+  padding: 16px;
 }
 
 .review-card .review-text-box {
-  min-height: 180px;
+  min-height: 160px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.quote-mark {
+  font-size: 28px;
+  color: var(--gold);
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+
+.review-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: white;
+  margin: 4px 0 0;
 }
 
 .review-card .copy-btn {
   width: 100%;
   margin-top: 16px;
+}
+
+/* ==== Small screens ==== */
+@media (max-width: 380px) {
+  .review-card {
+    min-width: 240px;
+    width: 78vw;
+    padding: 14px;
+  }
+
+  .review-title {
+    font-size: 16px;
+  }
 }
