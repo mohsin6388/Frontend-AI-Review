@@ -146,7 +146,7 @@ export default function ForgotPassword({ onBack, onVerified }) {
       setOtpLoading(true);
       setOtpError("");
 
-      const response = await fetch(`${API}/auth/verify-otp`, {
+      const response = await fetch(`${API}/auth/forgot-verify-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -335,6 +335,7 @@ export default function ForgotPassword({ onBack, onVerified }) {
     );
   }
 
+  
   return (
     <div
       style={{

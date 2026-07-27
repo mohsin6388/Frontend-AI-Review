@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../utils/api";
 
 const styles = `
@@ -462,7 +462,7 @@ export default function CreatePassword() {
   const passwordsMismatch = confirmPass.length > 0 && newPass !== confirmPass;
   const isValid = strength === 4 && passwordsMatch;
 
-  const navigate = useNavigation()
+  const navigate = useNavigate()
   const location = useLocation();
 
   const email = location.state?.email;
