@@ -8,6 +8,7 @@ import logo from "../assets/review-booster-logo2.png";
 import Loading from "../components/Loading";
 import './Login.css'
 
+import { GoogleLogin } from '@react-oauth/google';
 
 
 const LoginPage = () => {
@@ -53,6 +54,32 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+
+
+   const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/google-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // cookies ke liye zaroori hai
+        body: JSON.stringify({ credential: credentialResponse.credential }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        login(data.user);    
+        navigate("/dashboard");
+      } else {
+        alert(data.message || "Google login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Google login mein error aaya");
+    }
+  };
+
+
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") handleSubmit();
@@ -194,6 +221,14 @@ const LoginPage = () => {
                 {t.createOne}
               </Link>
             </p>
+
+            <div style={{marginTop: "20px"}}>
+               <GoogleLogin
+            
+        onSuccess={handleGoogleSuccess}
+        onError={() => alert("Google login failed")}
+      />
+            </div>
 
             <div className="trust-row">
               {t.trustItems.map((tr) => (

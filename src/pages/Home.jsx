@@ -784,6 +784,7 @@ function PricingCard({
   return (
     <div
       ref={ref}
+      onClick={() => (window.location.href = isCustom ? "/contact-us" : "/login")}
       style={{
         background: highlight
           ? "linear-gradient(145deg,#073057,#0a4a8a)"
@@ -798,6 +799,7 @@ function PricingCard({
         opacity: vis ? 1 : 0,
         transition: `all 0.5s ease ${delay}ms`,
         boxShadow: highlight ? "0 24px 60px rgba(7,48,87,0.4)" : "none",
+        cursor: "pointer",
       }}
     >
       {highlight && (
