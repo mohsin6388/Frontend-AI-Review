@@ -59,7 +59,7 @@ const LoginPage = () => {
 
    const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const res = await fetch(`${API}/api/auth/google-login`, {
+      const res = await fetch(`${API}/auth/google-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // cookies ke liye zaroori hai
