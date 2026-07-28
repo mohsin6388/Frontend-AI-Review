@@ -15,6 +15,8 @@ import TermsAndCondition from '../components/TermsAndCondition';
 import PrivacyPolicy from '../components/PrivacyPolicy';
 import Guide from '../components/Guide';
 import MySubscriptions from "./MySubscriptions";
+import { QrCode, CheckCircle2, Download, Copy, HelpCircle, AlertCircle, Building2, Mail } from "lucide-react";
+import CreateBusiness from "../components/CreateBusiness"
 
 
 const DashboardPage = () => {
@@ -48,29 +50,6 @@ const DashboardPage = () => {
   const [businessTypes, setBusinessTypes] = useState([]);
   const [copied, setCopied] = useState(false);
 
-
-  const getBusinessTypes = async () => {
-    try {
-      setLoading(true);
-
-      const { data } = await api.get("/business/type/business-type");
-
-      if (data.success) {
-        setBusinessTypes(data.data);
-      }
-    } catch (error) {
-      console.log("Business Types Fetch Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
-  useEffect(() => {
-    if(activeTab === 'create'){
-      getBusinessTypes();
-    }
-  }, [activeTab]);
 
 
 
@@ -130,72 +109,74 @@ const DashboardPage = () => {
   }
 };
 
-  const handleChange = (e) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-  };
+  // const handleChange = (e) => {
+  //   setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  // };
 
 
-  const handleSubmit = async () => {
-    if (!form.name || !form.type || !form.google_place_id) {
-      setError("Sab required fields fill karein");
-      return;
-    }
+  // const handleSubmit = async () => {
+  //   if (!form.name || !form.type || !form.google_place_id) {
+  //     setError("Sab required fields fill karein");
+  //     return;
+  //   }
 
-    setError("");
-    setLoading(true);
+  //   setError("");
+  //   setLoading(true);
 
-    try {
-      const payload = {
-        name: form.name,
-        type: form.type,
-        google_place_id: form.google_place_id,
-        owner_email: form.owner_email || null,
-        user_id: user.id,
-      };
+  //   try {
+  //     const payload = {
+  //       name: form.name,
+  //       type: form.type,
+  //       google_place_id: form.google_place_id,
+  //       owner_email: form.owner_email || null,
+  //       user_id: user.id,
+  //     };
 
-      const res = await api.post("/business", payload);
+  //     const res = await api.post("/business", payload);
 
-      if (res.data?.success) {
-        setResult(res.data);
+  //     if (res.data?.success) {
+  //       setResult(res.data);
 
-        setBusinesses((prev) => [...prev, res.data.business]);
-      } else {
-        console.log("==========>", res?.data)
-        setError(res?.data.error);
-      }
-    } catch (err) {
-      console.log("okay ==========>", err?.response?.data?.error);
-      setError(
-        err?.response?.data?.error // || err?.message || "Kuch galat ho gaya",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  //       setBusinesses((prev) => [...prev, res.data.business]);
+  //     } else {
+  //       console.log("==========>", res?.data)
+  //       setError(res?.data.error);
+  //     }
+  //   } catch (err) {
+  //     console.log("okay ==========>", err?.response?.data?.error);
+  //     setError(
+  //       err?.response?.data?.error // || err?.message || "Kuch galat ho gaya",
+  //     );
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
 
-   const handleCopyLink = async () => {
-     try {
-       await navigator.clipboard.writeText(result.reviewPageUrl);
+  //  const handleCopyLink = async () => {
+  //    try {
+  //      await navigator.clipboard.writeText(result.reviewPageUrl);
 
-       setCopied(true);
+  //      setCopied(true);
 
-       setTimeout(() => {
-         setCopied(false);
-       }, 2000);
-     } catch (error) {
-       console.error("Copy failed:", error);
-     }
-   };
+  //      setTimeout(() => {
+  //        setCopied(false);
+  //      }, 2000);
+  //    } catch (error) {
+  //      console.error("Copy failed:", error);
+  //    }
+  //  };
 
-  const handleDownloadQR = () => {
-    const link = document.createElement('a');
-    link.href = result.qrCode;
-    link.download = `${result.business.name}-QR-Code.png`;
-    link.click();
-  };
+  // const handleDownloadQR = () => {
+  //   const link = document.createElement('a');
+  //   link.href = result.qrCode;
+  //   link.download = `${result.business.name}-QR-Code.png`;
+  //   link.click();
+  // };
 
   // Helper to switch tabs and close mobile menu together
+  
+  
   const goToTab = (tab) => {
     setActiveTab(tab);
     setMobileMenuOpen(false);
@@ -208,93 +189,65 @@ const DashboardPage = () => {
       <div className="orb orb-2" />
 
       {/* ── Top Navbar ── */}
+
       <header className="dash-navbar">
-        <button
-          className="hamburger-btn"
-          onClick={() => setMobileMenuOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          <span className={`hamburger-line ${mobileMenuOpen ? "line1-open" : ""}`} />
-          <span className={`hamburger-line ${mobileMenuOpen ? "line2-open" : ""}`} />
-          <span className={`hamburger-line ${mobileMenuOpen ? "line3-open" : ""}`} />
-        </button>
+  <button
+    className="hamburger-btn"
+    onClick={() => setMobileMenuOpen((v) => !v)}
+    aria-label="Toggle menu"
+  >
+    <span className={`hamburger-line ${mobileMenuOpen ? "line1-open" : ""}`} />
+    <span className={`hamburger-line ${mobileMenuOpen ? "line2-open" : ""}`} />
+    <span className={`hamburger-line ${mobileMenuOpen ? "line3-open" : ""}`} />
+  </button>
 
-        <div className="dash-brand">
-          <span className="dash-brand-icon">
-            {" "}
-            <img src={logo} alt="" style={{ height: "60px", width: "60px" }} />
-          </span>
-          <span
-            className="dash-brand-name"
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: "20px",
-              fontWeight: "700",
-              background: "linear-gradient(135deg, #073057 0%, #378ADD 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              letterSpacing: "0.3px",
-            }}
-          >
-            Review Ninja Pro
-          </span>
-        </div>
-        <div className="dash-nav-right">
-          <div className="dash-user-pill">
-            <span className="dash-user-avatar">
-              {user?.name?.[0]?.toUpperCase() || "?"}
-            </span>
-            <span className="dash-user-name">{user?.name || "User"}</span>
-          </div>
-          <button
-            className="dash-logout-btn"
-            onClick={handleLogout}
-            disabled={loading}
-          >
+  <div className="dash-brand">
+    <img src={logo} alt="Review Ninja Pro" className="dash-brand-icon" />
+    <span className="dash-brand-name">Review Ninja Pro</span>
+  </div>
 
-            {outLoading ? (
-              <span
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <span
-                  style={{
-                    width: "16px",
-                    height: "16px",
-                    border: "2px solid white",
-                    borderTopColor: "transparent",
-                    borderRadius: "50%",
-                    display: "inline-block",
-                    animation: "spin 1s linear infinite",
-                  }}
-                />
-                <span className="logout-text">Logging out...</span>
-              </span>
-            ) : (
-              <span
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <svg
-                  className="logout-icon"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                  <polyline points="16 17 21 12 16 7" />
-                  <line x1="21" y1="12" x2="9" y2="12" />
-                </svg>
-                <span className="logout-text">Logout</span>
-              </span>
-            )}
-          </button>
-        </div>
-      </header>
+  <div className="dash-nav-right">
+    <div className="dash-user-pill">
+      <span className="dash-user-avatar">
+        {user?.name?.[0]?.toUpperCase() || "?"}
+      </span>
+      <span className="dash-user-name">{user?.name || "User"}</span>
+    </div>
+
+    <button
+      className="dash-logout-btn"
+      onClick={handleLogout}
+      disabled={loading || outLoading}
+    >
+      {outLoading ? (
+        <>
+          <span className="dash-spinner" />
+          <span className="logout-text">Logging out…</span>
+        </>
+      ) : (
+        <>
+          <svg
+            className="logout-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span className="logout-text">Logout</span>
+        </>
+      )}
+    </button>
+  </div>
+</header>
+
 
       <div className="dashboard-layout">
         {/* Mobile overlay - shown behind sidebar when open */}
@@ -362,6 +315,8 @@ const DashboardPage = () => {
 
         {/* Main Content */}
         <main className="dash-main">
+
+
           {activeTab === "home" &&
             (loading ? (
               <div
@@ -401,195 +356,17 @@ const DashboardPage = () => {
               />
             ))}
 
-          {activeTab === "create" && (
-            <>
-              {!showPlaceIdHelp ? (
-                <div className="create-business-layout animate-fadeIn">
-                  {/* LEFT SIDE */}
-                  <div className="create-form-card">
-                    <div className="create-header">
-                      <div className="create-badge">New Business</div>
 
-                      {/* REMOVE KIYA "Create Review QR" */}
 
-                      <p className="create-subtitle">
-                        Add your business details and generate a smart QR code
-                        for collecting customer reviews.
-                      </p>
-                    </div>
 
-                    <div className="form-grid">
-                      {/* Business Name */}
-                      <div className="form-group">
-                        <label>Business Name</label>
+            {activeTab === "create" && (
+  <CreateBusiness
+    onBusinessCreated={(newBiz) =>
+      setBusinesses((prev) => [...prev, newBiz])
+    }
+  />
+            )}
 
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="e.g. Sharma Ji Cafe"
-                          value={form.name}
-                          onChange={handleChange}
-                        />
-                      </div>
-
-                      {/* Business Type */}
-                      <div className="form-group">
-                        <label>Business Type</label>
-
-                        <select
-                          name="type"
-                          value={form.type}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Business Type</option>
-
-                          {businessTypes.map((t) => (
-                            <option key={t.id} value={t.business_type}>
-                              {t.business_type}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      {/* Google Place ID */}
-                      <div className="form-group full-width">
-                        <label>Google Place ID</label>
-
-                        <input
-                          type="text"
-                          name="google_place_id"
-                          placeholder="Enter Google Place ID"
-                          value={form.google_place_id}
-                          onChange={handleChange}
-                        />
-
-                        <div
-                          onClick={() => setShowPlaceIdHelp(true)}
-                          style={{
-                            color: "#2563eb",
-                            textDecoration: "underline",
-                            fontSize: "14px",
-                            fontWeight: "500",
-                            paddingLeft: "5px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          How to find your Google Business Place ID
-                        </div>
-                      </div>
-
-                      {/* Email */}
-                      <div className="form-group full-width">
-                        <label>Owner Email</label>
-
-                        <input
-                          type="email"
-                          name="owner_email"
-                          placeholder="you@example.com"
-                          value={form.owner_email}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-
-                    {error && <div className="error-box">⚠️ {error}</div>}
-
-                    <button
-                      className="generate-btn"
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      onClick={handleSubmit}
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <div>
-                          <Loading size={20} />
-                        </div>
-                      ) : (
-                        "Generate QR Code"
-                      )}
-                    </button>
-                  </div>
-
-                  {/* RIGHT SIDE */}
-                  <div className="preview-card">
-                    {!result ? (
-                      <>
-                        <div className="preview-icon">📲</div>
-
-                        <h3 style={{ color: "Black" }}>QR Preview</h3>
-
-                        <p style={{ color: "gray" }}>
-                          Your generated review QR code will appear here.
-                        </p>
-
-                        <div className="preview-placeholder">QR CODE</div>
-
-                        <div className="preview-features">
-                          <div
-                            className="feature-item"
-                            style={{ color: "green" }}
-                          >
-                            ✅ Instant QR Generation
-                          </div>
-
-                          <div
-                            className="feature-item"
-                            style={{ color: "green" }}
-                          >
-                            ✅ Google Review Redirect
-                          </div>
-
-                          <div
-                            className="feature-item"
-                            style={{ color: "green" }}
-                          >
-                            ✅ Download PNG QR
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="qr-result-section">
-                        <div className="success-badge">
-                          ✅ QR Generated Successfully
-                        </div>
-
-                        <img
-                          src={result.qrCode}
-                          alt="QR Code"
-                          className="generated-qr"
-                        />
-
-                        <button
-                          className="download-btn"
-                          onClick={handleDownloadQR}
-                        >
-                          Download QR
-                        </button>
-
-                        <div className="review-link-box">
-                          <span style={{ color: "black" }}>
-                            {result.reviewPageUrl}
-                          </span>
-
-                          <button onClick={handleCopyLink}>
-                            {copied ? "Copied!" : "Copy"}
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="create-form-card">
-                  <Guide onBack={() => setShowPlaceIdHelp(false)} />
-                </div>
-              )}
-            </>
-          )}
 
           {/* PAYMENT TAB */}
           {activeTab === "payments" && <PaymentPage user={user} />}

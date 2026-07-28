@@ -7,6 +7,7 @@ import authContent from "../i18n/authContent";
 import logo from "../assets/review-booster-logo2.png";
 import Loading from "../components/Loading";
 import { API } from '../utils/api'
+import ErrorPopup from "../components/ErrorPopup";
 import './Login.css'
 
 import { GoogleLogin } from '@react-oauth/google';
@@ -22,63 +23,115 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [popupMsg, setPopupMsg] = useState("");
+
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async () => {
-    if (!form.email || !form.password) {
-      setError(t.errorFillBoth);
-      return;
-    }
-    setError("");
-    setLoading(true);
-    try {
-
-      const res = await api.post("/auth/login", {
-        email: form.email,
-        password: form.password,
-      },
-      {
-       withCredentials: true,
-      }
+  if (!form.email || !form.password) {
+    setPopupMsg(t.errorFillBoth);
+    return;
+  }
+  setLoading(true);
+  try {
+    const res = await api.post(
+      "/auth/login",
+      { email: form.email, password: form.password },
+      { withCredentials: true }
     );
 
-    console.log("Response ===>", res)
+    login(res.data.user);
+    navigate("/dashboard");
+  } catch (err) {
+    setPopupMsg(err.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
-      login(res.data.user);
+
+
+const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    const res = await fetch(`${API}/auth/google-login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ credential: credentialResponse.credential }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      login(data.user);
       navigate("/dashboard");
+    } else {
+      setPopupMsg(data.message || "Google login failed");
+    }
+  } catch (err) {
+    console.error(err);
+    setPopupMsg("Google login mein network error aaya");
+  }
+};
+
+
+
+  // const handleSubmit = async () => {
+  //   if (!form.email || !form.password) {
+  //     setError(t.errorFillBoth);
+  //     return;
+  //   }
+  //   setError("");
+  //   setLoading(true);
+  //   try {
+
+  //     const res = await api.post("/auth/login", {
+  //       email: form.email,
+  //       password: form.password,
+  //     },
+  //     {
+  //      withCredentials: true,
+  //     }
+  //   );
+
+  //   console.log("Response ===>", res)
+
+  //     login(res.data.user);
+  //     navigate("/dashboard");
     
-    } catch (err) {
-      setError(err.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || "Login failed");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
 
-   const handleGoogleSuccess = async (credentialResponse) => {
-    try {
-      const res = await fetch(`${API}/auth/google-login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // cookies ke liye zaroori hai
-        body: JSON.stringify({ credential: credentialResponse.credential }),
-      });
+  //  const handleGoogleSuccess = async (credentialResponse) => {
+  //   try {
+  //     const res = await fetch(`${API}/auth/google-login`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       credentials: "include", // cookies ke liye zaroori hai
+  //       body: JSON.stringify({ credential: credentialResponse.credential }),
+  //     });
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      if (data.success) {
-        login(data.user);    
-        navigate("/dashboard");
-      } else {
-        alert(data.message || "Google login failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Google login mein error aaya");
-    }
-  };
+  //     if (data.success) {
+  //       login(data.user);    
+  //       navigate("/dashboard");
+  //     } else {
+  //       alert(data.message || "Google login failed");
+  //     }
+  //   } catch (err) {
+  //     setError(err.data.message || "Google login failed");
+  //     console.error(err);
+  //     // alert("Google login mein error aaya");
+  //   }
+  // };
 
 
 
@@ -87,7 +140,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="shell">
+
+    <>
+    <ErrorPopup message={popupMsg} onClose={() => setPopupMsg("")} />
+
+        <div className="shell">
       <button
         onClick={toggleLang}
         aria-label="Toggle language"
@@ -242,6 +299,9 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
+    
+    </>
+
   );
 };
 
