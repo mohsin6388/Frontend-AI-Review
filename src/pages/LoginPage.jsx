@@ -6,6 +6,7 @@ import { useLanguage } from "../context/LanguageContext";
 import authContent from "../i18n/authContent";
 import logo from "../assets/review-booster-logo2.png";
 import Loading from "../components/Loading";
+import { API } from '../utils/api'
 import './Login.css'
 
 import { GoogleLogin } from '@react-oauth/google';
@@ -58,7 +59,7 @@ const LoginPage = () => {
 
    const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const res = await fetch("http://localhost:5000/api/auth/google-login", {
+      const res = await fetch(`${API}/api/auth/google-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // cookies ke liye zaroori hai
