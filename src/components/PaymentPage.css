@@ -318,3 +318,140 @@
     font-size: 13px;
   }
 }
+
+
+.plan-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px 28px;
+  width: 440px;
+  max-width: 92vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.plan-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.plan-modal-label {
+  font-size: 13px;
+  color: #374151;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.plan-modal-select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-bottom: 16px;
+  background: #fff;
+  color: black;
+}
+
+.plan-modal-summary {
+  background: #f8f9fc;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.plan-modal-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #4b5563;
+  padding: 4px 0;
+}
+
+.plan-modal-total {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 6px;
+  padding-top: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #111827;
+}
+
+
+
+
+/* ===== Add this to your existing PaymentPage.css ===== */
+
+.plan-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px 28px;
+  width: 440px;
+  max-width: 92vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.plan-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.plan-modal-label {
+  font-size: 13px;
+  color: #374151;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.plan-modal-select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+.plan-modal-summary {
+  background: #f8f9fc;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.plan-modal-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #4b5563;
+  padding: 4px 0;
+}
+
+.plan-modal-total {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 6px;
+  padding-top: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #111827;
+}

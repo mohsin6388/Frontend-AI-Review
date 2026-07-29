@@ -17,6 +17,7 @@ import Guide from '../components/Guide';
 import MySubscriptions from "./MySubscriptions";
 import { QrCode, CheckCircle2, Download, Copy, HelpCircle, AlertCircle, Building2, Mail } from "lucide-react";
 import CreateBusiness from "../components/CreateBusiness"
+import RefundPolicy from './RefundPolicy';
 
 
 const DashboardPage = () => {
@@ -310,6 +311,12 @@ const DashboardPage = () => {
             >
               Privacy Policy
             </button>
+             {/* <button
+              className={`sidebar-item ${activeTab === "refundPolicy" ? "active" : ""}`}
+              onClick={() => goToTab("refundPolicy")}
+            >
+              Refund Policy
+            </button> */}
           </div>
         </aside>
 
@@ -381,6 +388,11 @@ const DashboardPage = () => {
 
           {/* SETTINGS TAB */}
           {activeTab === "privacyPolicy" && <PrivacyPolicy />}
+
+           {/* Refund Policy */}
+          {/* {activeTab === "refundPolicy" && <RefundPolicy />} */}
+
+
         </main>
       </div>
     </div>

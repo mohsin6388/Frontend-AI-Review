@@ -11,6 +11,7 @@ const FOOTER_LINK_HREFS = {
   "Terms & Condition": "/terms-and-condition",
   "About Us": "/about-us",
   "Contact": "/contact-us",
+  "Refund Policy": "/refund-policy",
 };
 
 export default function Footer() {

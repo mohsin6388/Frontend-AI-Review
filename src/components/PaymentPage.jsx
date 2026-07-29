@@ -1,6 +1,4 @@
 
-
-
 import React, { useState, useEffect } from 'react'
 import './PaymentPage.css';
 import api from "../api";
@@ -11,13 +9,14 @@ const PLANS = {
     name: "Starter",
     tagline: "For small shops & solo businesses",
     monthlyPrice: 999,
+    quarterlyPrice: 2997, // assumption: 999 x 3 — change if actual discounted price hai
     yearlyPrice: 9999,
     features: [
-      "1 Location / Business Profile",
-      "Custom QR Code for Google Reviews",
-      "Basic AI Review Suggestions",
-      "WhatsApp/SMS Invites (200–300/mo)",
-      "Basic Review Gate",
+      "2 Location / Business Profile",
+      "2 Business Review QR Standee",
+      "50 AI Review Generations per Business Location",
+      "AI-Powered Review Generator",
+      "Advanced Review Analytics",
     ],
   },
   growth: {
@@ -25,16 +24,15 @@ const PLANS = {
     name: "Growth / Pro",
     tagline: "For established businesses & clinics",
     monthlyPrice: 1999,
+    quarterlyPrice: 5997, // assumption: 1999 x 3 — change if actual discounted price hai
     yearlyPrice: 19999,
     popular: true,
     features: [
-      "Everything in Starter",
-      "Smart AI Review Engine (Multi-language)",
-      "Unlimited QR Code Scans",
-      "WhatsApp Auto-Reminders",
-      "Digital Business Card / Microsite",
-      "Auto Social Media Creatives",
-      "Priority Support",
+      "3 Location / Business Profile",
+      "3 Business Review QR Standee",
+      "100 AI Review Generations per Business Location",
+      "AI-Powered Review Generator",
+      "Advanced Review Analytics with sentiment analysis",
     ],
   },
 };
@@ -45,7 +43,12 @@ const PaymentPage = ({ user }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [paymentError, setPaymentError] = useState("");
   const [processingPlan, setProcessingPlan] = useState(null);
-  const [billingCycle, setBillingCycle] = useState("monthly"); // "monthly" | "yearly"
+  const [billingCycle, setBillingCycle] = useState("monthly"); // "monthly" | "yearly" — top toggle, sirf card price display ke liye
+
+  // ===== popup ke liye state =====
+  const [showPlanModal, setShowPlanModal] = useState(false);
+  const [modalPlan, setModalPlan] = useState(null);
+  const [modalCycle, setModalCycle] = useState("quarterly"); // "quarterly" | "yearly"
 
   const fetchPaymentStatus = async () => {
     setLoading(true);
@@ -57,6 +60,9 @@ const PaymentPage = ({ user }) => {
       if (data?.data?.plan_name) {
         if (data.data.plan_name.endsWith("_yearly")) {
           setBillingCycle("yearly");
+        } else if (data.data.plan_name.endsWith("_quarterly")) {
+          // quarterly ke liye top toggle me alag option nahi hai, monthly-view se match kar rahe
+          setBillingCycle("monthly");
         } else if (data.data.plan_name.endsWith("_monthly")) {
           setBillingCycle("monthly");
         }
@@ -74,16 +80,28 @@ const PaymentPage = ({ user }) => {
     }
   }, [user]);
 
-  const handlePayment = async (planId) => {
+  // Buy Now ab seedha payment nahi, popup kholega — current top toggle ke hisaab se default cycle set karega
+  const openPlanModal = (plan) => {
+    setModalPlan(plan);
+    setModalCycle(billingCycle === "yearly" ? "yearly" : "quarterly");
+    setShowPlanModal(true);
+  };
+
+  const closePlanModal = () => {
+    setShowPlanModal(false);
+    setModalPlan(null);
+  };
+
+  // handlePayment ab planId + cycle dono leta hai
+  const handlePayment = async (planId, cycle) => {
     setPaymentError("");
     setProcessingPlan(planId);
 
     try {
       const token = localStorage.getItem("rb_token");
 
-      // plan_name sent to backend includes billing cycle,
-      // e.g. "starter_monthly" or "starter_yearly"
-      const backendPlanName = `${planId}_${billingCycle}`;
+      // plan_name sent to backend, e.g. "starter_quarterly" or "starter_yearly"
+      const backendPlanName = `${planId}_${cycle}`;
 
       const { data } = await api.post(
         "/payment/create-order",
@@ -92,7 +110,8 @@ const PaymentPage = ({ user }) => {
       );
 
       const options = {
-        key: "rzp_live_TEwIhHLXLXjQto",
+        // key: "rzp_live_TEwIhHLXLXjQto",
+        key: "rzp_test_TGpgN0JsvbJb4a",
         amount: data.order.amount,
         currency: data.order.currency,
         order_id: data.order.id,
@@ -147,9 +166,26 @@ const PaymentPage = ({ user }) => {
     }
   };
 
-  const renderButtonContent = (planId, label) => {
-    const fullPlanId = `${planId}_${billingCycle}`;
+  // popup se "Proceed to Pay" click hone par
+  const handleModalProceed = () => {
+    if (!modalPlan) return;
+    closePlanModal();
+    handlePayment(modalPlan.id, modalCycle);
+  };
 
+  // ===== BUG FIX: card ka "current plan" status uss card ke top-toggle cycle ke against check hona chahiye =====
+  // Top toggle "monthly" -> card ka actual purchase-cycle "quarterly" hota hai (kyunki popup me monthly ka option nahi, quarterly hi hai)
+  // Top toggle "yearly" -> card ka actual purchase-cycle "yearly" hota hai
+  const getCardFullPlanId = (planId) => {
+    const cycle = billingCycle === "yearly" ? "yearly" : "quarterly";
+    return `${planId}_${cycle}`;
+  };
+
+  const isCardCurrentPlan = (planId) => {
+    return paymentInfo?.data?.plan_name === getCardFullPlanId(planId);
+  };
+
+  const renderButtonContent = (planId, label) => {
     if (processingPlan === planId) {
       return (
         <>
@@ -158,23 +194,20 @@ const PaymentPage = ({ user }) => {
         </>
       );
     }
-    if (paymentInfo?.data?.plan_name === fullPlanId) {
+    if (isCardCurrentPlan(planId)) {
       return "✓ Current Plan";
     }
     return label;
   };
 
   const getButtonClass = (planId) => {
-    const fullPlanId = `${planId}_${billingCycle}`;
-
-    if (paymentInfo?.data?.plan_name === fullPlanId) return "buy-btn current-plan";
+    if (isCardCurrentPlan(planId)) return "buy-btn current-plan";
     if (processingPlan === planId) return "buy-btn processing";
     return "buy-btn";
   };
 
   const isButtonDisabled = (planId) => {
-    const fullPlanId = `${planId}_${billingCycle}`;
-    return paymentInfo?.data?.plan_name === fullPlanId || processingPlan === planId;
+    return isCardCurrentPlan(planId) || processingPlan === planId;
   };
 
   if (loading) {
@@ -207,6 +240,9 @@ const PaymentPage = ({ user }) => {
     );
   }
 
+  const modalPrice =
+    modalPlan && (modalCycle === "quarterly" ? modalPlan.quarterlyPrice : modalPlan.yearlyPrice);
+
   return (
     <div className="pricing-page animate-fadeIn">
       {paymentError && (
@@ -218,7 +254,7 @@ const PaymentPage = ({ user }) => {
         <p>Start collecting more Google reviews with powerful QR tools.</p>
       </div>
 
-      {/* ===== BILLING TOGGLE ===== */}
+      {/* ===== BILLING TOGGLE (card price display ke liye) ===== */}
       <div className="billing-toggle">
         <button
           className={billingCycle === "monthly" ? "toggle-btn active" : "toggle-btn"}
@@ -269,7 +305,7 @@ const PaymentPage = ({ user }) => {
               </div>
 
               <button
-                onClick={() => handlePayment(plan.id)}
+                onClick={() => openPlanModal(plan)}
                 className={getButtonClass(plan.id)}
                 disabled={isButtonDisabled(plan.id)}
               >
@@ -289,11 +325,12 @@ const PaymentPage = ({ user }) => {
             <p className="plan-gst">₹4,999–₹7,999/mo · up to 5 locations</p>
 
             <div className="plan-features">
-              <p><span className="check-icon">✔</span> Multi-location Dashboard</p>
-              <p><span className="check-icon">✔</span> White-Label branding</p>
-              <p><span className="check-icon">✔</span> Unlimited Campaigns</p>
-              <p><span className="check-icon">✔</span> Dedicated Account Manager</p>
-              <p><span className="check-icon">✔</span> Sentiment Analysis</p>
+              <p><span className="check-icon">✔</span> Multi-Location Business Profiles</p>
+              <p><span className="check-icon">✔</span> QR Standees for All Locations</p>
+              <p><span className="check-icon">✔</span> Unlimited AI Review Generator</p>
+              <p><span className="check-icon">✔</span> Advanced Review Analytics</p>
+              <p><span className="check-icon">✔</span> Custom Feature Development</p>
+              <p><span className="check-icon">✔</span> Priority Support</p>
             </div>
           </div>
 
@@ -307,6 +344,75 @@ const PaymentPage = ({ user }) => {
           </button>
         </div>
       </div>
+
+      {/* ===== PLAN SELECTION POPUP ===== */}
+      {showPlanModal && modalPlan && (
+        <div className="success-overlay" onClick={closePlanModal}>
+          <div className="plan-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="plan-modal-close" onClick={closePlanModal}>✕</button>
+
+            <span className="plan-badge">{modalPlan.name}</span>
+            <p className="plan-tagline" style={{ marginTop: 4 }}>
+              {modalPlan.tagline}
+            </p>
+
+            <div className="plan-features" style={{ margin: "16px 0" }}>
+              {modalPlan.features.map((f, i) => (
+                <p key={i}>
+                  <span className="check-icon">✔</span> {f}
+                </p>
+              ))}
+            </div>
+
+            <hr style={{ border: "none", borderTop: "1px solid #eee", margin: "16px 0" }} />
+
+            {/* dropdown: 3 Months / Yearly */}
+            <label className="plan-modal-label">Select Billing Cycle</label>
+            <select
+              value={modalCycle}
+              onChange={(e) => setModalCycle(e.target.value)}
+              className="plan-modal-select"
+            >
+              <option value="quarterly">
+                3 Months — ₹{modalPlan.quarterlyPrice.toLocaleString("en-IN")}
+              </option>
+              <option value="yearly">
+                Yearly — ₹{modalPlan.yearlyPrice.toLocaleString("en-IN")}
+              </option>
+            </select>
+
+            {/* price breakdown */}
+            <div className="plan-modal-summary">
+              <div className="plan-modal-row">
+                <span>Plan Amount</span>
+                <span>₹{modalPrice?.toLocaleString("en-IN")}</span>
+              </div>
+              <div className="plan-modal-row">
+                <span>GST (18%)</span>
+                <span>₹{Math.round(modalPrice * 0.18).toLocaleString("en-IN")}</span>
+              </div>
+              <div className="plan-modal-row plan-modal-total">
+                <span>Total Amount</span>
+                <span>
+                  ₹{Math.round(modalPrice * 1.18).toLocaleString("en-IN")}
+                  <span className="price-period">
+                    {modalCycle === "quarterly" ? " / 3 months" : " / year"}
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={handleModalProceed}
+              className="buy-btn"
+              disabled={processingPlan === modalPlan.id}
+              style={{ width: "100%", marginTop: 16 }}
+            >
+              {processingPlan === modalPlan.id ? "Processing..." : "Proceed to Pay"}
+            </button>
+          </div>
+        </div>
+      )}
 
       {showSuccess && (
         <div className="success-overlay">
@@ -324,9 +430,4 @@ const PaymentPage = ({ user }) => {
   );
 };
 
-export default PaymentPage
-
-
-
-
-
+export default PaymentPage;

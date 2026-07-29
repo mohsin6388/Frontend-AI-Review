@@ -15,6 +15,7 @@ import TermsAndCondition from './pages/TermsAndCondition'
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import AboutUs from './pages/About.jsx';
 import ContactUs from './pages/ContactUs.jsx';
+import RefundPolicy from './pages/RefundPolicy.jsx';
 
 // Protected route — redirect to /login if not authenticated
 const PrivateRoute = ({ children }) => {
@@ -56,6 +57,15 @@ function AppRoutes() {
          element={
           <PublicRoute>
             <PrivacyPolicy/>
+          </PublicRoute>
+        }
+        />
+
+        <Route
+        path='/refund-policy'
+         element={
+          <PublicRoute>
+            <RefundPolicy/>
           </PublicRoute>
         }
         />

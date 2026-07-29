@@ -76,6 +76,16 @@ const MySubscriptions = ({ user }) => {
     ? data.plan_name.charAt(0).toUpperCase() + data.plan_name.slice(1)
     : "N/A";
 
+    console.log("====>",planName)
+
+  const planNames = {
+  Starter_quarterly: "Starter Quarterly Plan",
+  Starter_yearly: "Starter Yearly Plan",
+  Growth_quarterly: "Growth Quarterly Plan",
+  Growth_yearly: "Growth Yearly Plan",
+  };
+
+
   // ===== EXPIRY CALCULATION (pure frontend, based on end_date) =====
   // Raw days remaining, can go negative once expired
   const rawDaysRemaining = data.end_date
@@ -101,7 +111,7 @@ const MySubscriptions = ({ user }) => {
             >
               {isExpired ? "● Expired" : isExpiringSoon ? "● Expiring Soon" : "● Active"}
             </span>
-            <h1>🎉 {planName} Plan</h1>
+            <h1>🎉 {planNames[planName]}</h1>
           </div>
 
           {daysRemaining !== null && isActive && (
@@ -115,7 +125,7 @@ const MySubscriptions = ({ user }) => {
         <div className="subscription-details">
           <div className="detail-item">
             <h4>Plan</h4>
-            <p>{planName}</p>
+            <p>{planNames[planName]}</p>
           </div>
 
           <div className="detail-item">
