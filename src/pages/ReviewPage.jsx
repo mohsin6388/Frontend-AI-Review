@@ -153,8 +153,15 @@ const ReviewPage = () => {
             {/* Business Header */}
             <div className="biz-header">
               <div className="biz-avatar">
-                {business.name.charAt(0).toUpperCase()}
-              </div>
+  <img
+    src={business.logo_url}
+    alt={business.name}
+    className="biz-avatar-img"
+    onError={(e) => {
+      e.target.src = "/default-business.png"; // fallback image
+    }}
+  />
+</div>
               <div className='new-biz'>
                 <h1 className="biz-name">{business.name}</h1> 
                 <p className="biz-type">{business.type}</p>
@@ -168,7 +175,7 @@ const ReviewPage = () => {
             {step === STEP.RATE && (
               <div className="step-section animate-fadeIn">
                 <h2 className="step-title">{T.rateTitle}</h2>
-                <p className="step-subtitle">{T.rateSubtitle}</p>
+                {/* <p className="step-subtitle">{T.rateSubtitle}</p> */}
                 <StarRating
                   onRate={handleRate}
                   labels={T.starRating.labels}
