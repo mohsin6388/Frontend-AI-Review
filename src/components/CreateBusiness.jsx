@@ -310,7 +310,7 @@ const CreateBusiness = ({ onBusinessCreated, email }) => {
                 type="email"
                 name="owner_email"
                 placeholder="you@example.com"
-                value={ email[0].owner_email}
+                value={email?.[0]?.owner_email || ""}
                 disabled
                 // onChange={handleChange}
               />
