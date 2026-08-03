@@ -50,6 +50,10 @@ const DashboardPage = () => {
 
   const [businessTypes, setBusinessTypes] = useState([]);
   const [copied, setCopied] = useState(false);
+  const [stats, setStats] = useState(null);
+
+
+  console.log("=======> ", businesses)
 
 
 
@@ -64,6 +68,7 @@ const DashboardPage = () => {
         });
 
         setBusinesses(res.data.businesses || []);
+        setStats(res.data.stats || null); 
         console.log("Fetched Businesses:", res.data.businesses);
       } catch (error) {
         console.log("Business Fetch Error:", error);
@@ -73,9 +78,9 @@ const DashboardPage = () => {
       }
     };
 
-    if (activeTab === "home" && user?.id) {
-      fetchBiz();
-    }
+    // if (activeTab === "home" && user?.id) {
+    //   fetchBiz();
+    // }
   }, [activeTab, user]);
 
 
@@ -109,79 +114,18 @@ const DashboardPage = () => {
     setOutLoading(false);
   }
 };
-
-  // const handleChange = (e) => {
-  //   setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-  // };
-
-
-  // const handleSubmit = async () => {
-  //   if (!form.name || !form.type || !form.google_place_id) {
-  //     setError("Sab required fields fill karein");
-  //     return;
-  //   }
-
-  //   setError("");
-  //   setLoading(true);
-
-  //   try {
-  //     const payload = {
-  //       name: form.name,
-  //       type: form.type,
-  //       google_place_id: form.google_place_id,
-  //       owner_email: form.owner_email || null,
-  //       user_id: user.id,
-  //     };
-
-  //     const res = await api.post("/business", payload);
-
-  //     if (res.data?.success) {
-  //       setResult(res.data);
-
-  //       setBusinesses((prev) => [...prev, res.data.business]);
-  //     } else {
-  //       console.log("==========>", res?.data)
-  //       setError(res?.data.error);
-  //     }
-  //   } catch (err) {
-  //     console.log("okay ==========>", err?.response?.data?.error);
-  //     setError(
-  //       err?.response?.data?.error // || err?.message || "Kuch galat ho gaya",
-  //     );
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
-  //  const handleCopyLink = async () => {
-  //    try {
-  //      await navigator.clipboard.writeText(result.reviewPageUrl);
-
-  //      setCopied(true);
-
-  //      setTimeout(() => {
-  //        setCopied(false);
-  //      }, 2000);
-  //    } catch (error) {
-  //      console.error("Copy failed:", error);
-  //    }
-  //  };
-
-  // const handleDownloadQR = () => {
-  //   const link = document.createElement('a');
-  //   link.href = result.qrCode;
-  //   link.download = `${result.business.name}-QR-Code.png`;
-  //   link.click();
-  // };
-
-  // Helper to switch tabs and close mobile menu together
   
   
   const goToTab = (tab) => {
     setActiveTab(tab);
     setMobileMenuOpen(false);
   };
+
+
+
+ const isLimitReached =
+  stats?.reviewsLimit !== null &&
+  stats?.maxReviews >= stats?.reviewsLimit;
 
 
   return (
@@ -191,63 +135,94 @@ const DashboardPage = () => {
 
       {/* ── Top Navbar ── */}
 
-      <header className="dash-navbar">
-  <button
-    className="hamburger-btn"
-    onClick={() => setMobileMenuOpen((v) => !v)}
-    aria-label="Toggle menu"
-  >
-    <span className={`hamburger-line ${mobileMenuOpen ? "line1-open" : ""}`} />
-    <span className={`hamburger-line ${mobileMenuOpen ? "line2-open" : ""}`} />
-    <span className={`hamburger-line ${mobileMenuOpen ? "line3-open" : ""}`} />
-  </button>
 
-  <div className="dash-brand">
-    <img src={logo} alt="Review Ninja Pro" className="dash-brand-icon" />
-    <span className="dash-brand-name">Review Ninja Pro</span>
-  </div>
+       <header className="dash-navbar">
+    <button
+      className="hamburger-btn"
+      onClick={() => setMobileMenuOpen((v) => !v)}
+      aria-label="Toggle menu"
+    >
+      <span className={`hamburger-line ${mobileMenuOpen ? "line1-open" : ""}`} />
+      <span className={`hamburger-line ${mobileMenuOpen ? "line2-open" : ""}`} />
+      <span className={`hamburger-line ${mobileMenuOpen ? "line3-open" : ""}`} />
+    </button>
 
-  <div className="dash-nav-right">
-    <div className="dash-user-pill">
-      <span className="dash-user-avatar">
-        {user?.name?.[0]?.toUpperCase() || "?"}
-      </span>
-      <span className="dash-user-name">{user?.name || "User"}</span>
+    <div className="dash-brand">
+      <img src={logo} alt="Review Ninja Pro" className="dash-brand-icon" />
+      <span className="dash-brand-name">Review Ninja Pro</span>
     </div>
 
-    <button
-      className="dash-logout-btn"
-      onClick={handleLogout}
-      disabled={loading || outLoading}
-    >
-      {outLoading ? (
-        <>
-          <span className="dash-spinner" />
-          <span className="logout-text">Logging out…</span>
-        </>
-      ) : (
-        <>
-          <svg
-            className="logout-icon"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
-          </svg>
-          <span className="logout-text">Logout</span>
-        </>
+    <div className="dash-nav-right">
+      {stats?.planName === "free" && (
+        <div className={`dash-usage-pill ${isLimitReached ? "limit-reached" : ""}`}>
+      <span className="dash-usage-dot" />
+      <span className="dash-usage-text">
+        Free Plan{" "}
+        <strong>
+          {stats?.maxReviews ?? 0}/{stats?.reviewsLimit ?? "∞"}
+        </strong>
+      </span>
+
+      {isLimitReached && (
+        <button className="dash-upgrade-btn" onClick={() => setActiveTab('payments')}>
+          Upgrade
+        </button>
       )}
-    </button>
-  </div>
-</header>
+    </div>
+
+      )}
+
+
+       {
+      stats?.planName !== "free"  && isLimitReached && (
+        <button className="dash-upgrade-btn" onClick={() => setActiveTab('payments')}>
+          Upgrade
+        </button>
+      )
+
+    }
+
+      <div className="dash-user-pill">
+        <span className="dash-user-avatar">
+          {user?.name?.[0]?.toUpperCase() || "?"}
+        </span>
+        <span className="dash-user-name">{user?.name || "User"}</span>
+      </div>
+
+      <button
+        className="dash-logout-btn"
+        onClick={handleLogout}
+        disabled={loading || outLoading}
+      >
+        {outLoading ? (
+          <>
+            <span className="dash-spinner" />
+            <span className="logout-text">Logging out…</span>
+          </>
+        ) : (
+          <>
+            <svg
+              className="logout-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span className="logout-text">Logout</span>
+          </>
+        )}
+      </button>
+    </div>
+  </header>
+
 
 
       <div className="dashboard-layout">
@@ -358,6 +333,7 @@ const DashboardPage = () => {
               <BusinessState
                 user={user}
                 businesses={businesses}
+                stats={stats}
                 bizLoading={bizLoading}
                 setActiveTab={setActiveTab}
               />
@@ -368,6 +344,7 @@ const DashboardPage = () => {
 
             {activeTab === "create" && (
   <CreateBusiness
+    email={businesses}
     onBusinessCreated={(newBiz) =>
       setBusinesses((prev) => [...prev, newBiz])
     }

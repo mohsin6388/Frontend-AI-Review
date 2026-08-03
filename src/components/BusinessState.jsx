@@ -4,7 +4,7 @@ import "./BusinessState.css";
 import BusinessDetails from "./BusinessDetails";
 import QrPage from "./QrPage";
 
-const BusinessState = ({ user, businesses, bizLoading, setActiveTab }) => {
+const BusinessState = ({ user, businesses, bizLoading, setActiveTab, stats }) => {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [showQR, setShowQR] = useState(false);
 
@@ -33,13 +33,28 @@ const BusinessState = ({ user, businesses, bizLoading, setActiveTab }) => {
     <div className="business-page">
       {/* TOP STATS */}
       <div className="business-stats-grid">
+
+
+           <div className="business-stat-card">
+          <div className="stat-icon-wrap stat-icon-violet">
+            <QrCode size={20} strokeWidth={2} />
+          </div>
+          <div>
+            <p>Total Review Generate</p>
+            <h2>{stats?.maxReviews}<span>/</span>{stats?.reviewsLimit}</h2>
+          </div>
+        </div>
+
+
+
+
         <div className="business-stat-card">
           <div className="stat-icon-wrap stat-icon-blue">
             <Building2 size={20} strokeWidth={2} />
           </div>
           <div>
             <p>Total Businesses</p>
-            <h2>{businesses.length}</h2>
+            <h2>{stats?.totalBusinesses}</h2>
           </div>
         </div>
 
@@ -49,7 +64,7 @@ const BusinessState = ({ user, businesses, bizLoading, setActiveTab }) => {
           </div>
           <div>
             <p>QR Generated</p>
-            <h2>{businesses.length}</h2>
+            <h2>{businesses?.length}</h2>
           </div>
         </div>
       </div>

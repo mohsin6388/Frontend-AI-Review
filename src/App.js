@@ -43,51 +43,11 @@ function AppRoutes() {
         }
         />
 
-      <Route
-        path='/terms-and-condition'
-       element={
-          <PublicRoute>
-          <TermsAndCondition/>
-          </PublicRoute>
-        }
-        />
-
-        <Route
-        path='/privacy-policy'
-         element={
-          <PublicRoute>
-            <PrivacyPolicy/>
-          </PublicRoute>
-        }
-        />
-
-        <Route
-        path='/refund-policy'
-         element={
-          <PublicRoute>
-            <RefundPolicy/>
-          </PublicRoute>
-        }
-        />
-
-
-        <Route
-        path='/about-us'
-       element={
-          <PublicRoute>
-          <AboutUs/>
-          </PublicRoute>
-        }
-        />
-
-            <Route
-        path='/contact-us'
-       element={
-          <PublicRoute>
-          <ContactUs/>
-          </PublicRoute>
-        }
-        />
+      <Route path='/terms-and-condition' element={<TermsAndCondition/>} />
+<Route path='/privacy-policy' element={<PrivacyPolicy/>} />
+<Route path='/refund-policy' element={<RefundPolicy/>} />
+<Route path='/about-us' element={<AboutUs/>} />
+<Route path='/contact-us' element={<ContactUs/>} />
 
 
       <Route

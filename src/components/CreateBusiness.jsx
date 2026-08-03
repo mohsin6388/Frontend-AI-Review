@@ -18,7 +18,7 @@ import {
   X,
 } from "lucide-react";
 
-const CreateBusiness = ({ onBusinessCreated }) => {
+const CreateBusiness = ({ onBusinessCreated, email }) => {
   const { user } = useAuth();
   const fileInputRef = useRef(null);
   const brandedCardRef = useRef(null);
@@ -29,8 +29,11 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     name: "",
     type: "",
     google_place_id: "",
-    owner_email: "",
+    owner_email: email[0].owner_email || "",
   });
+
+  console.log("CreateBusiness email prop:", email);
+
 
   const [logoFile, setLogoFile] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
@@ -96,39 +99,7 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  // const handleSubmit = async () => {
-  //   if (!form.name || !form.type || !form.google_place_id) {
-  //     setError("Sab required fields fill karein");
-  //     return;
-  //   }
-
-  //   setError("");
-  //   setLoading(true);
-
-  //   try {
-  //     const payload = {
-  //       name: form.name,
-  //       type: form.type,
-  //       google_place_id: form.google_place_id,
-  //       owner_email: form.owner_email || null,
-  //       user_id: user.id,
-  //     };
-
-  //     const res = await api.post("/business", payload);
-
-  //     if (res.data?.success) {
-  //       setResult(res.data);
-  //       onBusinessCreated?.(res.data.business);
-  //     } else {
-  //       setError(res?.data.error);
-  //     }
-  //   } catch (err) {
-  //     setError(err?.response?.data?.error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
+  
   const handleSubmit = async () => {
   if (!form.name || !form.type || !form.google_place_id) {
     setError("Sab required fields fill karein");
@@ -339,8 +310,9 @@ const CreateBusiness = ({ onBusinessCreated }) => {
                 type="email"
                 name="owner_email"
                 placeholder="you@example.com"
-                value={form.owner_email}
-                onChange={handleChange}
+                value={ email[0].owner_email}
+                disabled
+                // onChange={handleChange}
               />
             </div>
           </div>

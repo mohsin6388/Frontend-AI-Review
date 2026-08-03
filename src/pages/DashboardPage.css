@@ -1347,3 +1347,76 @@
   }
 
 }
+
+
+
+
+
+
+
+
+.dash-usage-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(61, 90, 241, 0.1);
+  border: 1px solid rgba(61, 90, 241, 0.3);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.dash-usage-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3d5af1;
+  flex-shrink: 0;
+}
+
+.dash-usage-text {
+  color: #3d5af1;
+  font-weight: 500;
+}
+
+.dash-usage-text strong {
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+.dash-usage-pill.limit-reached {
+  background: rgba(255, 82, 82, 0.1);
+  border-color: rgba(255, 82, 82, 0.3);
+}
+.dash-usage-pill.limit-reached .dash-usage-dot,
+.dash-usage-pill.limit-reached .dash-usage-text {
+  color: #ff5252;
+}
+
+/* Upgrade button jab limit reach ho */
+.dash-upgrade-btn {
+  margin-left: 4px;
+  padding: 3px 10px;
+  border: none;
+  border-radius: 999px;
+  background: #ff5252;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.dash-upgrade-btn:hover {
+  background: #e04343;
+}
+
+@media (max-width: 480px) {
+  .dash-usage-pill {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  .dash-usage-text {
+    display: none;
+  }
+}
