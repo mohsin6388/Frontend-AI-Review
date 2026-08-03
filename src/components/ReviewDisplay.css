@@ -1,7 +1,6 @@
-
 /* ==== Self-contained theme (fallbacks so it always renders correctly,
    even if the global theme CSS isn't loaded on this public/QR page) ==== */
-.review-display {
+.rnp-review-display {
   --gold: var(--gold, #FACC15);
   --gold-dim: var(--gold-dim, rgba(250, 204, 21, 0.15));
   --border-glow: var(--border-glow, rgba(250, 204, 21, 0.35));
@@ -18,83 +17,99 @@
   font-family: var(--font-display);
 }
 
-.review-display * {
+.rnp-review-display * {
   box-sizing: border-box;
 }
 
-/* Fallback animation, in case global keyframes aren't loaded here */
-@keyframes pulse-gold {
+@keyframes rnp-pulse-gold {
   0%, 100% { box-shadow: 0 0 0 0 rgba(40, 101, 232, 0.35); }
   50% { box-shadow: 0 0 0 8px rgba(40, 101, 232, 0); }
 }
 
 /* ==== Header ==== */
-.review-header {
+.rnp-header {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
 }
 
-.review-icon {
+.rnp-icon {
   font-size: 24px;
   flex-shrink: 0;
 }
 
-.review-title {
+.rnp-title {
   margin: 0;
   font-size: 18px;
   font-weight: 800;
-  color: white
+  color: var(--text-primary, #111827);
 }
 
-.review-subtitle {
+.rnp-subtitle {
   margin: 2px 0 0;
   font-size: 13px;
   color: var(--text-secondary);
 }
 
-/* ==== Steps ==== */
-.review-steps {
+/* ==== Reviews slider ==== */
+.rnp-reviews-slider {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px 4px 10px;
+  margin-top: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rnp-reviews-slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+.rnp-reviews-slider::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 20px;
+}
+
+.rnp-review-card {
+  min-width: 280px;
+  max-width: 320px;
+  width: 85vw;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: var(--radius-md);
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  background: rgba(250, 204, 21, 0.04);
-  border: 1px solid rgba(250, 204, 21, 0.1);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  margin-top: 15px;
 }
 
-.step-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.rnp-review-text-box {
+  min-height: 160px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  border-radius: 20px;
 }
 
-.step-num {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--gold-dim);
-  border: 1px solid var(--border-glow);
+.rnp-quote-mark {
+  font-size: 28px;
   color: var(--gold);
-  font-size: 11px;
-  font-weight: 700;
-  font-family: var(--font-display);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  line-height: 1;
+  font-family: Georgia, serif;
 }
 
-.step-text {
-  font-size: 13px;
-  color: var(--text-secondary);
+.rnp-review-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1f2937;
+  font-weight: 600;
+  margin: 4px 0 0;
 }
 
 /* ==== Copy button ==== */
-.copy-btn {
+.rnp-copy-btn {
   width: 100%;
   min-height: 52px;
   padding: 14px 16px;
@@ -113,110 +128,77 @@
   justify-content: center;
   gap: 8px;
   text-align: center;
-  animation: pulse-gold 2s ease infinite;
+  margin-top: 16px;
+  animation: rnp-pulse-gold 2s ease infinite;
 }
 
-.copy-btn:hover {
+.rnp-copy-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(40, 101, 232, 0.4);
-  background: linear-gradient(135deg, #2865E8, #1D4ED8);
 }
 
-.copy-btn:active {
+.rnp-copy-btn:active {
   transform: translateY(0);
-  background: linear-gradient(135deg, #2865E8, #1D4ED8);
-  
 }
 
-.copy-btn.copied {
-  background: linear-gradient(135deg, #2865E8, #1D4ED8);
-  color: #fff;
+.rnp-copy-btn.rnp-copied {
   animation: none;
 }
 
-.btn-icon {
+.rnp-btn-icon {
   display: flex;
   align-items: center;
   font-size: medium;
 }
 
-/* ==== Disclaimer ==== */
-.disclaimer {
-  text-align: center;
-  font-size: 11px;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin-top: 10px;
-}
-
-/* ==== Reviews slider ==== */
-.reviews-slider {
+/* ==== Steps ==== */
+.rnp-steps {
   display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 4px 4px 10px;
-  margin-top: 20px;
-  -webkit-overflow-scrolling: touch;
-}
-
-.reviews-slider::-webkit-scrollbar {
-  height: 8px;
-}
-
-.reviews-slider::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 20px;
-}
-
-.review-card {
-  min-width: 280px;
-  max-width: 320px;
-  width: 85vw;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border-color, #e5e7eb);
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(250, 204, 21, 0.04);
+  border: 1px solid rgba(250, 204, 21, 0.1);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 14px 16px;
+  margin-top: 15px;
 }
 
-.review-card .review-text-box {
-  min-height: 160px;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  border-radius: 20px;
+.rnp-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.quote-mark {
-  font-size: 28px;
+.rnp-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  border: 1px solid var(--border-glow);
   color: var(--gold);
-  line-height: 1;
-  font-family: Georgia, serif;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.review-text {
-  font-size: 14px;
-  line-height: 1.6;
-  color: black;
-  font-weight: 600;
-  margin: 4px 0 0;
-}
-
-.review-card .copy-btn {
-  width: 100%;
-  margin-top: 16px;
+.rnp-step-text {
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
 /* ==== Small screens ==== */
 @media (max-width: 380px) {
-  .review-card {
+  .rnp-review-card {
     min-width: 240px;
     width: 78vw;
     padding: 14px;
   }
 
-  .review-title {
+  .rnp-title {
     font-size: 16px;
   }
 }
