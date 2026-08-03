@@ -29,7 +29,7 @@ const CreateBusiness = ({ onBusinessCreated, email }) => {
     name: "",
     type: "",
     google_place_id: "",
-    owner_email: email[0].owner_email || "",
+    owner_email: email?.[0]?.owner_email || "",
   });
 
   console.log("CreateBusiness email prop:", email);

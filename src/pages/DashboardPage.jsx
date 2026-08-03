@@ -78,9 +78,9 @@ const DashboardPage = () => {
       }
     };
 
-    // if (activeTab === "home" && user?.id) {
-    //   fetchBiz();
-    // }
+    if (activeTab === "home" && user?.id) {
+      fetchBiz();
+    }
   }, [activeTab, user]);
 
 
