@@ -36,13 +36,16 @@ const DashboardPage = () => {
   // Mobile sidebar toggle
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const rbUser = JSON.parse(localStorage.getItem("rb_user"));
+  const email = rbUser?.email;
+
 
   // QR Create form
   const [form, setForm] = useState({
     name: '',
     type: '',
     google_place_id: '',
-    owner_email: '',
+    owner_email: email || '',
   });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -344,7 +347,6 @@ const DashboardPage = () => {
 
             {activeTab === "create" && (
   <CreateBusiness
-    email={businesses}
     onBusinessCreated={(newBiz) =>
       setBusinesses((prev) => [...prev, newBiz])
     }

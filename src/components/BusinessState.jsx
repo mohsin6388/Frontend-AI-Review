@@ -41,7 +41,7 @@ const BusinessState = ({ user, businesses, bizLoading, setActiveTab, stats }) =>
           </div>
           <div>
             <p>Total Review Generate</p>
-            <h2>{stats?.maxReviews}<span>/</span>{stats?.reviewsLimit}</h2>
+            <h2>{stats?.maxReviews ?? 0}<span>/</span>{stats?.reviewsLimit} </h2>
           </div>
         </div>
 

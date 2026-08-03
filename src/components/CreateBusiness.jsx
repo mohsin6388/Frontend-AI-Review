@@ -18,18 +18,21 @@ import {
   X,
 } from "lucide-react";
 
-const CreateBusiness = ({ onBusinessCreated, email }) => {
+const CreateBusiness = ({ onBusinessCreated }) => {
   const { user } = useAuth();
   const fileInputRef = useRef(null);
   const brandedCardRef = useRef(null);
 
   const [showPlaceIdHelp, setShowPlaceIdHelp] = useState(false);
 
+  const rbUser = JSON.parse(localStorage.getItem("rb_user"));
+  const email = rbUser?.email;
+
   const [form, setForm] = useState({
     name: "",
     type: "",
     google_place_id: "",
-    owner_email: email?.[0]?.owner_email || "",
+    owner_email: email || "",
   });
 
   console.log("CreateBusiness email prop:", email);
@@ -309,8 +312,8 @@ const CreateBusiness = ({ onBusinessCreated, email }) => {
               <input
                 type="email"
                 name="owner_email"
-                placeholder="you@example.com"
-                value={email?.[0]?.owner_email || ""}
+                // placeholder="you@example.com"
+                value={email}
                 disabled
                 // onChange={handleChange}
               />
