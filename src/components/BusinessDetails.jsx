@@ -3,6 +3,7 @@ import "./BusinessDetails.css";
 import { API } from "../utils/api";
 import api from "../api";
 import { toPng } from "html-to-image";
+import logo from "../assets/review-booster-logo2.png";
 
 const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
   const [reviews, setReviews] = useState([]);
@@ -44,42 +45,100 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
     }
   };
 
+
+
+
+  // const handleDownloadQR = async () => {
+  //   if (!ticketRef.current) return;
+  //   setDownloading(true);
+
+  //   try {
+  //     await document.fonts.ready;
+
+  //     const images = ticketRef.current.querySelectorAll("img");
+  //     await Promise.all(
+  //       Array.from(images).map((img) =>
+  //         img.complete
+  //           ? Promise.resolve()
+  //           : new Promise((res) => {
+  //               img.onload = res;
+  //               img.onerror = res;
+  //             })
+  //       )
+  //     );
+
+  //     const dataUrl = await toPng(ticketRef.current, {
+  //       cacheBust: true,
+  //       pixelRatio: 3,
+  //       backgroundColor: "#faf8f2",
+  //       skipFonts: true,
+  //     });
+
+  //     const link = document.createElement("a");
+  //     link.href = dataUrl;
+  //     link.download = `${business.name}-QR-Card.png`;
+  //     link.click();
+  //   } catch (err) {
+  //     console.warn("Download warning (non-critical):", err);
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
+
   const handleDownloadQR = async () => {
-    if (!ticketRef.current) return;
-    setDownloading(true);
+  if (!ticketRef.current) return;
+  setDownloading(true);
 
-    try {
-      await document.fonts.ready;
+  try {
+    const node = ticketRef.current;
 
-      const images = ticketRef.current.querySelectorAll("img");
-      await Promise.all(
-        Array.from(images).map((img) =>
-          img.complete
-            ? Promise.resolve()
-            : new Promise((res) => {
-                img.onload = res;
-                img.onerror = res;
-              })
-        )
-      );
+    // Playfair Display font fully load hone do
+    await document.fonts.ready;
+    await document.fonts.load("700 23px 'Playfair Display'");
+    await document.fonts.load("600 23px 'Playfair Display'");
 
-      const dataUrl = await toPng(ticketRef.current, {
-        cacheBust: true,
-        pixelRatio: 3,
-        backgroundColor: "#faf8f2",
-        skipFonts: true,
-      });
+    const images = node.querySelectorAll("img");
+    await Promise.all(
+      Array.from(images).map((img) =>
+        img.complete
+          ? Promise.resolve()
+          : new Promise((res) => {
+              img.onload = res;
+              img.onerror = res;
+            })
+      )
+    );
 
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `${business.name}-QR-Card.png`;
-      link.click();
-    } catch (err) {
-      console.warn("Download warning (non-critical):", err);
-    } finally {
-      setDownloading(false);
-    }
-  };
+    // Actual rendered size lo, taaki footer/content cut na ho
+    const rect = node.getBoundingClientRect();
+
+    // ek chhota delay - layout paint completely ho jaaye
+    await new Promise((res) => setTimeout(res, 100));
+
+    const dataUrl = await toPng(node, {
+      cacheBust: true,
+      pixelRatio: 3,
+      backgroundColor: "#faf8f2",
+      width: rect.width,
+      height: rect.height,
+      skipFonts: true, // font already preload ho chuka hai, isse extension wali fetch error bhi avoid hogi
+      style: {
+        margin: "0",
+      },
+    });
+
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = `${business.name}-QR-Card.png`;
+    link.click();
+  } catch (err) {
+    console.warn("Download warning (non-critical):", err);
+  } finally {
+    setDownloading(false);
+  }
+};
+
+
 
   const handleDelete = async () => {
   try {
@@ -98,21 +157,6 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
   }
 };
 
-  // const handleDelete = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data } = await api.delete(`/business/${business.id}`);
-  //     if (data.success) {
-  //       setPopUp(false);
-  //       setSelectedBusiness(null);
-  //       setActiveTab("create");
-  //     }
-  //   } catch (error) {
-  //     console.log("Delete Error:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
     business.user_review_url
@@ -201,44 +245,62 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
             </a>
           </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
           {/* QR TICKET */}
           <div className="bd-card bd-qr-card">
             <h2 className="bd-card-title">Review QR code</h2>
 
             <div className="bd-ticket" ref={ticketRef}>
-              <div className="bd-ticket-top">
-                {business.logo_url ? (
-                  <img src={business.logo_url} alt={business.name} className="bd-ticket-logo" />
-                ) : (
-                  <div className="bd-ticket-logo bd-logo-fallback">
-                    {business.name?.[0]?.toUpperCase()}
-                  </div>
-                )}
-                <p className="bd-ticket-name">{business.name}</p>
-              </div>
+  <div className="bd-ticket-top">
+    {business.logo_url ? (
+      <img src={business.logo_url} alt={business.name} className="bd-ticket-logo" />
+    ) : (
+      <div className="bd-ticket-logo bd-logo-fallback">
+        {business.name?.[0]?.toUpperCase()}
+      </div>
+    )}
+    <p className="bd-ticket-name">{business.name}</p>
+  </div>
 
-              {/* <div className="bd-ticket-perforation">
-                <span className="bd-notch bd-notch-left" />
-                <span className="bd-perf-line" />
-                <span className="bd-notch bd-notch-right" />
-              </div> */}
+  <div className="bd-ticket-bottom">
+    <div className="bd-qr-wrap">
+      <img src={qrSrc} alt="QR Code" />
+    </div>
+    <span className="bd-scan-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1" />
+        <rect x="14" y="3" width="7" height="7" rx="1" />
+        <rect x="3" y="14" width="7" height="7" rx="1" />
+        <path d="M14 14h3v3h-3zM19 14h2M14 19h2M19 19h2" />
+      </svg>
+      Scan to review
+    </span>
+  </div>
 
-              <div className="bd-ticket-bottom">
-                <div className="bd-qr-wrap">
-                  <img src={qrSrc} alt="QR Code" />
-                </div>
-                <span className="bd-scan-pill">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="7" height="7" rx="1" />
-                    <rect x="14" y="3" width="7" height="7" rx="1" />
-                    <rect x="3" y="14" width="7" height="7" rx="1" />
-                    <path d="M14 14h3v3h-3zM19 14h2M14 19h2M19 19h2" />
-                  </svg>
-                  Scan to review
-                </span>
-              </div>
-            </div>
+  {/* ===== BRAND FOOTER ===== */}
+  <div className="bd-ticket-footer">
+    <img src={logo} alt="Review Ninja Pro" className="bd-footer-logo" />
+    <span className="bd-footer-name">Review Ninja Pro</span>
+  </div>
+           </div>
 
+
+
+
+
+            <div className="bd-link-row">
             <button className="bd-download-btn" onClick={handleDownloadQR} disabled={downloading}>
               {downloading ? (
                 "Preparing…"
@@ -254,6 +316,8 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
               )}
             </button>
 
+            </div>
+
             <div className="bd-link-row">
               <span title={business.user_review_url}>{business.user_review_url}</span>
               <button onClick={handleCopyLink}>
@@ -261,6 +325,11 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
               </button>
             </div>
           </div>
+
+
+
+
+
         </div>
 
         {/* REVIEWS */}

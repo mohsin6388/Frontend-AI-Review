@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import Loading from "./Loading";
 import Guide from "./Guide";
 import "./CreateBusiness.css";
+import logo from "../assets/review-booster-logo2.png";
 import {
   QrCode,
   CheckCircle2,
@@ -17,11 +18,13 @@ import {
   ImagePlus,
   X,
 } from "lucide-react";
+import ErrorPopup from "./ErrorPopup";
 
 const CreateBusiness = ({ onBusinessCreated }) => {
   const { user } = useAuth();
   const fileInputRef = useRef(null);
   const brandedCardRef = useRef(null);
+  const [popupType, setPopupType] = useState("error"); // "error" | "success" | "info"
 
   const [showPlaceIdHelp, setShowPlaceIdHelp] = useState(false);
 
@@ -34,9 +37,6 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     google_place_id: "",
     owner_email: email || "",
   });
-
-  console.log("CreateBusiness email prop:", email);
-
 
   const [logoFile, setLogoFile] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
@@ -88,6 +88,7 @@ const CreateBusiness = ({ onBusinessCreated }) => {
 
     if (file.size > 3 * 1024 * 1024) {
       setError("Logo size 3MB se kam hona chahiye");
+      setPopupType("error");
       return;
     }
 
@@ -102,10 +103,10 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  
   const handleSubmit = async () => {
   if (!form.name || !form.type || !form.google_place_id) {
     setError("Sab required fields fill karein");
+    setPopupType("error");
     return;
   }
 
@@ -120,7 +121,6 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     formData.append("owner_email", form.owner_email || "");
     formData.append("user_id", user.id);
 
-    // logo sirf tab append karo jab user ne select kiya ho
     if (logoFile) {
       formData.append("logo", logoFile);
     }
@@ -132,11 +132,21 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     if (res.data?.success) {
       setResult(res.data);
       onBusinessCreated?.(res.data.business);
+      setPopupType("success");
     } else {
-      setError(res?.data.error);
+      setPopupType("error");
     }
   } catch (err) {
-    setError(err?.response?.data?.error);
+    console.log(err);
+    setPopupType("error");
+
+    if (err?.response?.status === 413) {
+      setError("File size bahut zyada hai. Chhoti size ki file upload karein.");
+    } else if (err?.response?.data?.error) {
+      setError(err.response.data.error);
+    } else {
+      setError("Business create karne mein error aayi. Dobara try karein.");
+    }
   } finally {
     setLoading(false);
   }
@@ -155,13 +165,18 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     }
   };
 
- const handleDownloadQR = async () => {
+  const handleDownloadQR = async () => {
   if (!brandedCardRef.current) return;
 
   try {
-    await document.fonts.ready;
+    const node = brandedCardRef.current;
 
-    const images = brandedCardRef.current.querySelectorAll("img");
+    // Fonts (Playfair Display) fully load hone do
+    await document.fonts.ready;
+    await document.fonts.load("700 23px 'Playfair Display'");
+    await document.fonts.load("600 23px 'Playfair Display'");
+
+    const images = node.querySelectorAll("img");
     await Promise.all(
       Array.from(images).map((img) =>
         img.complete
@@ -173,11 +188,19 @@ const CreateBusiness = ({ onBusinessCreated }) => {
       )
     );
 
-    const dataUrl = await toPng(brandedCardRef.current, {
+    const rect = node.getBoundingClientRect();
+    await new Promise((res) => setTimeout(res, 100));
+
+    const dataUrl = await toPng(node, {
       cacheBust: true,
       pixelRatio: 3,
       backgroundColor: "#fdfaf3",
-      skipFonts: true,
+      width: rect.width,
+      height: rect.height,
+      skipFonts: true, // wapas add kiya — fonts already preloaded hain, embedWebFonts fetch skip ho jayega
+      style: {
+        margin: "0",
+      },
     });
 
     const link = document.createElement("a");
@@ -185,7 +208,6 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     link.download = `${result.business.name}-QR-Card.png`;
     link.click();
   } catch (err) {
-    // Extension-blocked font fetch jaisi non-critical errors ko silently ignore karo
     console.warn("Download warning (non-critical):", err);
   }
 };
@@ -199,6 +221,10 @@ const CreateBusiness = ({ onBusinessCreated }) => {
   }
 
   return (
+
+    <>
+
+
     <div className="create-business-layout animate-fadeIn">
       {/* LEFT SIDE */}
       <div className="create-form-card">
@@ -377,65 +403,143 @@ const CreateBusiness = ({ onBusinessCreated }) => {
             </div>
           </>
         ) : (
-          <div className="qr-result-section">
-            <div className="success-badge">
-              <CheckCircle2 size={16} strokeWidth={2.25} />
-              QR Generated Successfully
-            </div>
+          // <div className="qr-result-section">
+          //   <div className="success-badge">
+          //     <CheckCircle2 size={16} strokeWidth={2.25} />
+          //     QR Generated Successfully
+          //   </div>
 
-            {/* ===== BRANDED QR CARD ===== */}
-            <div className="branded-qr-card" ref={brandedCardRef}>
-              {result.business?.logo_url && (
-                 <img
-                   src={result.business.logo_url}
-                   alt="Business logo"
-                   className="branded-qr-logo"
-                   crossOrigin="anonymous"
-                 />
-               )}
+          //   {/* ===== BRANDED QR CARD ===== */}
+          //   <div className="branded-qr-card" ref={brandedCardRef}>
+          //     {result.business?.logo_url && (
+          //        <img
+          //          src={result.business.logo_url}
+          //          alt="Business logo"
+          //          className="branded-qr-logo"
+          //          crossOrigin="anonymous"
+          //        />
+          //      )}
               
 
-              <p className="branded-qr-name">{form.name}</p>
+          //     <p className="branded-qr-name">{form.name}</p>
 
-              <div className="branded-qr-code-wrap">
-                <img
-                  src={result.qrCode}
-                  alt="QR Code"
-                  className="branded-qr-img"
-                />
-              </div>
+          //     <div className="branded-qr-code-wrap">
+          //       <img
+          //         src={result.qrCode}
+          //         alt="QR Code"
+          //         className="branded-qr-img"
+          //       />
+          //     </div>
 
-              <span className="branded-qr-scanme">
-                <QrCode size={14} strokeWidth={2.5} />
-                Scan to Review
-              </span>
-            </div>
+          //     <span className="branded-qr-scanme">
+          //       <QrCode size={14} strokeWidth={2.5} />
+          //       Scan to Review
+          //     </span>
+          //   </div>
 
-            <button className="download-btn" onClick={handleDownloadQR}>
-              <Download size={16} strokeWidth={2.25} />
-              Download QR
-            </button>
+          //   <button className="download-btn" onClick={handleDownloadQR}>
+          //     <Download size={16} strokeWidth={2.25} />
+          //     Download QR
+          //   </button>
 
-            <div className="review-link-box">
-              <span>{result.reviewPageUrl}</span>
-              <button onClick={handleCopyLink}>
-                {copied ? (
-                  <>
-                    <CheckCircle2 size={14} strokeWidth={2.25} />
-                    Copied
-                  </>
-                ) : (
-                  <>
-                    <Copy size={14} strokeWidth={2.25} />
-                    Copy
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
+          //   <div className="review-link-box">
+          //     <span>{result.reviewPageUrl}</span>
+          //     <button onClick={handleCopyLink}>
+          //       {copied ? (
+          //         <>
+          //           <CheckCircle2 size={14} strokeWidth={2.25} />
+          //           Copied
+          //         </>
+          //       ) : (
+          //         <>
+          //           <Copy size={14} strokeWidth={2.25} />
+          //           Copy
+          //         </>
+          //       )}
+          //     </button>
+          //   </div>
+          // </div>
+          <div className="qr-result-section">
+  <div className="success-badge">
+    <CheckCircle2 size={16} strokeWidth={2.25} />
+    QR Generated Successfully
+  </div>
+
+  {/* ===== BRANDED QR CARD ===== */}
+  <div className="branded-qr-card" ref={brandedCardRef}>
+    <div className="branded-qr-inner">
+      {result.business?.logo_url && (
+        <img
+          src={result.business.logo_url}
+          alt="Business logo"
+          className="branded-qr-logo"
+          crossOrigin="anonymous"
+        />
+      )}
+
+      <p className="branded-qr-name">{form.name}</p>
+      <div className="branded-qr-divider" />
+
+      <div className="branded-qr-code-wrap">
+        <img
+          src={result.qrCode}
+          alt="QR Code"
+          className="branded-qr-img"
+        />
+      </div>
+
+      <span className="branded-qr-scanme">
+        <QrCode size={13} strokeWidth={2.5} />
+        Scan to Review
+      </span>
+    </div>
+
+    {/* ===== BRAND FOOTER ===== */}
+    <div className="branded-qr-footer">
+  <img
+    src={logo}
+    alt="Review Ninja Pro"
+    className="footer-mark-img"
+  />
+  <span className="footer-name">Review Ninja Pro</span>
+</div>
+  </div>
+
+  <button className="download-btn" onClick={handleDownloadQR}>
+    <Download size={16} strokeWidth={2.25} />
+    Download QR
+  </button>
+
+  <div className="review-link-box">
+    <span>{result.reviewPageUrl}</span>
+    <button onClick={handleCopyLink}>
+      {copied ? (
+        <>
+          <CheckCircle2 size={14} strokeWidth={2.25} />
+          Copied
+        </>
+      ) : (
+        <>
+          <Copy size={14} strokeWidth={2.25} />
+          Copy
+        </>
+      )}
+    </button>
+  </div>
+</div>
         )}
       </div>
     </div>
+
+
+
+  <ErrorPopup
+       message={error}
+       type={popupType}
+       onClose={() => setError("")}
+      />
+
+    </>
   );
 };
 
