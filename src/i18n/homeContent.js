@@ -138,138 +138,44 @@ const en = {
     ],
   },
 
+
+
+    businesses: {
+    badge: "TRUSTED BY",
+    titleMain: "Businesses That",
+    titleHighlight: "Use Review Ninja Pro",
+    sub: "From cafes to clinics — real businesses growing with us.",
+   items: [
+      {
+        name: "The Perch Restaurant",
+        tagline: "Fine dining, Kanpur",
+        logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDX43IxLn76NlrX0FbmvGjoZrZ32bhQYGX6ZtohE2Dg&s=10"     },
+      {
+        name: "Vaishnavi Hospital",
+        tagline: "Healthcare,, Kanpur",
+        logo: "https://vaishnavihospital.in/assets/logo.png",
+      },
+      {
+        name: "Ritzz",
+        tagline: "Sweet Shop, Lucknow",
+        logo: "https://ritzz.in/images/icon/logo.png",
+      },
+      {
+        name: "The Hue Unisex Salon",
+        tagline: "beauty & Salon, Kanpur",
+        logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR8HDZVrjsZsc0j4IurCelODGPLCQlOXpgdIanjU6XjA&s",
+      },
+      {
+        name: "P3 Salon",
+        tagline: "beauty & Salon, Kanpur",
+        logo: "https://p3salonkanpur.com/__l5e/assets-v1/1a96f67a-927a-416a-b9b3-5091762d9aaf/p3-logo.png",
+      },
+    ],
+  },
+
   /* =========================================================
    REPLACE the `pricing:` object inside `en` with this block
    ========================================================= */
-  pricing: {
-    badge: "PRICING",
-    title: "Simple, Affordable Plans",
-    sub: "Pick the plan that fits your business — upgrade anytime.",
-    note: "* Prices shown are for the selected billing cycle, + 18% GST. Enterprise starts at ₹4,999/month.",
-    monthlyLabel: "Monthly",
-    yearlyLabel: "Yearly",
-    saveTag: "Save 2 months",
-    plans: [
-      {
-        plan: "Starter",
-        audience: "For small shops & solo businesses",
-        setupPrice: "999",
-        monthlyPrice: "999",
-        yearlyPrice: "9,999",
-        features: [
-          "2 Location / Business Profile",
-          "2 Business Review QR Standee",
-          "50 AI Review Generations per Business Location",
-          "AI-Powered Review Generator",
-          "Advanced Review Analytics",
-        ],
-      },
-      {
-        plan: "Growth / Pro",
-        audience: "For established businesses & clinics",
-        setupPrice: "1,999",
-        monthlyPrice: "1,999",
-        yearlyPrice: "19,999",
-        highlight: true,
-         features: [
-          "3 Location / Business Profile",
-          "3 Business Review QR Standee",
-          "100 AI Review Generations per Business Location",
-          "AI-Powered Review Generator",
-          "Advanced Review Analytics with sentiment analysis",
-        ],
-      },
-      {
-        plan: "Enterprise",
-        audience: "Chains, franchises & agencies",
-        isCustom: true,
-       features: [
-         "Multi-Location Business Profiles",
-         "QR Standees for All Locations",
-         "Unlimited AI Review Generator",
-         "Advanced Review Analytics",
-         "Custom Feature Development",
-         "Priority Support",
-       ],
-
-        
-      },
-    ],
-    bestSeller: "⭐ BEST SELLER",
-    custom: "Custom",
-    customNote: "₹4,999–₹7,999/month · up to 5 locations",
-    perMonth: "/mo",
-    perYear: "/yr",
-    ctaDefault: "Get Started →",
-    ctaCustom: "Contact Sales →",
-  },
-
-/* =========================================================
-   REPLACE the `pricing:` object inside `hi` with this block
-   ========================================================= */
-  // pricing: {
-  //   badge: "PRICING",
-  //   title: "Simple, Affordable Plans",
-  //   sub: "Apne business ke hisaab se plan choose karein — kabhi bhi upgrade karein.",
-  //   note: "* Prices selected billing cycle ke hisaab se hain, + 18% GST. Enterprise ₹4,999/month se shuru.",
-  //   monthlyLabel: "Monthly",
-  //   yearlyLabel: "Yearly",
-  //   saveTag: "2 mahine save karein",
-  //   plans: [
-  //     {
-  //       plan: "Starter",
-  //       audience: "Chote shops aur solo businesses ke liye",
-  //       setupPrice: "999",
-  //       monthlyPrice: "999",
-  //       yearlyPrice: "9,999",
-  //       features: [
-  //         "1 Location / Business Profile",
-  //         "Custom QR Code Google Reviews ke liye",
-  //         "Basic AI Review Suggestions",
-  //         "WhatsApp/SMS Invites (200–300/mo)",
-  //         "Basic Review Gate",
-  //       ],
-  //     },
-  //     {
-  //       plan: "Growth / Pro",
-  //       audience: "Established businesses aur clinics ke liye",
-  //       setupPrice: "1,999",
-  //       monthlyPrice: "1,999",
-  //       yearlyPrice: "19,999",
-  //       highlight: true,
-  //       features: [
-  //         "Starter ki sabhi cheezein",
-  //         "Smart AI Review Engine (Multi-language)",
-  //         "Unlimited QR Code Scans",
-  //         "WhatsApp Auto-Reminders",
-  //         "Digital Business Card / Microsite",
-  //         "Auto Social Media Creatives",
-  //         "Priority Support",
-  //       ],
-  //     },
-  //     {
-  //       plan: "Enterprise",
-  //       audience: "Chains, franchises aur agencies ke liye",
-  //       isCustom: true,
-  //       features: [
-  //         "Multi-location Dashboard",
-  //         "White-Label Branding",
-  //         "Unlimited Campaigns",
-  //         "Dedicated Account Manager",
-  //         "Sentiment Analysis",
-  //       ],
-  //     },
-  //   ],
-  //   bestSeller: "⭐ BEST SELLER",
-  //   custom: "Custom",
-  //   customNote: "₹4,999–₹7,999/month · 5 locations tak",
-  //   perMonth: "/mo",
-  //   perYear: "/yr",
-  //   ctaDefault: "Shuru Karein →",
-  //   ctaCustom: "Sales Se Baat Karein →",
-  // },
-
-
   // pricing: {
   //   badge: "PRICING",
   //   title: "Simple, Affordable Plans",
@@ -286,11 +192,11 @@ const en = {
   //       monthlyPrice: "999",
   //       yearlyPrice: "9,999",
   //       features: [
-  //         "1 Location / Business Profile",
-  //         "Custom QR Code for Google Reviews",
-  //         "Basic AI Review Suggestions",
-  //         "WhatsApp/SMS Invites (200–300/mo)",
-  //         "Basic Review Gate",
+  //         "2 Location / Business Profile",
+  //         "2 Business Review QR Standee",
+  //         "50 AI Review Generations per Business Location",
+  //         "AI-Powered Review Generator",
+  //         "Advanced Review Analytics",
   //       ],
   //     },
   //     {
@@ -300,27 +206,28 @@ const en = {
   //       monthlyPrice: "1,999",
   //       yearlyPrice: "19,999",
   //       highlight: true,
-  //       features: [
-  //         "Everything in Starter",
-  //         "Smart AI Review Engine (Multi-language)",
-  //         "Unlimited QR Code Scans",
-  //         "WhatsApp Auto-Reminders",
-  //         "Digital Business Card / Microsite",
-  //         "Auto Social Media Creatives",
-  //         "Priority Support",
+  //        features: [
+  //         "3 Location / Business Profile",
+  //         "3 Business Review QR Standee",
+  //         "100 AI Review Generations per Business Location",
+  //         "AI-Powered Review Generator",
+  //         "Advanced Review Analytics with sentiment analysis",
   //       ],
   //     },
   //     {
   //       plan: "Enterprise",
   //       audience: "Chains, franchises & agencies",
   //       isCustom: true,
-  //       features: [
-  //         "Multi-location Dashboard",
-  //         "White-Label Branding",
-  //         "Unlimited Campaigns",
-  //         "Dedicated Account Manager",
-  //         "Sentiment Analysis",
-  //       ],
+  //      features: [
+  //        "Multi-Location Business Profiles",
+  //        "QR Standees for All Locations",
+  //        "Unlimited AI Review Generator",
+  //        "Advanced Review Analytics",
+  //        "Custom Feature Development",
+  //        "Priority Support",
+  //      ],
+
+        
   //     },
   //   ],
   //   bestSeller: "⭐ BEST SELLER",
@@ -333,6 +240,71 @@ const en = {
   // },
 
 
+    pricing: {
+    badge: "PRICING",
+    title: "Simple, Affordable Plans",
+    sub: "Pick the plan that fits your business — upgrade anytime.",
+    note: "* Prices shown are for the selected billing cycle & country. Taxes may apply.",
+    monthlyLabel: "Monthly",
+    yearlyLabel: "Yearly",
+    saveTag: "Save 2 months",
+    plans: [
+      {
+        plan: "Starter",
+        audience: "For small shops & solo businesses",
+        setupPrice:   { IN: "999",   US: "29",  GB: "25",  AE: "99" },
+        monthlyPrice: { IN: "999",   US: "29",  GB: "25",  AE: "99" },
+        yearlyPrice:  { IN: "9,999", US: "290", GB: "250", AE: "999" },
+        features: [
+          "2 Location / Business Profile",
+          "2 Business Review QR Standee",
+          "50 AI Review Generations per Business Location",
+          "AI-Powered Review Generator",
+          "Advanced Review Analytics",
+        ],
+      },
+      {
+        plan: "Growth / Pro",
+        audience: "For established businesses & clinics",
+        setupPrice:   { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
+        monthlyPrice: { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
+        yearlyPrice:  { IN: "19,999", US: "490", GB: "420", AE: "1,790" },
+        highlight: true,
+        features: [
+          "3 Location / Business Profile",
+          "3 Business Review QR Standee",
+          "100 AI Review Generations per Business Location",
+          "AI-Powered Review Generator",
+          "Advanced Review Analytics with sentiment analysis",
+        ],
+      },
+      {
+        plan: "Enterprise",
+        audience: "Chains, franchises & agencies",
+        isCustom: true,
+        features: [
+          "Multi-Location Business Profiles",
+          "QR Standees for All Locations",
+          "Unlimited AI Review Generator",
+          "Advanced Review Analytics",
+          "Custom Feature Development",
+          "Priority Support",
+        ],
+      },
+    ],
+    bestSeller: "⭐ BEST SELLER",
+    custom: "Custom",
+    customNote: {
+      IN: "₹4,999–₹7,999/month · up to 5 locations",
+      US: "$149–$249/month · up to 5 locations",
+      GB: "£129–£219/month · up to 5 locations",
+      AE: "AED 549–899/month · up to 5 locations",
+    },
+    perMonth: "/mo",
+    perYear: "/yr",
+    ctaDefault: "Get Started →",
+    ctaCustom: "Contact Sales →",
+  },
 
   faq: {
     badge: "FAQ",
@@ -530,12 +502,108 @@ const hi = {
     ],
   },
 
+    businesses: {
+    badge: "TRUSTED BY",
+    titleMain: "Businesses Jo",
+    titleHighlight: "Review Ninja Pro Use Karte Hain",
+    sub: "Cafes se lekar clinics tak — real businesses hamare saath grow kar rahe hain.",
+    items: [
+      {
+        name: "The Perch Roof Restaurant",
+        tagline: "Fine dining, Kanpur",
+        logo: "https://instagram.fknu1-4.fna.fbcdn.net/v/t51.82787-19/515442298_17917409007105815_5825678686345921665_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44NzMuYzIifQ&_nc_ht=instagram.fknu1-4.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gF71Si0u8ECyaIeC-K3blmZ1uhV4xoVclxAQOjTU-YIETT2L-VvEyC5Iw5otDCumprH0mVswJLzuwFOXLra3UvG&_nc_ohc=5-xtE4RrxLkQ7kNvwHM2AuZ&_nc_gid=Om_B4LDJOzf3CvvYdKg9YQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AQJYlDKnzqhLvxDMrmeHT6mYmlXgH1l3UrDd-kv5ixMRmg&oe=6AA35D6E&_nc_sid=7a9f4b"     },
+      {
+        name: "Vaishnavi Hospital",
+        tagline: "Healthcare,, Kanpur",
+        logo: "https://vaishnavihospital.in/assets/logo.png",
+      },
+      {
+        name: "Ritzz",
+        tagline: "Sweet Shop, Lucknow",
+        logo: "https://ritzz.in/images/icon/logo.png",
+      },
+      {
+        name: "The Hue Unisex Salon & Academy",
+        tagline: "beauty & Salon, Kanpur",
+        logo: "https://instagram.fknu1-2.fna.fbcdn.net/v/t51.82787-19/652481146_18062078045354020_8069777317891158687_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fknu1-2.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2gHVpZJfkDtdoqsLVHGAXPeADH3jBXL4gDlU92WWjkvSpii6AKj2axxB10-Z-WwNieKTcA0HE17o141sbuehRff3&_nc_ohc=SkOST2JqAqQQ7kNvwE4YpvO&_nc_gid=bv0JMjh0LCBeKOkhuA05Lg&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AQIf1evdg72NUL0CbR9RtlM3LkCMSRLEoNnF3S5i-0c-AQ&oe=6AA34A87&_nc_sid=7a9f4b",
+      },
+      {
+        name: "P3 Salon",
+        tagline: "beauty & Salon, Kanpur",
+        logo: "https://p3salonkanpur.com/__l5e/assets-v1/1a96f67a-927a-416a-b9b3-5091762d9aaf/p3-logo.png",
+      },
+    ],
+  },
 
-    pricing: {
+
+  //   pricing: {
+  //   badge: "PRICING",
+  //   title: "Simple, Affordable Plans",
+  //   sub: "Pick the plan that fits your business — upgrade anytime.",
+  //   note: "* Prices shown are for the selected billing cycle, + 18% GST. Enterprise starts at ₹4,999/month.",
+  //   monthlyLabel: "Monthly",
+  //   yearlyLabel: "Yearly",
+  //   saveTag: "Save 2 months",
+  //   plans: [
+  //     {
+  //       plan: "Starter",
+  //       audience: "For small shops & solo businesses",
+  //       setupPrice: "999",
+  //       monthlyPrice: "999",
+  //       yearlyPrice: "9,999",
+  //       features: [
+  //         "2 Location / Business Profile",
+  //         "2 Business Review QR Standee",
+  //         "50 AI Review Generations per Business Location",
+  //         "AI-Powered Review Generator",
+  //         "Advanced Review Analytics",
+  //       ],
+  //     },
+  //     {
+  //       plan: "Growth / Pro",
+  //       audience: "For established businesses & clinics",
+  //       setupPrice: "1,999",
+  //       monthlyPrice: "1,999",
+  //       yearlyPrice: "19,999",
+  //       highlight: true,
+  //        features: [
+  //         "3 Location / Business Profile",
+  //         "3 Business Review QR Standee",
+  //         "100 AI Review Generations per Business Location",
+  //         "AI-Powered Review Generator",
+  //         "Advanced Review Analytics with sentiment analysis",
+  //       ],
+  //     },
+  //     {
+  //       plan: "Enterprise",
+  //       audience: "Chains, franchises & agencies",
+  //       isCustom: true,
+  //      features: [
+  //        "Multi-Location Business Profiles",
+  //        "QR Standees for All Locations",
+  //        "Unlimited AI Review Generator",
+  //        "Advanced Review Analytics",
+  //        "Custom Feature Development",
+  //        "Priority Support",
+  //      ],
+
+        
+  //     },
+  //   ],
+  //   bestSeller: "⭐ BEST SELLER",
+  //   custom: "Custom",
+  //   customNote: "₹4,999–₹7,999/month · up to 5 locations",
+  //   perMonth: "/mo",
+  //   perYear: "/yr",
+  //   ctaDefault: "Get Started →",
+  //   ctaCustom: "Contact Sales →",
+  // },
+
+      pricing: {
     badge: "PRICING",
     title: "Simple, Affordable Plans",
-    sub: "Pick the plan that fits your business — upgrade anytime.",
-    note: "* Prices shown are for the selected billing cycle, + 18% GST. Enterprise starts at ₹4,999/month.",
+    sub: "Apne business ke liye sahi plan chunein — kabhi bhi upgrade karein.",
+    note: "* Prices selected billing cycle aur country ke hisaab se hain. Taxes apply ho sakte hain.",
     monthlyLabel: "Monthly",
     yearlyLabel: "Yearly",
     saveTag: "Save 2 months",
@@ -543,9 +611,9 @@ const hi = {
       {
         plan: "Starter",
         audience: "For small shops & solo businesses",
-        setupPrice: "999",
-        monthlyPrice: "999",
-        yearlyPrice: "9,999",
+        setupPrice:   { IN: "999",   US: "29",  GB: "25",  AE: "99" },
+        monthlyPrice: { IN: "999",   US: "29",  GB: "25",  AE: "99" },
+        yearlyPrice:  { IN: "9,999", US: "290", GB: "250", AE: "999" },
         features: [
           "2 Location / Business Profile",
           "2 Business Review QR Standee",
@@ -557,11 +625,11 @@ const hi = {
       {
         plan: "Growth / Pro",
         audience: "For established businesses & clinics",
-        setupPrice: "1,999",
-        monthlyPrice: "1,999",
-        yearlyPrice: "19,999",
+        setupPrice:   { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
+        monthlyPrice: { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
+        yearlyPrice:  { IN: "19,999", US: "490", GB: "420", AE: "1,790" },
         highlight: true,
-         features: [
+        features: [
           "3 Location / Business Profile",
           "3 Business Review QR Standee",
           "100 AI Review Generations per Business Location",
@@ -573,86 +641,30 @@ const hi = {
         plan: "Enterprise",
         audience: "Chains, franchises & agencies",
         isCustom: true,
-       features: [
-         "Multi-Location Business Profiles",
-         "QR Standees for All Locations",
-         "Unlimited AI Review Generator",
-         "Advanced Review Analytics",
-         "Custom Feature Development",
-         "Priority Support",
-       ],
-
-        
+        features: [
+          "Multi-Location Business Profiles",
+          "QR Standees for All Locations",
+          "Unlimited AI Review Generator",
+          "Advanced Review Analytics",
+          "Custom Feature Development",
+          "Priority Support",
+        ],
       },
     ],
     bestSeller: "⭐ BEST SELLER",
     custom: "Custom",
-    customNote: "₹4,999–₹7,999/month · up to 5 locations",
+    customNote: {
+      IN: "₹4,999–₹7,999/month · up to 5 locations",
+      US: "$149–$249/month · up to 5 locations",
+      GB: "£129–£219/month · up to 5 locations",
+      AE: "AED 549–899/month · up to 5 locations",
+    },
     perMonth: "/mo",
     perYear: "/yr",
     ctaDefault: "Get Started →",
     ctaCustom: "Contact Sales →",
   },
-
-  // pricing: {
-  //   badge: "PRICING",
-  //   title: "Simple, Affordable Plans",
-  //   sub: "Acrylic QR Standee + AI Engine — sab ek package mein.",
-  //   note: "* Setup charges one-time hain. Free trial available hai. Enterprise minimum ₹1,999/month.",
-  //   plans: [
-  //     {
-  //       plan: "Starter",
-  //       audience: "Chote Vendors, Naye Cafes",
-  //       setupPrice: "999",
-  //       monthlyPrice: "799",
-  //       features: [
-  //         "1 Acrylic QR Standee",
-  //         "Basic AI Engine",
-  //         "50 Reviews/month",
-  //         "Negative Feedback Filter",
-  //         "Email Support",
-  //       ],
-  //     },
-  //     {
-  //       plan: "Growth Plan",
-  //       audience: "Restaurants, Salons, Clinics",
-  //       setupPrice: "1,499",
-  //       monthlyPrice: "999",
-  //       highlight: true,
-  //       features: [
-  //         "2 Premium Acrylic Standees",
-  //         "Unlimited AI Reviews",
-  //         "Negative Review Filter",
-  //         "Keyword-Rich AI Reviews",
-  //         "Multi-Language Support",
-  //         "Analytics Dashboard",
-  //         "Priority Support",
-  //       ],
-  //     },
-  //     {
-  //       plan: "Enterprise",
-  //       audience: "Multi-branch Brands, Hotels",
-  //       isCustom: true,
-  //       features: [
-  //         "Custom Branded Standees (saari branches)",
-  //         "Centralized Dashboard",
-  //         "Unlimited Reviews & Locations",
-  //         "White-Label Option",
-  //         "API Access & Integrations",
-  //         "Dedicated Account Manager",
-  //       ],
-  //     },
-  //   ],
-
-
-  //   bestSeller: "⭐ BEST SELLER",
-  //   custom: "Custom",
-  //   customNote: "Min ₹1,999/month",
-  //   perMonth: "/mo",
-  //   ctaDefault: "Shuru Karein →",
-  //   ctaCustom: "Sales Se Baat Karein →",
-  // },
-
+ 
   faq: {
     badge: "FAQ",
     title: "Aksar Puche Jane Wale Sawaal",

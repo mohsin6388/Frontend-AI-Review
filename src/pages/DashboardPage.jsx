@@ -156,6 +156,104 @@ const DashboardPage = () => {
     </div>
 
     <div className="dash-nav-right">
+  {stats?.hasSubscription ? (
+    // =========================
+    // ACTIVE SUBSCRIPTION
+    // =========================
+    <div
+      className={`dash-usage-pill ${
+        isLimitReached ? "limit-reached" : ""
+      }`}
+    >
+      <span className="dash-usage-dot" />
+
+      <span className="dash-usage-text">
+        {stats?.planName === "free" ? "Free Plan" : stats?.planName}
+        {" "}
+
+        <strong>
+          {stats?.maxReviews ?? 0}/{stats?.reviewsLimit ?? "∞"}
+        </strong>
+      </span>
+
+      {isLimitReached && (
+        <button
+          className="dash-upgrade-btn"
+          onClick={() => setActiveTab("payments")}
+        >
+          Upgrade
+        </button>
+      )}
+    </div>
+  ) : (
+    // =========================
+    // NO / EXPIRED SUBSCRIPTION
+    // =========================
+    <div className="dash-usage-pill limit-reached">
+      <span className="dash-usage-dot" />
+
+      <span className="dash-usage-text">
+        No Subscription
+      </span>
+
+      <button
+        className="dash-upgrade-btn"
+        onClick={() => setActiveTab("payments")}
+      >
+        Upgrade
+      </button>
+    </div>
+  )}
+
+  {/* USER */}
+  <div className="dash-user-pill">
+    <span className="dash-user-avatar">
+      {user?.name?.[0]?.toUpperCase() || "?"}
+    </span>
+
+    <span className="dash-user-name">
+      {user?.name || "User"}
+    </span>
+  </div>
+
+  {/* LOGOUT */}
+  <button
+    className="dash-logout-btn"
+    onClick={handleLogout}
+    disabled={loading || outLoading}
+  >
+    {outLoading ? (
+      <>
+        <span className="dash-spinner" />
+        <span className="logout-text">Logging out…</span>
+      </>
+    ) : (
+      <>
+        <svg
+          className="logout-icon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+
+        <span className="logout-text">
+          Logout
+        </span>
+      </>
+    )}
+  </button>
+</div>
+
+    {/* <div className="dash-nav-right">
       {stats?.planName === "free" && (
         <div className={`dash-usage-pill ${isLimitReached ? "limit-reached" : ""}`}>
       <span className="dash-usage-dot" />
@@ -223,8 +321,8 @@ const DashboardPage = () => {
           </>
         )}
       </button>
-    </div>
-  </header>
+    </div> */}
+      </header>
 
 
 

@@ -77,25 +77,51 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
+  // const handleLogoChange = (e) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
+
+  //   if (!file.type.startsWith("image/")) {
+  //     setError("Sirf image file upload karein (PNG, JPG, SVG)");
+  //     return;
+  //   }
+
+  //   if (file.size > 3 * 1024 * 1024) {
+  //     setError("Logo size 3MB se kam hona chahiye");
+  //     setPopupType("error");
+  //     return;
+  //   }
+
+  //   setError("");
+  //   setLogoFile(file);
+  //   setLogoPreview(URL.createObjectURL(file));
+  // };
+
   const handleLogoChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const file = e.target.files?.[0];
+  if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      setError("Sirf image file upload karein (PNG, JPG, SVG)");
-      return;
-    }
+  // Only image files
+  if (!file.type.startsWith("image/")) {
+    setError("Sirf image file upload karein (PNG, JPG, SVG)");
+    setPopupType("error");
+    e.target.value = "";
+    return;
+  }
 
-    if (file.size > 3 * 1024 * 1024) {
-      setError("Logo size 3MB se kam hona chahiye");
-      setPopupType("error");
-      return;
-    }
+  // Maximum 2MB
+  if (file.size > 2 * 1024 * 1024) {
+    setError("Logo size 2MB se zyada nahi hona chahiye.");
+    setPopupType("error");
+    e.target.value = "";
+    return;
+  }
 
-    setError("");
-    setLogoFile(file);
-    setLogoPreview(URL.createObjectURL(file));
-  };
+  setError("");
+  setLogoFile(file);
+  setLogoPreview(URL.createObjectURL(file));
+};
+
 
   const handleRemoveLogo = () => {
     setLogoFile(null);
@@ -165,52 +191,124 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     }
   };
 
-  const handleDownloadQR = async () => {
-  if (!brandedCardRef.current) return;
+//   const handleDownloadQR = async () => {
+//   if (!brandedCardRef.current) return;
+
+//   try {
+//     const node = brandedCardRef.current;
+
+//     // Fonts (Playfair Display) fully load hone do
+//     await document.fonts.ready;
+//     await document.fonts.load("700 23px 'Playfair Display'");
+//     await document.fonts.load("600 23px 'Playfair Display'");
+
+//     const images = node.querySelectorAll("img");
+//     await Promise.all(
+//       Array.from(images).map((img) =>
+//         img.complete
+//           ? Promise.resolve()
+//           : new Promise((res) => {
+//               img.onload = res;
+//               img.onerror = res;
+//             })
+//       )
+//     );
+
+//     const rect = node.getBoundingClientRect();
+//     await new Promise((res) => setTimeout(res, 100));
+
+//     const dataUrl = await toPng(node, {
+//       cacheBust: true,
+//       pixelRatio: 3,
+//       backgroundColor: "#fdfaf3",
+//       width: rect.width,
+//       height: rect.height,
+//       skipFonts: true, // wapas add kiya — fonts already preloaded hain, embedWebFonts fetch skip ho jayega
+//       style: {
+//         margin: "0",
+//       },
+//     });
+
+//     const link = document.createElement("a");
+//     link.href = dataUrl;
+//     link.download = `${result.business.name}-QR-Card.png`;
+//     link.click();
+//   } catch (err) {
+//     console.warn("Download warning (non-critical):", err);
+//   }
+// };
+
+const handleDownloadQR = async () => {
+  if (!brandedCardRef.current || !result?.business?.name) return;
 
   try {
     const node = brandedCardRef.current;
 
-    // Fonts (Playfair Display) fully load hone do
+    // Make sure fonts are loaded
     await document.fonts.ready;
-    await document.fonts.load("700 23px 'Playfair Display'");
-    await document.fonts.load("600 23px 'Playfair Display'");
 
+    // Make sure all images are loaded
     const images = node.querySelectorAll("img");
+
     await Promise.all(
-      Array.from(images).map((img) =>
-        img.complete
-          ? Promise.resolve()
-          : new Promise((res) => {
-              img.onload = res;
-              img.onerror = res;
-            })
-      )
+      Array.from(images).map((img) => {
+        if (img.complete) {
+          return Promise.resolve();
+        }
+
+        return new Promise((resolve) => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      })
     );
 
-    const rect = node.getBoundingClientRect();
-    await new Promise((res) => setTimeout(res, 100));
+    // Give browser one frame to finish rendering
+    await new Promise((resolve) =>
+      requestAnimationFrame(() => resolve())
+    );
+
+    const width = node.scrollWidth;
+    const height = node.scrollHeight;
 
     const dataUrl = await toPng(node, {
       cacheBust: true,
       pixelRatio: 3,
+
+      width,
+      height,
+
       backgroundColor: "#fdfaf3",
-      width: rect.width,
-      height: rect.height,
-      skipFonts: true, // wapas add kiya — fonts already preloaded hain, embedWebFonts fetch skip ho jayega
+
       style: {
+        width: `${width}px`,
+        height: `${height}px`,
         margin: "0",
+        transform: "none",
       },
+
+      // Don't skip fonts
+      skipFonts: false,
     });
 
     const link = document.createElement("a");
+
     link.href = dataUrl;
     link.download = `${result.business.name}-QR-Card.png`;
+
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+
   } catch (err) {
-    console.warn("Download warning (non-critical):", err);
+    console.error("QR Download Error:", err);
+
+    setError("QR download nahi ho paya. Please dobara try karein.");
+    setPopupType("error");
   }
 };
+
+
 
   if (showPlaceIdHelp) {
     return (
@@ -261,7 +359,7 @@ const CreateBusiness = ({ onBusinessCreated }) => {
               </div>
 
               <div className="logo-upload-info">
-                <p>PNG, JPG or SVG. Square image works best.</p>
+               <p>PNG, JPG or SVG. Square image works best. Maximum size: 2MB.</p>
                 {logoPreview && (
                   <button
                     type="button"

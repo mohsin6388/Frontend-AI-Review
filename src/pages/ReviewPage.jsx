@@ -34,21 +34,60 @@ const ReviewPage = () => {
   const [negativeFeedback, setNegativeFeedback] = useState('');
 
   // Load business data
-  useEffect(() => {
-    const fetchBusiness = async () => {
-      try {
-        const res = await api.get(`/business/review/${businessId}`);
-        setBusiness(res.data.businesses[0]);
-        setTags(res.data.tags);
-        setStep(STEP.RATE);
-      } catch (err) {
-        setErrorMsg(err.message || T.errorFallback);
-        setStep(STEP.ERROR);
-      }
-    };
-    fetchBusiness();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [businessId]);
+
+useEffect(() => {
+  const fetchBusiness = async () => {
+    try {
+      console.log("checking my side at local ================");
+
+      const res = await api.get(`/business/review/${businessId}`);
+
+      setBusiness(res.data.businesses[0]);
+      setTags(res.data.tags);
+      setStep(STEP.RATE);
+
+    } catch (err) {
+
+      console.log("FULL API ERROR:", err);
+      console.log("BACKEND RESPONSE:", err.response?.data);
+
+      const backendMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
+        T.errorFallback;
+
+      setErrorMsg(backendMessage);
+      setStep(STEP.ERROR);
+    }
+  };
+
+  fetchBusiness();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [businessId]);
+
+
+  
+
+
+
+  // useEffect(() => {
+  //   const fetchBusiness = async () => {
+  //     try {
+  //       console.log("checking my side at local ================")
+  //       const res = await api.get(`/business/review/${businessId}`);
+  //       setBusiness(res.data.businesses[0]);
+  //       setTags(res.data.tags);
+  //       setStep(STEP.RATE);
+  //     } catch (err) {
+  //       setErrorMsg(err.message || T.errorFallback);
+  //       setStep(STEP.ERROR);
+  //     }
+  //   };
+  //   fetchBusiness();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [businessId]);
 
   const handleRate = (r) => {
     setRating(r);

@@ -17,6 +17,9 @@ import AboutUs from './pages/About.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 import RefundPolicy from './pages/RefundPolicy.jsx';
 
+
+import CountrySelectModal from "./components/CountrySelectModal.jsx"
+
 // Protected route — redirect to /login if not authenticated
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -96,6 +99,7 @@ function AppRoutes() {
 function App() {
   return (
     <LanguageProvider>
+       <CountrySelectModal />
       <AuthProvider>
         <BrowserRouter>
           <AppRoutes />
