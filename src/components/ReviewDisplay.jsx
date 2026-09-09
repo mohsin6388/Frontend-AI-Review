@@ -24,6 +24,7 @@ const ReviewDisplay = ({
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [loadingIndex, setLoadingIndex] = useState(null);
 
+  
   const handleCopyAndGo = async (reviewText, index) => {
     setLoadingIndex(index);
 
