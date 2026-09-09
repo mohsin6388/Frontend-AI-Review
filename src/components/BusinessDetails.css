@@ -434,6 +434,80 @@
 
 
 
+/* ===== Add this to BusinessDetails.css ===== */
+
+.bd-reviews-locked-wrap {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.bd-reviews-locked-blur {
+  filter: blur(6px);
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bd-upgrade-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.bd-upgrade-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.bd-upgrade-icon {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff4e5;
+  color: #b9770e;
+}
+
+.bd-upgrade-card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+}
+
+.bd-upgrade-card p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+.bd-upgrade-btn {
+  background: #1D4ED8;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bd-upgrade-btn:hover {
+  opacity: 0.9;
+}
+
+
+
 
 
 

@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import ErrorPopup from "./ErrorPopup";
+import BusinessPlaceSearch from "./Businessplacesearch";
 
 const CreateBusiness = ({ onBusinessCreated }) => {
   const { user } = useAuth();
@@ -35,6 +36,8 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     name: "",
     type: "",
     google_place_id: "",
+    selected_place_name: "",
+    selected_place_address: "",
     owner_email: email || "",
   });
 
@@ -76,26 +79,6 @@ const CreateBusiness = ({ onBusinessCreated }) => {
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
-
-  // const handleLogoChange = (e) => {
-  //   const file = e.target.files?.[0];
-  //   if (!file) return;
-
-  //   if (!file.type.startsWith("image/")) {
-  //     setError("Sirf image file upload karein (PNG, JPG, SVG)");
-  //     return;
-  //   }
-
-  //   if (file.size > 3 * 1024 * 1024) {
-  //     setError("Logo size 3MB se kam hona chahiye");
-  //     setPopupType("error");
-  //     return;
-  //   }
-
-  //   setError("");
-  //   setLogoFile(file);
-  //   setLogoPreview(URL.createObjectURL(file));
-  // };
 
   const handleLogoChange = (e) => {
   const file = e.target.files?.[0];
@@ -191,52 +174,6 @@ const CreateBusiness = ({ onBusinessCreated }) => {
     }
   };
 
-//   const handleDownloadQR = async () => {
-//   if (!brandedCardRef.current) return;
-
-//   try {
-//     const node = brandedCardRef.current;
-
-//     // Fonts (Playfair Display) fully load hone do
-//     await document.fonts.ready;
-//     await document.fonts.load("700 23px 'Playfair Display'");
-//     await document.fonts.load("600 23px 'Playfair Display'");
-
-//     const images = node.querySelectorAll("img");
-//     await Promise.all(
-//       Array.from(images).map((img) =>
-//         img.complete
-//           ? Promise.resolve()
-//           : new Promise((res) => {
-//               img.onload = res;
-//               img.onerror = res;
-//             })
-//       )
-//     );
-
-//     const rect = node.getBoundingClientRect();
-//     await new Promise((res) => setTimeout(res, 100));
-
-//     const dataUrl = await toPng(node, {
-//       cacheBust: true,
-//       pixelRatio: 3,
-//       backgroundColor: "#fdfaf3",
-//       width: rect.width,
-//       height: rect.height,
-//       skipFonts: true, // wapas add kiya — fonts already preloaded hain, embedWebFonts fetch skip ho jayega
-//       style: {
-//         margin: "0",
-//       },
-//     });
-
-//     const link = document.createElement("a");
-//     link.href = dataUrl;
-//     link.download = `${result.business.name}-QR-Card.png`;
-//     link.click();
-//   } catch (err) {
-//     console.warn("Download warning (non-critical):", err);
-//   }
-// };
 
 const handleDownloadQR = async () => {
   if (!brandedCardRef.current || !result?.business?.name) return;
@@ -407,26 +344,42 @@ const handleDownloadQR = async () => {
             </select>
           </div>
 
-          {/* Google Place ID */}
-          <div className="form-group full-width">
-            <label>Google Place ID</label>
-            <input
-              type="text"
-              name="google_place_id"
-              placeholder="Enter Google Place ID"
-              value={form.google_place_id}
-              onChange={handleChange}
-            />
 
-            <button
-              type="button"
-              className="help-link"
-              onClick={() => setShowPlaceIdHelp(true)}
-            >
-              <HelpCircle size={14} strokeWidth={2} />
-              How to find your Google Business Place ID
-            </button>
-          </div>
+
+      {/* 
+         Google PLace ID */}
+
+
+          <div className="form-group full-width">
+            <label>Search Your Google Business</label>
+
+           <BusinessPlaceSearch 
+           onPlaceSelect={(place) => {
+    setForm((f) => ({
+      ...f,
+      google_place_id: place.placeId,
+      selected_place_name: place.name,
+      selected_place_address: place.address,
+    }));
+           }} 
+         />
+         </div>
+
+{/* Selected Business Confirmation */}
+{form.google_place_id && (
+  <div className="form-group full-width">
+    <label>Selected Business</label>
+    <div className="selected-place-box">
+      <div className="selected-place-icon">
+        <CheckCircle2 size={18} strokeWidth={2.5} />
+      </div>
+      <div className="selected-place-text">
+        <div className="selected-place-name">{form.selected_place_name}</div>
+        <div className="selected-place-address">{form.selected_place_address}</div>
+      </div>
+    </div>
+  </div>
+)}
 
           {/* Email */}
           <div className="form-group full-width">
@@ -501,62 +454,7 @@ const handleDownloadQR = async () => {
             </div>
           </>
         ) : (
-          // <div className="qr-result-section">
-          //   <div className="success-badge">
-          //     <CheckCircle2 size={16} strokeWidth={2.25} />
-          //     QR Generated Successfully
-          //   </div>
-
-          //   {/* ===== BRANDED QR CARD ===== */}
-          //   <div className="branded-qr-card" ref={brandedCardRef}>
-          //     {result.business?.logo_url && (
-          //        <img
-          //          src={result.business.logo_url}
-          //          alt="Business logo"
-          //          className="branded-qr-logo"
-          //          crossOrigin="anonymous"
-          //        />
-          //      )}
-              
-
-          //     <p className="branded-qr-name">{form.name}</p>
-
-          //     <div className="branded-qr-code-wrap">
-          //       <img
-          //         src={result.qrCode}
-          //         alt="QR Code"
-          //         className="branded-qr-img"
-          //       />
-          //     </div>
-
-          //     <span className="branded-qr-scanme">
-          //       <QrCode size={14} strokeWidth={2.5} />
-          //       Scan to Review
-          //     </span>
-          //   </div>
-
-          //   <button className="download-btn" onClick={handleDownloadQR}>
-          //     <Download size={16} strokeWidth={2.25} />
-          //     Download QR
-          //   </button>
-
-          //   <div className="review-link-box">
-          //     <span>{result.reviewPageUrl}</span>
-          //     <button onClick={handleCopyLink}>
-          //       {copied ? (
-          //         <>
-          //           <CheckCircle2 size={14} strokeWidth={2.25} />
-          //           Copied
-          //         </>
-          //       ) : (
-          //         <>
-          //           <Copy size={14} strokeWidth={2.25} />
-          //           Copy
-          //         </>
-          //       )}
-          //     </button>
-          //   </div>
-          // </div>
+         
           <div className="qr-result-section">
   <div className="success-badge">
     <CheckCircle2 size={16} strokeWidth={2.25} />

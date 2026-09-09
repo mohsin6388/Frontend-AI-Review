@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./BusinessDetails.css";
 import { API } from "../utils/api";
 import api from "../api";
@@ -13,18 +14,40 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
   const [downloading, setDownloading] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
+  // NEW: plan-restriction state
+  const [restricted, setRestricted] = useState(false);
+  const [restrictionMessage, setRestrictionMessage] = useState("");
+
   const ticketRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         setLoading(true);
+        setRestricted(false);
         const token = localStorage.getItem("rb_token");
         const res = await fetch(`${API}/review/${business.id}`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
+
         const data = await res.json();
+
+        // Backend sends 403 for both "free plan" and "no active subscription"
+        if (res.status === 403) {
+          setRestricted(true);
+          setRestrictionMessage(data.error || "Upgrade your plan to view reviews");
+          setReviews([]);
+          return;
+        }
+
+        if (!res.ok) {
+          console.log("Reviews fetch error:", data.error);
+          setReviews([]);
+          return;
+        }
+
         setReviews(data.reviews || []);
       } catch (err) {
         console.log(err);
@@ -45,118 +68,76 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
     }
   };
 
-
-
-
-  // const handleDownloadQR = async () => {
-  //   if (!ticketRef.current) return;
-  //   setDownloading(true);
-
-  //   try {
-  //     await document.fonts.ready;
-
-  //     const images = ticketRef.current.querySelectorAll("img");
-  //     await Promise.all(
-  //       Array.from(images).map((img) =>
-  //         img.complete
-  //           ? Promise.resolve()
-  //           : new Promise((res) => {
-  //               img.onload = res;
-  //               img.onerror = res;
-  //             })
-  //       )
-  //     );
-
-  //     const dataUrl = await toPng(ticketRef.current, {
-  //       cacheBust: true,
-  //       pixelRatio: 3,
-  //       backgroundColor: "#faf8f2",
-  //       skipFonts: true,
-  //     });
-
-  //     const link = document.createElement("a");
-  //     link.href = dataUrl;
-  //     link.download = `${business.name}-QR-Card.png`;
-  //     link.click();
-  //   } catch (err) {
-  //     console.warn("Download warning (non-critical):", err);
-  //   } finally {
-  //     setDownloading(false);
-  //   }
-  // };
-
   const handleDownloadQR = async () => {
-  if (!ticketRef.current) return;
-  setDownloading(true);
+    if (!ticketRef.current) return;
+    setDownloading(true);
 
-  try {
-    const node = ticketRef.current;
+    try {
+      const node = ticketRef.current;
 
-    // Playfair Display font fully load hone do
-    await document.fonts.ready;
-    await document.fonts.load("700 23px 'Playfair Display'");
-    await document.fonts.load("600 23px 'Playfair Display'");
+      await document.fonts.ready;
+      await document.fonts.load("700 23px 'Playfair Display'");
+      await document.fonts.load("600 23px 'Playfair Display'");
 
-    const images = node.querySelectorAll("img");
-    await Promise.all(
-      Array.from(images).map((img) =>
-        img.complete
-          ? Promise.resolve()
-          : new Promise((res) => {
-              img.onload = res;
-              img.onerror = res;
-            })
-      )
-    );
+      const images = node.querySelectorAll("img");
+      await Promise.all(
+        Array.from(images).map((img) =>
+          img.complete
+            ? Promise.resolve()
+            : new Promise((res) => {
+                img.onload = res;
+                img.onerror = res;
+              })
+        )
+      );
 
-    // Actual rendered size lo, taaki footer/content cut na ho
-    const rect = node.getBoundingClientRect();
+      const rect = node.getBoundingClientRect();
+      await new Promise((res) => setTimeout(res, 100));
 
-    // ek chhota delay - layout paint completely ho jaaye
-    await new Promise((res) => setTimeout(res, 100));
+      const dataUrl = await toPng(node, {
+        cacheBust: true,
+        pixelRatio: 3,
+        backgroundColor: "#faf8f2",
+        width: rect.width,
+        height: rect.height,
+        skipFonts: true,
+        style: {
+          margin: "0",
+        },
+      });
 
-    const dataUrl = await toPng(node, {
-      cacheBust: true,
-      pixelRatio: 3,
-      backgroundColor: "#faf8f2",
-      width: rect.width,
-      height: rect.height,
-      skipFonts: true, // font already preload ho chuka hai, isse extension wali fetch error bhi avoid hogi
-      style: {
-        margin: "0",
-      },
-    });
-
-    const link = document.createElement("a");
-    link.href = dataUrl;
-    link.download = `${business.name}-QR-Card.png`;
-    link.click();
-  } catch (err) {
-    console.warn("Download warning (non-critical):", err);
-  } finally {
-    setDownloading(false);
-  }
-};
-
-
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `${business.name}-QR-Card.png`;
+      link.click();
+    } catch (err) {
+      console.warn("Download warning (non-critical):", err);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const handleDelete = async () => {
-  try {
-    setDeleting(true);
-    const { data } = await api.delete(`/business/${business.id}`);
+    try {
+      setDeleting(true);
+      const { data } = await api.delete(`/business/${business.id}`);
 
-    if (data.success) {
-      setPopUp(false);
-      setSelectedBusiness(null);
-      setActiveTab("create");
+      if (data.success) {
+        setPopUp(false);
+        setSelectedBusiness(null);
+        setActiveTab("create");
+      }
+    } catch (error) {
+      console.log("Delete Error:", error);
+    } finally {
+      setDeleting(false);
     }
-  } catch (error) {
-    console.log("Delete Error:", error);
-  } finally {
-    setDeleting(false);
-  }
-};
+  };
 
+  // NEW: go to billing route
+  const handleUpgradeClick = () => {
+    setActiveTab("payments"); // <-- apna actual billing route path yahan daalna agar alag hai
+  };
 
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
     business.user_review_url
@@ -231,8 +212,7 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
               <strong>{new Date(business.created_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}</strong>
             </div>
 
-            
-             <a className="bd-google-link"
+            <a className="bd-google-link"
               href={business.google_review_url}
               target="_blank"
               rel="noreferrer"
@@ -245,77 +225,59 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
             </a>
           </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
           {/* QR TICKET */}
           <div className="bd-card bd-qr-card">
             <h2 className="bd-card-title">Review QR code</h2>
 
             <div className="bd-ticket" ref={ticketRef}>
-  <div className="bd-ticket-top">
-    {business.logo_url ? (
-      <img src={business.logo_url} alt={business.name} className="bd-ticket-logo" />
-    ) : (
-      <div className="bd-ticket-logo bd-logo-fallback">
-        {business.name?.[0]?.toUpperCase()}
-      </div>
-    )}
-    <p className="bd-ticket-name">{business.name}</p>
-  </div>
+              <div className="bd-ticket-top">
+                {business.logo_url ? (
+                  <img src={business.logo_url} alt={business.name} className="bd-ticket-logo" />
+                ) : (
+                  <div className="bd-ticket-logo bd-logo-fallback">
+                    {business.name?.[0]?.toUpperCase()}
+                  </div>
+                )}
+                <p className="bd-ticket-name">{business.name}</p>
+              </div>
 
-  <div className="bd-ticket-bottom">
-    <div className="bd-qr-wrap">
-      <img src={qrSrc} alt="QR Code" />
-    </div>
-    <span className="bd-scan-pill">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1" />
-        <rect x="14" y="3" width="7" height="7" rx="1" />
-        <rect x="3" y="14" width="7" height="7" rx="1" />
-        <path d="M14 14h3v3h-3zM19 14h2M14 19h2M19 19h2" />
-      </svg>
-      Scan to review
-    </span>
-  </div>
+              <div className="bd-ticket-bottom">
+                <div className="bd-qr-wrap">
+                  <img src={qrSrc} alt="QR Code" />
+                </div>
+                <span className="bd-scan-pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <path d="M14 14h3v3h-3zM19 14h2M14 19h2M19 19h2" />
+                  </svg>
+                  Scan to review
+                </span>
+              </div>
 
-  {/* ===== BRAND FOOTER ===== */}
-  <div className="bd-ticket-footer">
-    <img src={logo} alt="Review Ninja Pro" className="bd-footer-logo" />
-    <span className="bd-footer-name">Review Ninja Pro</span>
-  </div>
-           </div>
-
-
-
-
+              {/* ===== BRAND FOOTER ===== */}
+              <div className="bd-ticket-footer">
+                <img src={logo} alt="Review Ninja Pro" className="bd-footer-logo" />
+                <span className="bd-footer-name">Review Ninja Pro</span>
+              </div>
+            </div>
 
             <div className="bd-link-row">
-            <button className="bd-download-btn" onClick={handleDownloadQR} disabled={downloading}>
-              {downloading ? (
-                "Preparing…"
-              ) : (
-                <>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 3v12" />
-                    <path d="M7 10l5 5 5-5" />
-                    <path d="M5 21h14" />
-                  </svg>
-                  Download QR card
-                </>
-              )}
-            </button>
-
+              <button className="bd-download-btn" onClick={handleDownloadQR} disabled={downloading}>
+                {downloading ? (
+                  "Preparing…"
+                ) : (
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 3v12" />
+                      <path d="M7 10l5 5 5-5" />
+                      <path d="M5 21h14" />
+                    </svg>
+                    Download QR card
+                  </>
+                )}
+              </button>
             </div>
 
             <div className="bd-link-row">
@@ -325,11 +287,6 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
               </button>
             </div>
           </div>
-
-
-
-
-
         </div>
 
         {/* REVIEWS */}
@@ -338,6 +295,41 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
 
           {loading ? (
             <p className="bd-empty">Loading reviews…</p>
+          ) : restricted ? (
+            /* ===== FREE TRIAL / NO SUBSCRIPTION: blurred + upgrade overlay ===== */
+            <div className="bd-reviews-locked-wrap">
+              <div className="bd-reviews-locked-blur" aria-hidden="true">
+                {/* Fake placeholder rows just to have something to blur behind the card */}
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bd-review-item">
+                    <div className="bd-review-top">
+                      <div>
+                        <h4>Customer name</h4>
+                        <span className="bd-rating-text">5 out of 5</span>
+                      </div>
+                      <div className="bd-stars">★★★★★</div>
+                    </div>
+                    <p>This is a placeholder review text so the layout looks realistic behind the blur.</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bd-upgrade-overlay">
+                <div className="bd-upgrade-card">
+                  <div className="bd-upgrade-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="11" width="18" height="10" rx="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                  </div>
+                  <h3>Reviews are locked</h3>
+                  <p>{restrictionMessage || "Upgrade your plan to view customer reviews."}</p>
+                  <button className="bd-upgrade-btn" onClick={handleUpgradeClick}>
+                    Upgrade Plan
+                  </button>
+                </div>
+              </div>
+            </div>
           ) : reviews.length === 0 ? (
             <div className="bd-empty-state">
               <p>No reviews yet</p>
@@ -363,51 +355,51 @@ const BusinessDetails = ({ business, setSelectedBusiness, setActiveTab }) => {
       </div>
 
       {popUp && (
-  <div className="bd-modal-overlay">
-    <div className="bd-modal">
-      <div className="bd-modal-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M3 6h18" />
-          <path d="M8 6V4h8v2" />
-          <path d="M19 6l-1 14H6L5 6" />
-          <path d="M10 11v6" />
-          <path d="M14 11v6" />
-        </svg>
-      </div>
+        <div className="bd-modal-overlay">
+          <div className="bd-modal">
+            <div className="bd-modal-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 6h18" />
+                <path d="M8 6V4h8v2" />
+                <path d="M19 6l-1 14H6L5 6" />
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+              </svg>
+            </div>
 
-      <h2>Delete business</h2>
-      <p>
-        This will permanently remove <strong>{business.name}</strong> and all
-        its review data. This action cannot be undone.
-      </p>
+            <h2>Delete business</h2>
+            <p>
+              This will permanently remove <strong>{business.name}</strong> and all
+              its review data. This action cannot be undone.
+            </p>
 
-      <div className="bd-modal-actions">
-        <button
-          className="bd-modal-cancel"
-          onClick={() => setPopUp(false)}
-          disabled={deleting}
-        >
-          Cancel
-        </button>
+            <div className="bd-modal-actions">
+              <button
+                className="bd-modal-cancel"
+                onClick={() => setPopUp(false)}
+                disabled={deleting}
+              >
+                Cancel
+              </button>
 
-        <button
-          className="bd-modal-confirm"
-          onClick={handleDelete}
-          disabled={deleting}
-        >
-          {deleting ? (
-            <>
-              <span className="bd-spinner" />
-              Deleting…
-            </>
-          ) : (
-            "Delete"
-          )}
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+              <button
+                className="bd-modal-confirm"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? (
+                  <>
+                    <span className="bd-spinner" />
+                    Deleting…
+                  </>
+                ) : (
+                  "Delete"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

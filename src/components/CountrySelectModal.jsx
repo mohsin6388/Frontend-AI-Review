@@ -14,7 +14,7 @@ export default function CountrySelectModal() {
     <div className="csm-overlay">
       <div className="csm-box">
         <h2 className="csm-title">Select Your Country</h2>
-        <p className="csm-sub">Apna country chuno taaki hum aapko sahi language aur pricing dikha sakein</p>
+        <p className="csm-sub">Choose your country so we can show you the correct language and pricing.</p>
 
         <div className="csm-grid">
           {COUNTRIES.map((c) => (

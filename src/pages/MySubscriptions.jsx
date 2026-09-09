@@ -1,6 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import api from "../api";
 import "./MySubscriptions.css";
+
+// Formats "starter_monthly" -> "Starter Monthly Plan"
+// Works for ANY plan_name automatically, no hardcoded map needed.
+const formatPlanName = (rawName) => {
+  if (!rawName) return "N/A";
+
+  const parts = rawName.toLowerCase().split("_"); // ["starter", "monthly"]
+  const cycleLabels = {
+    monthly: "Monthly",
+    quarterly: "Quarterly",
+    yearly: "Yearly",
+  };
+
+  const planType = parts[0]
+    ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1)
+    : "";
+  const cycle = parts[1] ? (cycleLabels[parts[1]] || parts[1]) : "";
+
+  return `${planType}${cycle ? " " + cycle : ""} Plan`.trim();
+};
 
 const MySubscriptions = ({ user }) => {
   const [paymentInfo, setPaymentInfo] = useState(null);
@@ -11,7 +31,6 @@ const MySubscriptions = ({ user }) => {
       setLoading(true);
       try {
         const { data } = await api.get(`/payment/check-payment/${user.id}`);
-        console.log(data);
         setPaymentInfo(data);
       } catch (error) {
         console.log(error);
@@ -60,7 +79,10 @@ const MySubscriptions = ({ user }) => {
   const data = paymentInfo?.data;
 
   // ===== NO SUBSCRIPTION STATE =====
-  if (!data || !paymentInfo?.isPaid) {
+  // Uses isSubscriptionActive (based on subscription status + end_date),
+  // NOT isPaid — isPaid depends on the payments table row being 'success',
+  // which can lag behind (e.g. verify-payment not completing locally).
+  if (!data || !paymentInfo?.isSubscriptionActive) {
     return (
       <div className="sub-page">
         <div className="no-sub-card">
@@ -72,22 +94,9 @@ const MySubscriptions = ({ user }) => {
     );
   }
 
-  const planName = data.plan_name
-    ? data.plan_name.charAt(0).toUpperCase() + data.plan_name.slice(1)
-    : "N/A";
-
-    console.log("====>",planName)
-
-  const planNames = {
-  Starter_quarterly: "Starter Quarterly Plan",
-  Starter_yearly: "Starter Yearly Plan",
-  Growth_quarterly: "Growth Quarterly Plan",
-  Growth_yearly: "Growth Yearly Plan",
-  };
-
+  const displayPlanName = formatPlanName(data.plan_name);
 
   // ===== EXPIRY CALCULATION (pure frontend, based on end_date) =====
-  // Raw days remaining, can go negative once expired
   const rawDaysRemaining = data.end_date
     ? Math.ceil((new Date(data.end_date) - new Date()) / (1000 * 60 * 60 * 24))
     : null;
@@ -111,7 +120,7 @@ const MySubscriptions = ({ user }) => {
             >
               {isExpired ? "● Expired" : isExpiringSoon ? "● Expiring Soon" : "● Active"}
             </span>
-            <h1>🎉 {planNames[planName]}</h1>
+            <h1> {displayPlanName}</h1>
           </div>
 
           {daysRemaining !== null && isActive && (
@@ -125,7 +134,7 @@ const MySubscriptions = ({ user }) => {
         <div className="subscription-details">
           <div className="detail-item">
             <h4>Plan</h4>
-            <p>{planNames[planName]}</p>
+            <p>{displayPlanName}</p>
           </div>
 
           <div className="detail-item">
@@ -193,4 +202,4 @@ const MySubscriptions = ({ user }) => {
   );
 };
 
-export default MySubscriptions
+export default MySubscriptions;

@@ -791,6 +791,12 @@ function SectionHeading({ badge, title, sub, light = false }) {
   );
 }
 
+
+
+
+
+
+
 export default function ReviewMasterLanding() {
   const [scrolled, setScrolled] = useState(false);
   const [heroVis, setHeroVis] = useState(false);

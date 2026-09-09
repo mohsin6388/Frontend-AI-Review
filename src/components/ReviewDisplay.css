@@ -1,20 +1,11 @@
-/* ==== Self-contained theme (fallbacks so it always renders correctly,
-   even if the global theme CSS isn't loaded on this public/QR page) ==== */
+/* ==== Self-contained theme — hardcoded safe colors, no dependency on
+   global CSS variables (they clash with the dark-theme index.css) ==== */
 .rnp-review-display {
-  --gold: var(--gold, #FACC15);
-  --gold-dim: var(--gold-dim, rgba(250, 204, 21, 0.15));
-  --border-glow: var(--border-glow, rgba(250, 204, 21, 0.35));
-  --green: var(--green, #10B981);
-  --text-secondary: var(--text-secondary, #4B5563);
-  --text-muted: var(--text-muted, #9CA3AF);
-  --radius-md: var(--radius-md, 12px);
-  --font-display: var(--font-display, 'Poppins', 'Segoe UI', sans-serif);
-
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  font-family: var(--font-display);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
 .rnp-review-display * {
@@ -24,6 +15,10 @@
 @keyframes rnp-pulse-gold {
   0%, 100% { box-shadow: 0 0 0 0 rgba(40, 101, 232, 0.35); }
   50% { box-shadow: 0 0 0 8px rgba(40, 101, 232, 0); }
+}
+
+@keyframes rnp-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ==== Header ==== */
@@ -41,61 +36,61 @@
 
 .rnp-title {
   margin: 0;
-  font-size: 18px;
+  font-size: clamp(16.5px, 4.5vw, 18px);
   font-weight: 800;
-  color: var(--text-primary, #111827);
+  color: #111111; /* solid dark, visible on white */
 }
 
 .rnp-subtitle {
   margin: 2px 0 0;
-  font-size: 13px;
-  color: var(--text-secondary);
+  font-size: clamp(12px, 3.4vw, 13px);
+  color: #6B6B6B; /* solid mid-grey, visible on white */
 }
 
 /* ==== Reviews slider ==== */
 .rnp-reviews-slider {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 4px 4px 10px;
-  margin-top: 20px;
+  scroll-padding-left: 4px;
+  padding: 4px 4px 4px;
+  margin-top: 18px;
   -webkit-overflow-scrolling: touch;
+
+  /* hide the default browser scrollbar (that "black bar") */
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* old Edge/IE */
 }
 
 .rnp-reviews-slider::-webkit-scrollbar {
-  height: 8px;
-}
-
-.rnp-reviews-slider::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 20px;
+  display: none; /* Chrome/Safari/mobile */
 }
 
 .rnp-review-card {
-  min-width: 280px;
-  max-width: 320px;
-  width: 85vw;
+  min-width: 260px;
+  max-width: 300px;
+  width: 82vw;
   flex-shrink: 0;
-  scroll-snap-align: start;
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: var(--radius-md);
+  scroll-snap-align: center;
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
   padding: 16px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .rnp-review-text-box {
-  min-height: 160px;
+  min-height: 150px;
   word-break: break-word;
   overflow-wrap: break-word;
-  border-radius: 20px;
 }
 
 .rnp-quote-mark {
   font-size: 28px;
-  color: var(--gold);
+  color: #F5A623;
   line-height: 1;
   font-family: Georgia, serif;
 }
@@ -115,12 +110,12 @@
   padding: 14px 16px;
   background: linear-gradient(135deg, #2865E8, #1D4ED8);
   color: #fff;
-  font-family: var(--font-display);
+  font-family: inherit;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.3;
   border: none;
-  border-radius: 20px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -143,6 +138,17 @@
 
 .rnp-copy-btn.rnp-copied {
   animation: none;
+  background: linear-gradient(135deg, #10B981, #059669);
+}
+
+.rnp-copy-btn.rnp-loading {
+  animation: none;
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+.rnp-copy-btn:disabled {
+  cursor: not-allowed;
 }
 
 .rnp-btn-icon {
@@ -151,16 +157,26 @@
   font-size: medium;
 }
 
+.rnp-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: rnp-spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
 /* ==== Steps ==== */
 .rnp-steps {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  background: rgba(250, 204, 21, 0.04);
-  border: 1px solid rgba(250, 204, 21, 0.1);
-  border-radius: var(--radius-md);
+  gap: 10px;
+  background: #FFF9E8;
+  border: 1px solid #F5E5B8;
+  border-radius: 12px;
   padding: 14px 16px;
-  margin-top: 15px;
+  margin-top: 16px;
 }
 
 .rnp-step-item {
@@ -173,12 +189,11 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--gold-dim);
-  border: 1px solid var(--border-glow);
-  color: var(--gold);
+  background: #FDEBC8;
+  border: 1px solid #F0C864;
+  color: #92651A; /* solid readable amber, not var(--gold) */
   font-size: 11px;
   font-weight: 700;
-  font-family: var(--font-display);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,18 +202,30 @@
 
 .rnp-step-text {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: #4B5563; /* solid dark grey, visible */
 }
 
 /* ==== Small screens ==== */
 @media (max-width: 380px) {
   .rnp-review-card {
-    min-width: 240px;
+    min-width: 230px;
     width: 78vw;
     padding: 14px;
   }
 
   .rnp-title {
     font-size: 16px;
+  }
+
+  .rnp-copy-btn {
+    font-size: 13px;
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 340px) {
+  .rnp-review-card {
+    min-width: 210px;
+    width: 76vw;
   }
 }

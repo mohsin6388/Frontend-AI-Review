@@ -80,12 +80,24 @@ const PaymentPage = ({ user }) => {
     }
   }, [user]);
 
-  // Buy Now ab seedha payment nahi, popup kholega — current top toggle ke hisaab se default cycle set karega
+  
+  // const openPlanModal = (plan) => {
+  //   setModalPlan(plan);
+  //   setModalCycle(billingCycle === "yearly" ? "yearly" : "quarterly");
+  //   setShowPlanModal(true);
+  // };
+
   const openPlanModal = (plan) => {
-    setModalPlan(plan);
-    setModalCycle(billingCycle === "yearly" ? "yearly" : "quarterly");
-    setShowPlanModal(true);
-  };
+  setModalPlan(plan);
+  if (billingCycle === "yearly") {
+    setModalCycle("yearly");
+  } else if (plan.id === "starter") {
+    setModalCycle("monthly");
+  } else {
+    setModalCycle("quarterly");
+  }
+  setShowPlanModal(true);
+};
 
   const closePlanModal = () => {
     setShowPlanModal(false);
@@ -110,7 +122,7 @@ const PaymentPage = ({ user }) => {
       );
 
       const options = {
-        // key: "rzp_test_TGpgN0JsvbJb4a",
+        // key: "rzp_test_TZW0dzD6BHG8kK",
         key: "rzp_live_TEwIhHLXLXjQto",
         amount: data.order.amount,
         currency: data.order.currency,
@@ -181,9 +193,13 @@ const PaymentPage = ({ user }) => {
     return `${planId}_${cycle}`;
   };
 
+  // const isCardCurrentPlan = (planId) => {
+  //   return paymentInfo?.data?.plan_name === getCardFullPlanId(planId);
+  // };
+
   const isCardCurrentPlan = (planId) => {
-    return paymentInfo?.data?.plan_name === getCardFullPlanId(planId);
-  };
+  return paymentInfo?.data?.plan_name?.startsWith(`${planId}_`);
+};
 
   const renderButtonContent = (planId, label) => {
     if (processingPlan === planId) {
@@ -240,8 +256,16 @@ const PaymentPage = ({ user }) => {
     );
   }
 
+  // const modalPrice =
+  //   modalPlan && (modalCycle === "quarterly" ? modalPlan.quarterlyPrice : modalPlan.yearlyPrice);
+
   const modalPrice =
-    modalPlan && (modalCycle === "quarterly" ? modalPlan.quarterlyPrice : modalPlan.yearlyPrice);
+  modalPlan &&
+  (modalCycle === "monthly"
+    ? modalPlan.monthlyPrice
+    : modalCycle === "quarterly"
+    ? modalPlan.quarterlyPrice
+    : modalPlan.yearlyPrice);
 
   return (
     <div className="pricing-page animate-fadeIn">
@@ -369,6 +393,23 @@ const PaymentPage = ({ user }) => {
             {/* dropdown: 3 Months / Yearly */}
             <label className="plan-modal-label">Select Billing Cycle</label>
             <select
+               value={modalCycle}
+               onChange={(e) => setModalCycle(e.target.value)}
+               className="plan-modal-select"
+             >
+               {modalPlan.id === "starter" && (
+                 <option value="monthly">
+                   1 Month — ₹{modalPlan.monthlyPrice.toLocaleString("en-IN")}
+                 </option>
+               )}
+               <option value="quarterly">
+                 3 Months — ₹{modalPlan.quarterlyPrice.toLocaleString("en-IN")}
+               </option>
+               <option value="yearly">
+                 Yearly — ₹{modalPlan.yearlyPrice.toLocaleString("en-IN")}
+               </option>
+             </select>             
+            {/* <select
               value={modalCycle}
               onChange={(e) => setModalCycle(e.target.value)}
               className="plan-modal-select"
@@ -379,7 +420,7 @@ const PaymentPage = ({ user }) => {
               <option value="yearly">
                 Yearly — ₹{modalPlan.yearlyPrice.toLocaleString("en-IN")}
               </option>
-            </select>
+            </select> */}
 
             {/* price breakdown */}
             <div className="plan-modal-summary">
@@ -395,8 +436,15 @@ const PaymentPage = ({ user }) => {
                 <span>Total Amount</span>
                 <span>
                   ₹{Math.round(modalPrice * 1.18).toLocaleString("en-IN")}
-                  <span className="price-period">
+                  {/* <span className="price-period">
                     {modalCycle === "quarterly" ? " / 3 months" : " / year"}
+                  </span> */}
+                  <span className="price-period">
+                    {modalCycle === "monthly"
+                      ? " / month"
+                      : modalCycle === "quarterly"
+                      ? " / 3 months"
+                      : " / year"}
                   </span>
                 </span>
               </div>
