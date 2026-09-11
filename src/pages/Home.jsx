@@ -4,7 +4,9 @@ import { useLanguage } from "../context/LanguageContext";
 import homeContent from "../i18n/homeContent";
 // import { Globe, Rocket, ShieldCheck, Star, Check, Plus, Sparkles, Smile, Laugh } from "lucide-react";
 import { Globe, Rocket, ShieldCheck, Star, Check, Plus, Sparkles, Smile, Laugh, Bot, Zap, BarChart3, QrCode, MousePointerClick, TrendingUp, HeartHandshake } from "lucide-react";
-
+import { Calendar, User, Tag } from "lucide-react";
+import { BusinessShowcase } from "../components/BusinessShowcase";
+import { getScrollerBusinesses } from "../i18n/businessScrollerData";
 /* ============================================================================
    DESIGN TOKENS
    Deep ink-navy surfaces, a single refined amber accent (kept close to the
@@ -796,7 +798,6 @@ function SectionHeading({ badge, title, sub, light = false }) {
 
 
 
-
 export default function ReviewMasterLanding() {
   const [scrolled, setScrolled] = useState(false);
   const [heroVis, setHeroVis] = useState(false);
@@ -1040,12 +1041,33 @@ export default function ReviewMasterLanding() {
             </div>
           </div>
 
-          <div style={{ marginTop: 60, position: "relative", zIndex: 1, animation: heroVis ? "fadeSlideUp 0.9s ease 0.5s both" : "none" }}>
+
+          <div
+  style={{
+    marginTop: 60,
+    position: "relative",
+    zIndex: 1,
+    width: "100%",
+    animation: heroVis ? "fadeSlideUp 0.9s ease 0.5s both" : "none",
+  }}
+>
+  <BusinessShowcase C={C} countryCode={countryInfo.code} />
+</div>
+
+          {/* <div style={{ marginTop: 60, position: "relative", zIndex: 1, animation: heroVis ? "fadeSlideUp 0.9s ease 0.5s both" : "none" }}>
             <div style={{ animation: "bounce-slow 3.5s ease-in-out infinite" }}>
               <PhoneMockup T={T.phoneMockup} />
             </div>
-          </div>
+          </div> */}
         </section>
+
+
+       
+
+
+
+
+        
 
         {/* TICKER */}
         <div style={{ background: C.accentSoft, borderTop: `1px solid ${C.surfaceBorder}`, borderBottom: `1px solid ${C.surfaceBorder}`, padding: "13px 0", overflow: "hidden" }}>
@@ -1132,7 +1154,7 @@ export default function ReviewMasterLanding() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section style={{ padding: "84px 5%", background: C.ink, position: "relative", overflow: "hidden" }}>
+        {/* <section style={{ padding: "84px 5%", background: C.ink, position: "relative", overflow: "hidden" }}>
           <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1 }}>
             <SectionHeading badge={T.testimonials.badge} title={`${T.testimonials.titleMain} <span style="color:${C.accent}">${T.testimonials.titleHighlight}</span>`} />
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
@@ -1141,11 +1163,11 @@ export default function ReviewMasterLanding() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
 
                       {/* BUSINESSES USING US — auto horizontal scroller */}
-        <section style={{ padding: "90px 0 4px 0", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
+        {/* <section style={{ padding: "90px 0 4px 0", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
           <div style={{ maxWidth: 1000, margin: "0 auto 40px", position: "relative", zIndex: 1, padding: "0 5%" }}>
             <SectionHeading
               badge={T.businesses.badge}
@@ -1163,7 +1185,30 @@ export default function ReviewMasterLanding() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
+
+        <section style={{ padding: "90px 0 4px 0", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
+  <div style={{ maxWidth: 1000, margin: "0 auto 40px", position: "relative", zIndex: 1, padding: "0 5%" }}>
+    <SectionHeading
+      badge={T.businesses.badge}
+      title={`${T.businesses.titleMain} <span style="color:${C.accent}">${T.businesses.titleHighlight}</span>`}
+      sub={T.businesses.sub}
+    />
+  </div>
+
+  <div className="business-scroller-mask" style={{ overflow: "hidden", position: "relative" }}>
+    <div className="business-scroller-track" style={{ display: "flex", gap: 18, width: "max-content" }}>
+      {(() => {
+        const scrollerBusinesses = getScrollerBusinesses(countryInfo.code);
+        return [...scrollerBusinesses, ...scrollerBusinesses].map((b, i) => (
+          <div key={i} style={{ width: 260, flexShrink: 0 }}>
+            <BusinessLogoCard name={b.name} tagline={b.tagline} logo={b.logo} />
+          </div>
+        ));
+      })()}
+    </div>
+  </div>
+</section>
 
         {/* PRICING */}
         <section id="pricing" style={{ padding: "84px 5%", background: C.inkSoft, position: "relative", overflow: "hidden" }}></section>
@@ -1255,9 +1300,19 @@ export default function ReviewMasterLanding() {
               <button className="btn-primary" style={{ padding: "14px 34px", fontSize: 15 }} onClick={() => (window.location.href = "/login")}>
                 {T.cta.primaryBtn}
               </button>
-              <button className="btn-outline" style={{ padding: "14px 30px", fontSize: 15 }}>
-                {T.cta.secondaryBtn}
-              </button>
+             <button
+  className="btn-outline"
+  style={{ padding: "14px 30px", fontSize: 15 }}
+  onClick={() => {
+    if (countryInfo.code === "IN") {
+      window.open("https://wa.me/918750200899?text=Hi%2C%20I%27m%20interested%20in%20Review%20Ninja%20Pro", "_blank");
+    } else {
+      window.location.href = "mailto:deificmonk@gmail.com.com?subject=Inquiry%20about%20Review%20Ninja%20Pro";
+    }
+  }}
+>
+  {T.cta.secondaryBtn}
+</button>
             </div>
             <p style={{ marginTop: 20, fontSize: 12, color: "rgba(243,246,251,0.42)", fontFamily: "'Inter',sans-serif" }}>{T.cta.note}</p>
           </div>

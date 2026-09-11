@@ -1,0 +1,11 @@
+
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /login
+Disallow: /signup
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /create-password
+ 
+Sitemap: https://reviewninjapro.com/sitemap.xml
