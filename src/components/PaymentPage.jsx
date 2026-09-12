@@ -639,8 +639,8 @@ const PaymentPage = ({ user }) => {
       );
 
       const options = {
-        key: "rzp_test_TZW0dzD6BHG8kK",
-        // key: "rzp_live_TEwIhHLXLXjQto",
+        // key: "rzp_test_TZW0dzD6BHG8kK",
+        key: "rzp_live_TEwIhHLXLXjQto",
         amount: data.order.amount,
         currency: data.order.currency,
         order_id: data.order.id,
