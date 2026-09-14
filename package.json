@@ -1,5 +1,5 @@
 {
-  "name": "review-rocket-frontend",
+  "name": "review-ninja-pro-frontend",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -20,8 +20,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "dev": "vite",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:prerender": "vite build && node prerender.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -42,5 +44,12 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "puppeteer": "^25.10.0"
+  },
+  "allowScripts": {
+    "puppeteer@25.10.0": true
+  }
 }

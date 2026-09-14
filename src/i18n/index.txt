@@ -69,3 +69,23 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+// package.json me pehle yeh script thi 
+// "scripts": {
+  //   "start": "react-scripts start",
+  //   "build": "react-scripts build",
+  //   "build:prerender": "vite build && node prerender.js",
+  //   "test": "react-scripts test",
+  //   "eject": "react-scripts eject"
+  // },

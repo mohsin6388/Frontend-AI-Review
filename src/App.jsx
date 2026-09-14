@@ -1,24 +1,23 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { LanguageProvider } from './context/LanguageContext';
-import ReviewPage from './pages/ReviewPage';
-import RegisterPage from './pages/RegisterPage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import DashboardPage from './pages/DashboardPage';
-import './index.css';
-import ForgotPassword from './pages/ForgotPassword';
-import CreatePassword from './pages/CreatePassword';
-import HomeLanding from './pages/Home.jsx';
-import TermsAndCondition from './pages/TermsAndCondition'
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import AboutUs from './pages/About.jsx';
-import ContactUs from './pages/ContactUs.jsx';
-import RefundPolicy from './pages/RefundPolicy.jsx';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
+import { LanguageProvider } from "./context/LanguageContext";
+import ReviewPage from "./pages/ReviewPage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import DashboardPage from "./pages/DashboardPage";
+import "./index.css";
+import ForgotPassword from "./pages/ForgotPassword";
+import CreatePassword from "./pages/CreatePassword";
+import HomeLanding from "./pages/Home.jsx";
+import TermsAndCondition from "./pages/TermsAndCondition";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AboutUs from "./pages/About.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
+import RefundPolicy from "./pages/RefundPolicy.jsx";
 
-
-import CountrySelectModal from "./components/CountrySelectModal.jsx"
+import CountrySelectModal from "./components/CountrySelectModal.jsx";
 
 // Protected route — redirect to /login if not authenticated
 const PrivateRoute = ({ children }) => {
@@ -39,19 +38,13 @@ function AppRoutes() {
     <Routes>
       {/* Auth pages */}
 
-      <Route
-        path='/'
-        element={
-          <HomeLanding/>
-        }
-        />
+      <Route path="/" element={<HomeLanding />} />
 
-      <Route path='/terms-and-condition' element={<TermsAndCondition/>} />
-<Route path='/privacy-policy' element={<PrivacyPolicy/>} />
-<Route path='/refund-policy' element={<RefundPolicy/>} />
-<Route path='/about-us' element={<AboutUs/>} />
-<Route path='/contact-us' element={<ContactUs/>} />
-
+      <Route path="/terms-and-condition" element={<TermsAndCondition />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/refund-policy" element={<RefundPolicy />} />
+      <Route path="/about-us" element={<AboutUs />} />
+      <Route path="/contact-us" element={<ContactUs />} />
 
       <Route
         path="/login"
@@ -99,7 +92,7 @@ function AppRoutes() {
 function App() {
   return (
     <LanguageProvider>
-       <CountrySelectModal />
+      <CountrySelectModal />
       <AuthProvider>
         <BrowserRouter>
           <AppRoutes />

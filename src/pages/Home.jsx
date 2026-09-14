@@ -3,7 +3,24 @@ import logo from "../assets/review-booster-logo2.png";
 import { useLanguage } from "../context/LanguageContext";
 import homeContent from "../i18n/homeContent";
 // import { Globe, Rocket, ShieldCheck, Star, Check, Plus, Sparkles, Smile, Laugh } from "lucide-react";
-import { Globe, Rocket, ShieldCheck, Star, Check, Plus, Sparkles, Smile, Laugh, Bot, Zap, BarChart3, QrCode, MousePointerClick, TrendingUp, HeartHandshake } from "lucide-react";
+import {
+  Globe,
+  Rocket,
+  ShieldCheck,
+  Star,
+  Check,
+  Plus,
+  Sparkles,
+  Smile,
+  Laugh,
+  Bot,
+  Zap,
+  BarChart3,
+  QrCode,
+  MousePointerClick,
+  TrendingUp,
+  HeartHandshake,
+} from "lucide-react";
 import { Calendar, User, Tag } from "lucide-react";
 import { BusinessShowcase } from "../components/BusinessShowcase";
 import { getScrollerBusinesses } from "../i18n/businessScrollerData";
@@ -31,8 +48,6 @@ const C = {
   paperInk: "#0B2036",
   paperDim: "#5B6B80",
 };
-
-
 
 // Professional vector icons — emoji ki jagah, order content arrays se match karta hai
 const WHY_MATTERS_ICONS = [
@@ -88,10 +103,17 @@ function LangToggle({ lang, toggleLang, small = false }) {
         flexShrink: 0,
         transition: "border-color .2s ease, background .2s ease",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(232,151,61,0.5)")}
-      onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.surfaceBorder)}
+      onMouseEnter={(e) =>
+        (e.currentTarget.style.borderColor = "rgba(232,151,61,0.5)")
+      }
+      onMouseLeave={(e) =>
+        (e.currentTarget.style.borderColor = C.surfaceBorder)
+      }
     >
-      <span aria-hidden><Globe size={14} /></span> {lang === "en" ? "Hinglish" : "English"}
+      <span aria-hidden>
+        <Globe size={14} />
+      </span>{" "}
+      {lang === "en" ? "Hinglish" : "English"}
     </button>
   );
 }
@@ -116,7 +138,10 @@ function Stars({ count = 5, size = 15 }) {
   return (
     <span style={{ display: "inline-flex", gap: 2 }}>
       {Array.from({ length: count }).map((_, i) => (
-        <span key={i} style={{ fontSize: size, color: C.accent, lineHeight: 1 }}>
+        <span
+          key={i}
+          style={{ fontSize: size, color: C.accent, lineHeight: 1 }}
+        >
           <Star size={size} fill="currentColor" stroke="none" />
         </span>
       ))}
@@ -127,7 +152,15 @@ function Stars({ count = 5, size = 15 }) {
 /* Subtle grid + glow ambience instead of scattered particles */
 function Ambience() {
   return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        overflow: "hidden",
+        pointerEvents: "none",
+        zIndex: 0,
+      }}
+    >
       <div
         style={{
           position: "absolute",
@@ -147,8 +180,10 @@ function Ambience() {
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
           backgroundSize: "64px 64px",
-          maskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%)",
+          maskImage:
+            "radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%)",
         }}
       />
     </div>
@@ -158,10 +193,22 @@ function Ambience() {
 function GoogleG({ size = 32 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48">
-      <path fill="#EA4335" d="M24 9.5c3.14 0 5.95 1.08 8.16 2.85l6.08-6.08C34.52 3.18 29.6 1 24 1 14.8 1 7 6.7 3.55 14.65l7.1 5.52C12.4 14.07 17.73 9.5 24 9.5z" />
-      <path fill="#4285F4" d="M46.5 24.5c0-1.63-.15-3.2-.42-4.7H24v8.9h12.67c-.55 2.96-2.2 5.47-4.67 7.16l7.1 5.52C43.4 37.8 46.5 31.6 46.5 24.5z" />
-      <path fill="#FBBC05" d="M10.65 28.17A14.55 14.55 0 0 1 9.5 24c0-1.44.25-2.83.65-4.17l-7.1-5.52A23.5 23.5 0 0 0 .5 24c0 3.8.9 7.4 2.55 10.6l7.1-5.52z" />
-      <path fill="#34A853" d="M24 46.5c5.6 0 10.3-1.85 13.7-5.02l-7.1-5.52C28.9 37.6 26.6 38.5 24 38.5c-6.27 0-11.6-4.57-13.35-10.67l-7.1 5.52C7 41.8 14.8 46.5 24 46.5z" />
+      <path
+        fill="#EA4335"
+        d="M24 9.5c3.14 0 5.95 1.08 8.16 2.85l6.08-6.08C34.52 3.18 29.6 1 24 1 14.8 1 7 6.7 3.55 14.65l7.1 5.52C12.4 14.07 17.73 9.5 24 9.5z"
+      />
+      <path
+        fill="#4285F4"
+        d="M46.5 24.5c0-1.63-.15-3.2-.42-4.7H24v8.9h12.67c-.55 2.96-2.2 5.47-4.67 7.16l7.1 5.52C43.4 37.8 46.5 31.6 46.5 24.5z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M10.65 28.17A14.55 14.55 0 0 1 9.5 24c0-1.44.25-2.83.65-4.17l-7.1-5.52A23.5 23.5 0 0 0 .5 24c0 3.8.9 7.4 2.55 10.6l7.1-5.52z"
+      />
+      <path
+        fill="#34A853"
+        d="M24 46.5c5.6 0 10.3-1.85 13.7-5.02l-7.1-5.52C28.9 37.6 26.6 38.5 24 38.5c-6.27 0-11.6-4.57-13.35-10.67l-7.1 5.52C7 41.8 14.8 46.5 24 46.5z"
+      />
     </svg>
   );
 }
@@ -175,10 +222,19 @@ function PhoneMockup({ T }) {
         background: "#0A1524",
         borderRadius: 38,
         padding: "13px 9px",
-        boxShadow: "0 40px 90px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)",
+        boxShadow:
+          "0 40px 90px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)",
       }}
     >
-      <div style={{ width: 58, height: 11, background: "#050B14", borderRadius: 8, margin: "0 auto 10px" }} />
+      <div
+        style={{
+          width: 58,
+          height: 11,
+          background: "#050B14",
+          borderRadius: 8,
+          margin: "0 auto 10px",
+        }}
+      />
       <div
         style={{
           background: "white",
@@ -191,7 +247,15 @@ function PhoneMockup({ T }) {
           gap: 10,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 8, paddingBottom: 9, borderBottom: "1px solid #EEF1F5" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            paddingBottom: 9,
+            borderBottom: "1px solid #EEF1F5",
+          }}
+        >
           <div
             style={{
               width: 30,
@@ -203,18 +267,58 @@ function PhoneMockup({ T }) {
               justifyContent: "center",
             }}
           >
-            <span style={{ color: "white", fontSize: 12, fontWeight: 700 }}>RN</span>
+            <span style={{ color: "white", fontSize: 12, fontWeight: 700 }}>
+              RN
+            </span>
           </div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 11, color: "#111", fontFamily: "'Inter',sans-serif" }}>{T.brand}</div>
-            <div style={{ fontSize: 9, color: "#8A93A3", fontFamily: "'Inter',sans-serif" }}>{T.thanks}</div>
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: 11,
+                color: "#111",
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
+              {T.brand}
+            </div>
+            <div
+              style={{
+                fontSize: 9,
+                color: "#8A93A3",
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
+              {T.thanks}
+            </div>
           </div>
         </div>
-        <div style={{ background: "#F5F8FC", borderRadius: 10, padding: "9px 11px", border: "1px solid #E1E9F2" }}>
-          <p style={{ margin: 0, fontSize: 11, color: C.paperInk, fontWeight: 600, fontFamily: "'Inter',sans-serif" }}>{T.question}</p>
+        <div
+          style={{
+            background: "#F5F8FC",
+            borderRadius: 10,
+            padding: "9px 11px",
+            border: "1px solid #E1E9F2",
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: 11,
+              color: C.paperInk,
+              fontWeight: 600,
+              fontFamily: "'Inter',sans-serif",
+            }}
+          >
+            {T.question}
+          </p>
         </div>
         {[
-          { emoji: <Laugh size={16} />, label: T.optionExcellent, selected: true },
+          {
+            emoji: <Laugh size={16} />,
+            label: T.optionExcellent,
+            selected: true,
+          },
           { emoji: <Smile size={16} />, label: T.optionGood, selected: false },
         ].map((o) => (
           <div
@@ -226,21 +330,67 @@ function PhoneMockup({ T }) {
               background: "#FAFBFD",
               borderRadius: 8,
               padding: "8px 10px",
-              border: o.selected ? `2px solid ${C.navy}` : "2px solid transparent",
+              border: o.selected
+                ? `2px solid ${C.navy}`
+                : "2px solid transparent",
             }}
           >
             <span style={{ fontSize: 16 }}>{o.emoji}</span>
-            <span style={{ fontSize: 12, fontWeight: 600, color: o.selected ? C.navy : "#374151", fontFamily: "'Inter',sans-serif" }}>
+            <span
+              style={{
+                fontSize: 12,
+                fontWeight: 600,
+                color: o.selected ? C.navy : "#374151",
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
               {o.label}
             </span>
             {o.selected && (
-              <span style={{ marginLeft: "auto", fontSize: 9, background: C.navy, color: "white", padding: "2px 6px", borderRadius: 5 }}><Check size={14} /></span>
+              <span
+                style={{
+                  marginLeft: "auto",
+                  fontSize: 9,
+                  background: C.navy,
+                  color: "white",
+                  padding: "2px 6px",
+                  borderRadius: 5,
+                }}
+              >
+                <Check size={14} />
+              </span>
             )}
           </div>
         ))}
-        <div style={{ background: "linear-gradient(135deg,#F5F8FC,#EAF1FA)", borderRadius: 10, padding: "9px 11px", border: "1px solid #CFE0F2" }}>
-          <div style={{ fontSize: 9, color: C.navy, fontWeight: 700, marginBottom: 4, fontFamily: "'Inter',sans-serif" }}><Sparkles size={12} /> {T.aiReady}</div>
-          <div style={{ fontSize: 10, color: C.paperInk, lineHeight: 1.55, fontFamily: "'Inter',sans-serif" }}>&ldquo;{T.sampleReview}&rdquo;</div>
+        <div
+          style={{
+            background: "linear-gradient(135deg,#F5F8FC,#EAF1FA)",
+            borderRadius: 10,
+            padding: "9px 11px",
+            border: "1px solid #CFE0F2",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 9,
+              color: C.navy,
+              fontWeight: 700,
+              marginBottom: 4,
+              fontFamily: "'Inter',sans-serif",
+            }}
+          >
+            <Sparkles size={12} /> {T.aiReady}
+          </div>
+          <div
+            style={{
+              fontSize: 10,
+              color: C.paperInk,
+              lineHeight: 1.55,
+              fontFamily: "'Inter',sans-serif",
+            }}
+          >
+            &ldquo;{T.sampleReview}&rdquo;
+          </div>
         </div>
         <div
           style={{
@@ -255,7 +405,16 @@ function PhoneMockup({ T }) {
           }}
         >
           <GoogleG size={13} />
-          <span style={{ color: "white", fontSize: 11, fontWeight: 700, fontFamily: "'Inter',sans-serif" }}>{T.postToGoogle}</span>
+          <span
+            style={{
+              color: "white",
+              fontSize: 11,
+              fontWeight: 700,
+              fontFamily: "'Inter',sans-serif",
+            }}
+          >
+            {T.postToGoogle}
+          </span>
         </div>
       </div>
     </div>
@@ -279,8 +438,28 @@ function StatCard({ value, label, icon, delay = 0 }) {
       }}
     >
       <div style={{ fontSize: 26, marginBottom: 8 }}>{icon}</div>
-      <div style={{ fontSize: 32, fontWeight: 800, color: C.accent, fontFamily: "'Sora',sans-serif", lineHeight: 1 }}>{value}</div>
-      <div style={{ fontSize: 12, color: C.textFaint, marginTop: 7, fontFamily: "'Inter',sans-serif", fontWeight: 500 }}>{label}</div>
+      <div
+        style={{
+          fontSize: 32,
+          fontWeight: 800,
+          color: C.accent,
+          fontFamily: "'Sora',sans-serif",
+          lineHeight: 1,
+        }}
+      >
+        {value}
+      </div>
+      <div
+        style={{
+          fontSize: 12,
+          color: C.textFaint,
+          marginTop: 7,
+          fontFamily: "'Inter',sans-serif",
+          fontWeight: 500,
+        }}
+      >
+        {label}
+      </div>
     </div>
   );
 }
@@ -302,7 +481,14 @@ function StepCard({ num, title, desc, icon, delay = 0 }) {
         transition: `all 0.65s cubic-bezier(.22,1,.36,1) ${delay}ms`,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 16,
+        }}
+      >
         <div
           style={{
             width: 46,
@@ -317,12 +503,40 @@ function StepCard({ num, title, desc, icon, delay = 0 }) {
         >
           {icon}
         </div>
-        <span style={{ fontWeight: 800, fontSize: 13, color: "rgba(11,32,54,0.18)", fontFamily: "'Sora',sans-serif", letterSpacing: 1 }}>
+        <span
+          style={{
+            fontWeight: 800,
+            fontSize: 13,
+            color: "rgba(11,32,54,0.18)",
+            fontFamily: "'Sora',sans-serif",
+            letterSpacing: 1,
+          }}
+        >
           {String(num).padStart(2, "0")}
         </span>
       </div>
-      <h3 style={{ margin: "0 0 8px", fontSize: 17, fontWeight: 700, color: C.paperInk, fontFamily: "'Sora',sans-serif" }}>{title}</h3>
-      <p style={{ margin: 0, fontSize: 13.5, color: C.paperDim, lineHeight: 1.7, fontFamily: "'Inter',sans-serif" }}>{desc}</p>
+      <h3
+        style={{
+          margin: "0 0 8px",
+          fontSize: 17,
+          fontWeight: 700,
+          color: C.paperInk,
+          fontFamily: "'Sora',sans-serif",
+        }}
+      >
+        {title}
+      </h3>
+      <p
+        style={{
+          margin: 0,
+          fontSize: 13.5,
+          color: C.paperDim,
+          lineHeight: 1.7,
+          fontFamily: "'Inter',sans-serif",
+        }}
+      >
+        {desc}
+      </p>
     </div>
   );
 }
@@ -360,8 +574,28 @@ function FeatureItem({ icon, title, desc, delay = 0 }) {
         {icon}
       </div>
       <div>
-        <h3 style={{ margin: "0 0 6px", fontSize: 17, fontWeight: 700, color: C.text, fontFamily: "'Sora',sans-serif" }}>{title}</h3>
-        <p style={{ margin: 0, fontSize: 13.5, color: C.textDim, lineHeight: 1.75, fontFamily: "'Inter',sans-serif" }}>{desc}</p>
+        <h3
+          style={{
+            margin: "0 0 6px",
+            fontSize: 17,
+            fontWeight: 700,
+            color: C.text,
+            fontFamily: "'Sora',sans-serif",
+          }}
+        >
+          {title}
+        </h3>
+        <p
+          style={{
+            margin: 0,
+            fontSize: 13.5,
+            color: C.textDim,
+            lineHeight: 1.75,
+            fontFamily: "'Inter',sans-serif",
+          }}
+        >
+          {desc}
+        </p>
       </div>
     </div>
   );
@@ -414,16 +648,30 @@ function TestiCard({ name, biz, text, delay = 0 }) {
           {name[0]}
         </div>
         <div>
-          <div style={{ fontWeight: 700, fontSize: 13, color: C.text, fontFamily: "'Inter',sans-serif" }}>{name}</div>
-          <div style={{ fontSize: 11, color: C.textFaint, fontFamily: "'Inter',sans-serif" }}>{biz}</div>
+          <div
+            style={{
+              fontWeight: 700,
+              fontSize: 13,
+              color: C.text,
+              fontFamily: "'Inter',sans-serif",
+            }}
+          >
+            {name}
+          </div>
+          <div
+            style={{
+              fontSize: 11,
+              color: C.textFaint,
+              fontFamily: "'Inter',sans-serif",
+            }}
+          >
+            {biz}
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-
-
 
 function BusinessLogoCard({ name, tagline, logo, delay = 0 }) {
   const [ref, vis] = useInView();
@@ -447,7 +695,13 @@ function BusinessLogoCard({ name, tagline, logo, delay = 0 }) {
         <img
           src={logo}
           alt={name}
-          style={{ width: 46, height: 46, borderRadius: 10, objectFit: "cover", flexShrink: 0 }}
+          style={{
+            width: 46,
+            height: 46,
+            borderRadius: 10,
+            objectFit: "cover",
+            flexShrink: 0,
+          }}
         />
       ) : (
         <div
@@ -470,8 +724,25 @@ function BusinessLogoCard({ name, tagline, logo, delay = 0 }) {
         </div>
       )}
       <div>
-        <div style={{ fontWeight: 700, fontSize: 14, color: C.text, fontFamily: "'Inter',sans-serif" }}>{name}</div>
-        <div style={{ fontSize: 12, color: C.textFaint, fontFamily: "'Inter',sans-serif" }}>{tagline}</div>
+        <div
+          style={{
+            fontWeight: 700,
+            fontSize: 14,
+            color: C.text,
+            fontFamily: "'Inter',sans-serif",
+          }}
+        >
+          {name}
+        </div>
+        <div
+          style={{
+            fontSize: 12,
+            color: C.textFaint,
+            fontFamily: "'Inter',sans-serif",
+          }}
+        >
+          {tagline}
+        </div>
       </div>
     </div>
   );
@@ -487,8 +758,8 @@ function PricingCard({
   highlight = false,
   isCustom = false,
   delay = 0,
-  countryCode = "IN",        // <-- yeh line honi chahiye
-  currencySymbol = "₹",       // <-- yeh line honi chahiye
+  countryCode = "IN", // <-- yeh line honi chahiye
+  currencySymbol = "₹", // <-- yeh line honi chahiye
   labels = {
     bestSeller: "⭐ BEST SELLER",
     custom: "Custom",
@@ -505,18 +776,25 @@ function PricingCard({
   // const periodLabel = billingCycle === "monthly" ? labels.perMonth : labels.perYear;
   const priceObj = billingCycle === "monthly" ? monthlyPrice : yearlyPrice;
   const price = priceObj ? priceObj[countryCode] : "";
-  const periodLabel = billingCycle === "monthly" ? labels.perMonth : labels.perYear;
+  const periodLabel =
+    billingCycle === "monthly" ? labels.perMonth : labels.perYear;
 
   return (
     <div
       ref={ref}
-      onClick={() => (window.location.href = isCustom ? "/contact-us" : "/login")}
+      onClick={() =>
+        (window.location.href = isCustom ? "/contact-us" : "/login")
+      }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       className="price-card"
       style={{
-        background: highlight ? `linear-gradient(160deg, ${C.navy}, ${C.navyDeep})` : C.surfaceHair,
-        border: highlight ? "1px solid rgba(232,151,61,0.4)" : `1px solid ${C.surfaceBorder}`,
+        background: highlight
+          ? `linear-gradient(160deg, ${C.navy}, ${C.navyDeep})`
+          : C.surfaceHair,
+        border: highlight
+          ? "1px solid rgba(232,151,61,0.4)"
+          : `1px solid ${C.surfaceBorder}`,
         borderRadius: 20,
         padding: "34px 26px",
         position: "relative",
@@ -531,8 +809,8 @@ function PricingCard({
         boxShadow: hover
           ? "0 28px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(232,151,61,0.35)"
           : highlight
-          ? "0 20px 50px rgba(6,36,66,0.4)"
-          : "0 4px 18px rgba(0,0,0,0.18)",
+            ? "0 20px 50px rgba(6,36,66,0.4)"
+            : "0 4px 18px rgba(0,0,0,0.18)",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
@@ -547,7 +825,8 @@ function PricingCard({
           left: hover ? "120%" : "-40%",
           width: "40%",
           height: "100%",
-          background: "linear-gradient(120deg, transparent, rgba(255,255,255,0.10), transparent)",
+          background:
+            "linear-gradient(120deg, transparent, rgba(255,255,255,0.10), transparent)",
           transition: "left .7s ease",
           pointerEvents: "none",
         }}
@@ -575,30 +854,114 @@ function PricingCard({
         </div>
       )}
 
-      <div style={{ fontSize: 11, fontWeight: 700, color: C.accent, letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 4, fontFamily: "'Inter',sans-serif" }}>
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: 700,
+          color: C.accent,
+          letterSpacing: 1.4,
+          textTransform: "uppercase",
+          marginBottom: 4,
+          fontFamily: "'Inter',sans-serif",
+        }}
+      >
         {plan}
       </div>
-      <div style={{ fontSize: 12, color: C.textFaint, marginBottom: 18, fontFamily: "'Inter',sans-serif" }}>{audience}</div>
+      <div
+        style={{
+          fontSize: 12,
+          color: C.textFaint,
+          marginBottom: 18,
+          fontFamily: "'Inter',sans-serif",
+        }}
+      >
+        {audience}
+      </div>
 
       {isCustom ? (
         <div style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 26, fontWeight: 800, color: "white", fontFamily: "'Sora',sans-serif" }}>{labels.custom}</div>
-          <div style={{ fontSize: 11.5, color: C.textFaint, marginTop: 4, fontFamily: "'Inter',sans-serif" }}>{labels.customNote}</div>
+          <div
+            style={{
+              fontSize: 26,
+              fontWeight: 800,
+              color: "white",
+              fontFamily: "'Sora',sans-serif",
+            }}
+          >
+            {labels.custom}
+          </div>
+          <div
+            style={{
+              fontSize: 11.5,
+              color: C.textFaint,
+              marginTop: 4,
+              fontFamily: "'Inter',sans-serif",
+            }}
+          >
+            {labels.customNote}
+          </div>
         </div>
       ) : (
         <div style={{ marginBottom: 24 }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-            <span style={{ fontSize: 38, fontWeight: 800, color: highlight ? "white" : C.accent, fontFamily: "'Sora',sans-serif" }}>{currencySymbol}{price}</span>
-            <span style={{ fontSize: 12.5, color: C.textFaint, fontFamily: "'Inter',sans-serif" }}>{periodLabel}</span>
+            <span
+              style={{
+                fontSize: 38,
+                fontWeight: 800,
+                color: highlight ? "white" : C.accent,
+                fontFamily: "'Sora',sans-serif",
+              }}
+            >
+              {currencySymbol}
+              {price}
+            </span>
+            <span
+              style={{
+                fontSize: 12.5,
+                color: C.textFaint,
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
+              {periodLabel}
+            </span>
           </div>
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 11, marginBottom: 26, flex: 1 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 11,
+          marginBottom: 26,
+          flex: 1,
+        }}
+      >
         {features.map((f, i) => (
-          <div key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start" }}>
-            <span style={{ color: C.accent, fontSize: 14, flexShrink: 0, marginTop: 1 }}><Check size={14} /></span>
-            <span style={{ fontSize: 13, color: highlight ? "rgba(255,255,255,0.82)" : C.textDim, lineHeight: 1.5, fontFamily: "'Inter',sans-serif" }}>{f}</span>
+          <div
+            key={i}
+            style={{ display: "flex", gap: 9, alignItems: "flex-start" }}
+          >
+            <span
+              style={{
+                color: C.accent,
+                fontSize: 14,
+                flexShrink: 0,
+                marginTop: 1,
+              }}
+            >
+              <Check size={14} />
+            </span>
+            <span
+              style={{
+                fontSize: 13,
+                color: highlight ? "rgba(255,255,255,0.82)" : C.textDim,
+                lineHeight: 1.5,
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
+              {f}
+            </span>
           </div>
         ))}
       </div>
@@ -607,7 +970,11 @@ function PricingCard({
         style={{
           width: "100%",
           padding: "13px 0",
-          background: highlight ? C.accent : hover ? "rgba(232,151,61,0.22)" : "rgba(232,151,61,0.12)",
+          background: highlight
+            ? C.accent
+            : hover
+              ? "rgba(232,151,61,0.22)"
+              : "rgba(232,151,61,0.12)",
           border: highlight ? "none" : "1px solid rgba(232,151,61,0.3)",
           borderRadius: 11,
           color: highlight ? "#1A0F00" : "white",
@@ -665,7 +1032,8 @@ function BillingToggle({ billingCycle, setBillingCycle, T }) {
           {cycle === "yearly" && (
             <span
               style={{
-                background: billingCycle === "yearly" ? "rgba(0,0,0,0.18)" : C.accentSoft,
+                background:
+                  billingCycle === "yearly" ? "rgba(0,0,0,0.18)" : C.accentSoft,
                 color: billingCycle === "yearly" ? "#1A0F00" : C.accent,
                 fontSize: 10,
                 fontWeight: 700,
@@ -709,7 +1077,17 @@ function FAQItem({ q, a, delay = 0 }) {
           gap: 14,
         }}
       >
-        <span style={{ fontSize: 15, fontWeight: 600, color: C.text, textAlign: "left", fontFamily: "'Inter',sans-serif" }}>{q}</span>
+        <span
+          style={{
+            fontSize: 15,
+            fontWeight: 600,
+            color: C.text,
+            textAlign: "left",
+            fontFamily: "'Inter',sans-serif",
+          }}
+        >
+          {q}
+        </span>
         <span
           style={{
             width: 26,
@@ -729,8 +1107,25 @@ function FAQItem({ q, a, delay = 0 }) {
           <Plus size={16} />
         </span>
       </button>
-      <div style={{ overflow: "hidden", maxHeight: open ? 220 : 0, transition: "max-height 0.35s ease", paddingBottom: open ? 15 : 0 }}>
-        <p style={{ margin: 0, fontSize: 14, color: C.textDim, lineHeight: 1.8, fontFamily: "'Inter',sans-serif" }}>{a}</p>
+      <div
+        style={{
+          overflow: "hidden",
+          maxHeight: open ? 220 : 0,
+          transition: "max-height 0.35s ease",
+          paddingBottom: open ? 15 : 0,
+        }}
+      >
+        <p
+          style={{
+            margin: 0,
+            fontSize: 14,
+            color: C.textDim,
+            lineHeight: 1.8,
+            fontFamily: "'Inter',sans-serif",
+          }}
+        >
+          {a}
+        </p>
       </div>
     </div>
   );
@@ -793,16 +1188,11 @@ function SectionHeading({ badge, title, sub, light = false }) {
   );
 }
 
-
-
-
-
-
 export default function ReviewMasterLanding() {
   const [scrolled, setScrolled] = useState(false);
   const [heroVis, setHeroVis] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { lang, toggleLang, T, countryInfo  } = useLanguage(homeContent);
+  const { lang, toggleLang, T, countryInfo } = useLanguage(homeContent);
   const [billingCycle, setBillingCycle] = useState("monthly");
 
   useEffect(() => {
@@ -817,7 +1207,9 @@ export default function ReviewMasterLanding() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   return (
@@ -877,7 +1269,14 @@ export default function ReviewMasterLanding() {
         }
       `}</style>
 
-      <div style={{ background: C.ink, color: C.text, overflowX: "hidden", minHeight: "100vh" }}>
+      <div
+        style={{
+          background: C.ink,
+          color: C.text,
+          overflowX: "hidden",
+          minHeight: "100vh",
+        }}
+      >
         {/* NAVBAR */}
         <nav
           style={{
@@ -894,7 +1293,9 @@ export default function ReviewMasterLanding() {
             background: scrolled ? "rgba(7,11,20,0.92)" : "transparent",
             backdropFilter: scrolled ? "blur(18px)" : "none",
             boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.3)" : "none",
-            borderBottom: scrolled ? `1px solid ${C.surfaceBorder}` : "1px solid transparent",
+            borderBottom: scrolled
+              ? `1px solid ${C.surfaceBorder}`
+              : "1px solid transparent",
             transition: "all .35s cubic-bezier(.4,0,.2,1)",
           }}
         >
@@ -912,35 +1313,79 @@ export default function ReviewMasterLanding() {
                 flexShrink: 0,
               }}
             >
-              <img src={logo} alt="logo" style={{ width: 34, height: 34, objectFit: "contain" }} />
+              <img
+                src={logo}
+                alt="logo"
+                style={{ width: 34, height: 34, objectFit: "contain" }}
+              />
             </div>
-            <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "-0.01em", fontFamily: "'Sora',sans-serif", color: "white" }}>
+            <span
+              style={{
+                fontWeight: 700,
+                fontSize: 18,
+                letterSpacing: "-0.01em",
+                fontFamily: "'Sora',sans-serif",
+                color: "white",
+              }}
+            >
               Review <span style={{ color: C.accent }}>Ninja</span>
-              <span style={{ fontWeight: 500, opacity: 0.7, fontSize: 14, marginLeft: 4 }}>Pro</span>
+              <span
+                style={{
+                  fontWeight: 500,
+                  opacity: 0.7,
+                  fontSize: 14,
+                  marginLeft: 4,
+                }}
+              >
+                Pro
+              </span>
             </span>
           </div>
 
-          <div className="nav-links" style={{ display: "flex", gap: 32, alignItems: "center" }}>
+          <div
+            className="nav-links"
+            style={{ display: "flex", gap: 32, alignItems: "center" }}
+          >
             {T.nav.links.map((l) => (
               <a
                 key={l}
                 href={`#${l.toLowerCase().replace(/\s/g, "-")}`}
                 className="nav-link"
-                style={{ color: "rgba(243,246,251,0.68)", textDecoration: "none", fontSize: 14, fontWeight: 600, fontFamily: "'Inter',sans-serif", padding: "4px 0" }}
+                style={{
+                  color: "rgba(243,246,251,0.68)",
+                  textDecoration: "none",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: "'Inter',sans-serif",
+                  padding: "4px 0",
+                }}
               >
                 {l}
               </a>
             ))}
           </div>
 
-                  <div className="nav-right" style={{ display: "flex", gap: 14, alignItems: "center" }}>
-            {countryInfo.code === "IN" && <LangToggle lang={lang} toggleLang={toggleLang} small />}
+          <div
+            className="nav-right"
+            style={{ display: "flex", gap: 14, alignItems: "center" }}
+          >
+            {countryInfo.code === "IN" && (
+              <LangToggle lang={lang} toggleLang={toggleLang} small />
+            )}
             <div className="nav-btns" style={{ display: "flex", gap: 10 }}>
-              <button className="btn-primary" style={{ padding: "10px 20px", fontSize: 13 }} onClick={() => (window.location.href = "/login")}>
+              <button
+                className="btn-primary"
+                style={{ padding: "10px 20px", fontSize: 13 }}
+                onClick={() => (window.location.href = "/login")}
+              >
                 {T.nav.cta}
               </button>
             </div>
-            <div className={`hamburger ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+            <div
+              className={`hamburger ${menuOpen ? "open" : ""}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
               <span />
               <span />
               <span />
@@ -948,14 +1393,30 @@ export default function ReviewMasterLanding() {
           </div>
         </nav>
 
-        <div className={`mobile-overlay ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(false)} />
+        <div
+          className={`mobile-overlay ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(false)}
+        />
         <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
           {T.nav.links.map((l) => (
-            <a key={l} href={`#${l.toLowerCase().replace(/\s/g, "-")}`} onClick={() => setMenuOpen(false)}>
+            <a
+              key={l}
+              href={`#${l.toLowerCase().replace(/\s/g, "-")}`}
+              onClick={() => setMenuOpen(false)}
+            >
               {l}
             </a>
           ))}
-          <button className="btn-primary" style={{ padding: "13px", fontSize: 14, marginTop: 16, borderRadius: 10 }} onClick={() => (window.location.href = "/login")}>
+          <button
+            className="btn-primary"
+            style={{
+              padding: "13px",
+              fontSize: 14,
+              marginTop: 16,
+              borderRadius: 10,
+            }}
+            onClick={() => (window.location.href = "/login")}
+          >
             {T.nav.cta}
           </button>
         </div>
@@ -976,7 +1437,15 @@ export default function ReviewMasterLanding() {
           }}
         >
           <Ambience />
-          <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", width: "100%" }}>
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1,
+              maxWidth: 800,
+              margin: "0 auto",
+              width: "100%",
+            }}
+          >
             <div
               style={{
                 display: "inline-flex",
@@ -990,8 +1459,25 @@ export default function ReviewMasterLanding() {
                 animation: heroVis ? "fadeSlideUp 0.6s ease both" : "none",
               }}
             >
-              <span style={{ width: 6, height: 6, background: C.accent, borderRadius: "50%", animation: "pulse 1.5s ease infinite" }} />
-              <span style={{ fontSize: 11, color: C.accent, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", fontFamily: "'Inter',sans-serif" }}>
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  background: C.accent,
+                  borderRadius: "50%",
+                  animation: "pulse 1.5s ease infinite",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 11,
+                  color: C.accent,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                  textTransform: "uppercase",
+                  fontFamily: "'Inter',sans-serif",
+                }}
+              >
                 AI-Powered Review Generation
               </span>
             </div>
@@ -1009,7 +1495,13 @@ export default function ReviewMasterLanding() {
               }}
             >
               {T.hero.titleLine1} <br /> {T.hero.titleLine2Pre}{" "}
-              <span style={{ background: `linear-gradient(135deg, ${C.accent}, #FFC97A)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              <span
+                style={{
+                  background: `linear-gradient(135deg, ${C.accent}, #FFC97A)`,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
                 {T.hero.titleHighlight}
               </span>
             </h1>
@@ -1030,29 +1522,51 @@ export default function ReviewMasterLanding() {
 
             <div
               className="hero-stats"
-              style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap", animation: heroVis ? "fadeSlideUp 0.7s ease 0.4s both" : "none" }}
+              style={{
+                display: "flex",
+                gap: 40,
+                justifyContent: "center",
+                flexWrap: "wrap",
+                animation: heroVis ? "fadeSlideUp 0.7s ease 0.4s both" : "none",
+              }}
             >
               {T.hero.stats.map((s) => (
                 <div key={s.n} style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 26, fontWeight: 800, color: C.accent, fontFamily: "'Sora',sans-serif" }}>{s.n}</div>
-                  <div style={{ fontSize: 11, color: C.textFaint, fontFamily: "'Inter',sans-serif" }}>{s.l}</div>
+                  <div
+                    style={{
+                      fontSize: 26,
+                      fontWeight: 800,
+                      color: C.accent,
+                      fontFamily: "'Sora',sans-serif",
+                    }}
+                  >
+                    {s.n}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 11,
+                      color: C.textFaint,
+                      fontFamily: "'Inter',sans-serif",
+                    }}
+                  >
+                    {s.l}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-
           <div
-  style={{
-    marginTop: 60,
-    position: "relative",
-    zIndex: 1,
-    width: "100%",
-    animation: heroVis ? "fadeSlideUp 0.9s ease 0.5s both" : "none",
-  }}
->
-  <BusinessShowcase C={C} countryCode={countryInfo.code} />
-</div>
+            style={{
+              marginTop: 60,
+              position: "relative",
+              zIndex: 1,
+              width: "100%",
+              animation: heroVis ? "fadeSlideUp 0.9s ease 0.5s both" : "none",
+            }}
+          >
+            <BusinessShowcase C={C} countryCode={countryInfo.code} />
+          </div>
 
           {/* <div style={{ marginTop: 60, position: "relative", zIndex: 1, animation: heroVis ? "fadeSlideUp 0.9s ease 0.5s both" : "none" }}>
             <div style={{ animation: "bounce-slow 3.5s ease-in-out infinite" }}>
@@ -1061,22 +1575,38 @@ export default function ReviewMasterLanding() {
           </div> */}
         </section>
 
-
-       
-
-
-
-
-        
-
         {/* TICKER */}
-        <div style={{ background: C.accentSoft, borderTop: `1px solid ${C.surfaceBorder}`, borderBottom: `1px solid ${C.surfaceBorder}`, padding: "13px 0", overflow: "hidden" }}>
-          <div style={{ display: "flex", animation: "ticker 24s linear infinite", width: "max-content" }}>
+        <div
+          style={{
+            background: C.accentSoft,
+            borderTop: `1px solid ${C.surfaceBorder}`,
+            borderBottom: `1px solid ${C.surfaceBorder}`,
+            padding: "13px 0",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              animation: "ticker 24s linear infinite",
+              width: "max-content",
+            }}
+          >
             {[...Array(2)]
               .fill(T.ticker)
               .flat()
               .map((t, i) => (
-                <span key={i} style={{ padding: "0 28px", fontSize: 12, fontWeight: 600, color: C.textDim, whiteSpace: "nowrap", fontFamily: "'Inter',sans-serif" }}>
+                <span
+                  key={i}
+                  style={{
+                    padding: "0 28px",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: C.textDim,
+                    whiteSpace: "nowrap",
+                    fontFamily: "'Inter',sans-serif",
+                  }}
+                >
                   {t}
                 </span>
               ))}
@@ -1084,39 +1614,130 @@ export default function ReviewMasterLanding() {
         </div>
 
         {/* WHY GOOGLE REVIEWS */}
-        <section style={{ padding: "84px 5%", background: C.ink, position: "relative", overflow: "hidden" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }} className="two-col">
+        <section
+          style={{
+            padding: "84px 5%",
+            background: C.ink,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1100,
+              margin: "0 auto",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 64,
+              alignItems: "center",
+            }}
+            className="two-col"
+          >
             <div>
-              <span style={{ fontSize: 11, fontWeight: 700, color: C.accent, letterSpacing: 2, textTransform: "uppercase", display: "block", marginBottom: 12, fontFamily: "'Inter',sans-serif" }}>
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: C.accent,
+                  letterSpacing: 2,
+                  textTransform: "uppercase",
+                  display: "block",
+                  marginBottom: 12,
+                  fontFamily: "'Inter',sans-serif",
+                }}
+              >
                 {T.whyMatters.badge}
               </span>
-              <h2 style={{ fontSize: "clamp(20px,2.6vw,30px)", fontWeight: 700, fontFamily: "'Sora',sans-serif", lineHeight: 1.2, marginBottom: 18, color: "white" }}>
-                {T.whyMatters.titleMain} <span style={{ color: C.accent }}>{T.whyMatters.titleHighlight}</span>
+              <h2
+                style={{
+                  fontSize: "clamp(20px,2.6vw,30px)",
+                  fontWeight: 700,
+                  fontFamily: "'Sora',sans-serif",
+                  lineHeight: 1.2,
+                  marginBottom: 18,
+                  color: "white",
+                }}
+              >
+                {T.whyMatters.titleMain}{" "}
+                <span style={{ color: C.accent }}>
+                  {T.whyMatters.titleHighlight}
+                </span>
               </h2>
-              <p style={{ fontSize: 15, color: C.textDim, lineHeight: 1.8, marginBottom: 30, fontFamily: "'Inter',sans-serif" }}>
-                <strong style={{ color: "white" }}>{T.whyMatters.bodyStrong}</strong> {T.whyMatters.bodyRest}
+              <p
+                style={{
+                  fontSize: 15,
+                  color: C.textDim,
+                  lineHeight: 1.8,
+                  marginBottom: 30,
+                  fontFamily: "'Inter',sans-serif",
+                }}
+              >
+                <strong style={{ color: "white" }}>
+                  {T.whyMatters.bodyStrong}
+                </strong>{" "}
+                {T.whyMatters.bodyRest}
               </p>
-              <button className="btn-primary" style={{ padding: "13px 26px", fontSize: 14 }} onClick={() => (window.location.href = "/login")}>
+              <button
+                className="btn-primary"
+                style={{ padding: "13px 26px", fontSize: 14 }}
+                onClick={() => (window.location.href = "/login")}
+              >
                 {T.whyMatters.cta}
               </button>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }} className="stats-grid">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 16,
+              }}
+              className="stats-grid"
+            >
               {T.whyMatters.stats.map((s, i) => (
                 // <StatCard key={s.label} value={s.value} label={s.label} icon={s.icon} delay={i * 100} />
-                 <StatCard key={s.label} value={s.value} label={s.label} icon={WHY_MATTERS_ICONS[i]} delay={i * 100} />
+                <StatCard
+                  key={s.label}
+                  value={s.value}
+                  label={s.label}
+                  icon={WHY_MATTERS_ICONS[i]}
+                  delay={i * 100}
+                />
               ))}
             </div>
           </div>
         </section>
 
         {/* HOW IT WORKS */}
-        <section id="how-it-works" style={{ padding: "84px 5%", background: C.paper }}>
-          <SectionHeading light badge={T.howItWorks.badge} title={T.howItWorks.title} sub={T.howItWorks.sub} />
-          <div style={{ maxWidth: 1000, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 24 }}>
+        <section
+          id="how-it-works"
+          style={{ padding: "84px 5%", background: C.paper }}
+        >
+          <SectionHeading
+            light
+            badge={T.howItWorks.badge}
+            title={T.howItWorks.title}
+            sub={T.howItWorks.sub}
+          />
+          <div
+            style={{
+              maxWidth: 1000,
+              margin: "0 auto",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
+              gap: 24,
+            }}
+          >
             {T.howItWorks.steps.map((s, i) => (
               // <StepCard key={s.num} num={s.num} icon={s.icon} title={s.title} delay={i * 150} desc={s.desc} />
-                  <StepCard key={s.num} num={s.num} icon={HOW_IT_WORKS_ICONS[i]} title={s.title} delay={i * 150} desc={s.desc} />
+              <StepCard
+                key={s.num}
+                num={s.num}
+                icon={HOW_IT_WORKS_ICONS[i]}
+                title={s.title}
+                delay={i * 150}
+                desc={s.desc}
+              />
             ))}
           </div>
           <div
@@ -1132,23 +1753,71 @@ export default function ReviewMasterLanding() {
               boxShadow: "0 20px 50px rgba(6,36,66,0.3)",
             }}
           >
-            <div style={{ fontSize: 40, flexShrink: 0 }}><ShieldCheck size={40} /></div>
+            <div style={{ fontSize: 40, flexShrink: 0 }}>
+              <ShieldCheck size={40} />
+            </div>
             <div>
-              <h3 style={{ fontFamily: "'Sora',sans-serif", fontSize: 19, fontWeight: 700, color: "white", marginBottom: 8 }}>{T.howItWorks.shieldTitle}</h3>
-              <p style={{ fontSize: 13, color: "rgba(243,246,251,0.72)", lineHeight: 1.75, margin: 0, fontFamily: "'Inter',sans-serif" }}>
-                {T.howItWorks.shieldBodyPre} <strong style={{ color: C.accent }}>{T.howItWorks.shieldBodyStrong}</strong> {T.howItWorks.shieldBodyPost}
+              <h3
+                style={{
+                  fontFamily: "'Sora',sans-serif",
+                  fontSize: 19,
+                  fontWeight: 700,
+                  color: "white",
+                  marginBottom: 8,
+                }}
+              >
+                {T.howItWorks.shieldTitle}
+              </h3>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: "rgba(243,246,251,0.72)",
+                  lineHeight: 1.75,
+                  margin: 0,
+                  fontFamily: "'Inter',sans-serif",
+                }}
+              >
+                {T.howItWorks.shieldBodyPre}{" "}
+                <strong style={{ color: C.accent }}>
+                  {T.howItWorks.shieldBodyStrong}
+                </strong>{" "}
+                {T.howItWorks.shieldBodyPost}
               </p>
             </div>
           </div>
         </section>
 
         {/* FEATURES */}
-        <section id="features" style={{ padding: "84px 5%", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
-          <div style={{ maxWidth: 900, margin: "0 auto", position: "relative", zIndex: 1 }}>
-            <SectionHeading badge={T.features.badge} title={`${T.features.titleMain} <span style="color:${C.accent}">${T.features.titleHighlight}</span>`} />
+        <section
+          id="features"
+          style={{
+            padding: "84px 5%",
+            background: C.inkSoft,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 900,
+              margin: "0 auto",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            <SectionHeading
+              badge={T.features.badge}
+              title={`${T.features.titleMain} <span style="color:${C.accent}">${T.features.titleHighlight}</span>`}
+            />
             {T.features.items.map((f, i) => (
               // <FeatureItem key={f.title} icon={f.icon} delay={i * 100} title={f.title} desc={f.desc} />
-               <FeatureItem key={f.title} icon={FEATURE_ICONS[i]} delay={i * 100} title={f.title} desc={f.desc} />
+              <FeatureItem
+                key={f.title}
+                icon={FEATURE_ICONS[i]}
+                delay={i * 100}
+                title={f.title}
+                desc={f.desc}
+              />
             ))}
           </div>
         </section>
@@ -1165,8 +1834,7 @@ export default function ReviewMasterLanding() {
           </div>
         </section> */}
 
-
-                      {/* BUSINESSES USING US — auto horizontal scroller */}
+        {/* BUSINESSES USING US — auto horizontal scroller */}
         {/* <section style={{ padding: "90px 0 4px 0", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
           <div style={{ maxWidth: 1000, margin: "0 auto 40px", position: "relative", zIndex: 1, padding: "0 5%" }}>
             <SectionHeading
@@ -1187,38 +1855,105 @@ export default function ReviewMasterLanding() {
           </div>
         </section> */}
 
-        <section style={{ padding: "90px 0 4px 0", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
-  <div style={{ maxWidth: 1000, margin: "0 auto 40px", position: "relative", zIndex: 1, padding: "0 5%" }}>
-    <SectionHeading
-      badge={T.businesses.badge}
-      title={`${T.businesses.titleMain} <span style="color:${C.accent}">${T.businesses.titleHighlight}</span>`}
-      sub={T.businesses.sub}
-    />
-  </div>
-
-  <div className="business-scroller-mask" style={{ overflow: "hidden", position: "relative" }}>
-    <div className="business-scroller-track" style={{ display: "flex", gap: 18, width: "max-content" }}>
-      {(() => {
-        const scrollerBusinesses = getScrollerBusinesses(countryInfo.code);
-        return [...scrollerBusinesses, ...scrollerBusinesses].map((b, i) => (
-          <div key={i} style={{ width: 260, flexShrink: 0 }}>
-            <BusinessLogoCard name={b.name} tagline={b.tagline} logo={b.logo} />
+        <section
+          style={{
+            padding: "90px 0 4px 0",
+            background: C.inkSoft,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1000,
+              margin: "0 auto 40px",
+              position: "relative",
+              zIndex: 1,
+              padding: "0 5%",
+            }}
+          >
+            <SectionHeading
+              badge={T.businesses.badge}
+              title={`${T.businesses.titleMain} <span style="color:${C.accent}">${T.businesses.titleHighlight}</span>`}
+              sub={T.businesses.sub}
+            />
           </div>
-        ));
-      })()}
-    </div>
-  </div>
-</section>
+
+          <div
+            className="business-scroller-mask"
+            style={{ overflow: "hidden", position: "relative" }}
+          >
+            <div
+              className="business-scroller-track"
+              style={{ display: "flex", gap: 18, width: "max-content" }}
+            >
+              {(() => {
+                const scrollerBusinesses = getScrollerBusinesses(
+                  countryInfo.code,
+                );
+                return [...scrollerBusinesses, ...scrollerBusinesses].map(
+                  (b, i) => (
+                    <div key={i} style={{ width: 260, flexShrink: 0 }}>
+                      <BusinessLogoCard
+                        name={b.name}
+                        tagline={b.tagline}
+                        logo={b.logo}
+                      />
+                    </div>
+                  ),
+                );
+              })()}
+            </div>
+          </div>
+        </section>
 
         {/* PRICING */}
-        <section id="pricing" style={{ padding: "84px 5%", background: C.inkSoft, position: "relative", overflow: "hidden" }}></section>
+        <section
+          style={{
+            padding: "84px 5%",
+            background: C.inkSoft,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        ></section>
 
         {/* PRICING */}
-        <section id="pricing" style={{ padding: "84px 5%", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
-          <div style={{ maxWidth: 1060, margin: "0 auto", position: "relative", zIndex: 1 }}>
-            <SectionHeading badge={T.pricing.badge} title={T.pricing.title} sub={T.pricing.sub} />
-            <BillingToggle billingCycle={billingCycle} setBillingCycle={setBillingCycle} T={T} />
-            <div className="pricing-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(290px,1fr))", gap: 22, alignItems: "stretch" }}>
+        <section
+          id="pricing"
+          style={{
+            padding: "84px 5%",
+            background: C.inkSoft,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1060,
+              margin: "0 auto",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            <SectionHeading
+              badge={T.pricing.badge}
+              title={T.pricing.title}
+              sub={T.pricing.sub}
+            />
+            <BillingToggle
+              billingCycle={billingCycle}
+              setBillingCycle={setBillingCycle}
+              T={T}
+            />
+            <div
+              className="pricing-grid"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit,minmax(290px,1fr))",
+                gap: 22,
+                alignItems: "stretch",
+              }}
+            >
               {/* {T.pricing.plans.map((p, i) => (
                 <PricingCard
                   key={p.plan}
@@ -1244,7 +1979,7 @@ export default function ReviewMasterLanding() {
                 />
               ))} */}
 
-                            {T.pricing.plans.map((p, i) => (
+              {T.pricing.plans.map((p, i) => (
                 <PricingCard
                   key={p.plan}
                   delay={i * 150}
@@ -1271,7 +2006,17 @@ export default function ReviewMasterLanding() {
                 />
               ))}
             </div>
-            <p style={{ textAlign: "center", marginTop: 26, fontSize: 12, color: C.textFaint, fontFamily: "'Inter',sans-serif" }}>{T.pricing.note}</p>
+            <p
+              style={{
+                textAlign: "center",
+                marginTop: 26,
+                fontSize: 12,
+                color: C.textFaint,
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
+              {T.pricing.note}
+            </p>
           </div>
         </section>
 
@@ -1286,62 +2031,208 @@ export default function ReviewMasterLanding() {
         </section>
 
         {/* CTA BANNER */}
-        <section style={{ padding: "76px 5%", background: `linear-gradient(135deg, ${C.navy}, ${C.navyDeep})`, position: "relative", overflow: "hidden", textAlign: "center" }}>
-          <div style={{ maxWidth: 620, margin: "0 auto", position: "relative", zIndex: 1 }}>
-            <div style={{ fontSize: 40, marginBottom: 16 }}><Rocket size={40} /></div>
-            <h2 style={{ fontSize: "clamp(26px,4vw,42px)", fontWeight: 700, fontFamily: "'Sora',sans-serif", color: "white", marginBottom: 16, lineHeight: 1.2 }}>
+        <section
+          style={{
+            padding: "76px 5%",
+            background: `linear-gradient(135deg, ${C.navy}, ${C.navyDeep})`,
+            position: "relative",
+            overflow: "hidden",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 620,
+              margin: "0 auto",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            <div style={{ fontSize: 40, marginBottom: 16 }}>
+              <Rocket size={40} />
+            </div>
+            <h2
+              style={{
+                fontSize: "clamp(26px,4vw,42px)",
+                fontWeight: 700,
+                fontFamily: "'Sora',sans-serif",
+                color: "white",
+                marginBottom: 16,
+                lineHeight: 1.2,
+              }}
+            >
               {T.cta.titleLine1}
-              <span style={{ fontSize: "clamp(20px,3vw,34px)", fontWeight: 700, fontFamily: "'Sora',sans-serif", color: "white", display: "block", marginTop: 6 }}>
-                {T.cta.titleLine2Pre} <span style={{ color: C.accent }}>{T.cta.titleHighlight}</span> {T.cta.titleLine2Post}
+              <span
+                style={{
+                  fontSize: "clamp(20px,3vw,34px)",
+                  fontWeight: 700,
+                  fontFamily: "'Sora',sans-serif",
+                  color: "white",
+                  display: "block",
+                  marginTop: 6,
+                }}
+              >
+                {T.cta.titleLine2Pre}{" "}
+                <span style={{ color: C.accent }}>{T.cta.titleHighlight}</span>{" "}
+                {T.cta.titleLine2Post}
               </span>
             </h2>
-            <p style={{ fontSize: 15, color: "rgba(243,246,251,0.68)", marginBottom: 34, lineHeight: 1.7, fontFamily: "'Inter',sans-serif" }}>{T.cta.subtitle}</p>
-            <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-              <button className="btn-primary" style={{ padding: "14px 34px", fontSize: 15 }} onClick={() => (window.location.href = "/login")}>
+            <p
+              style={{
+                fontSize: 15,
+                color: "rgba(243,246,251,0.68)",
+                marginBottom: 34,
+                lineHeight: 1.7,
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
+              {T.cta.subtitle}
+            </p>
+            <div
+              style={{
+                display: "flex",
+                gap: 12,
+                justifyContent: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <button
+                className="btn-primary"
+                style={{ padding: "14px 34px", fontSize: 15 }}
+                onClick={() => (window.location.href = "/login")}
+              >
                 {T.cta.primaryBtn}
               </button>
-             <button
-  className="btn-outline"
-  style={{ padding: "14px 30px", fontSize: 15 }}
-  onClick={() => {
-    if (countryInfo.code === "IN") {
-      window.open("https://wa.me/918750200899?text=Hi%2C%20I%27m%20interested%20in%20Review%20Ninja%20Pro", "_blank");
-    } else {
-      window.location.href = "mailto:deificmonk@gmail.com.com?subject=Inquiry%20about%20Review%20Ninja%20Pro";
-    }
-  }}
->
-  {T.cta.secondaryBtn}
-</button>
+              <button
+                className="btn-outline"
+                style={{ padding: "14px 30px", fontSize: 15 }}
+                onClick={() => {
+                  if (countryInfo.code === "IN") {
+                    window.open(
+                      "https://wa.me/918750200899?text=Hi%2C%20I%27m%20interested%20in%20Review%20Ninja%20Pro",
+                      "_blank",
+                    );
+                  } else {
+                    window.location.href =
+                      "mailto:deificmonk@gmail.com.com?subject=Inquiry%20about%20Review%20Ninja%20Pro";
+                  }
+                }}
+              >
+                {T.cta.secondaryBtn}
+              </button>
             </div>
-            <p style={{ marginTop: 20, fontSize: 12, color: "rgba(243,246,251,0.42)", fontFamily: "'Inter',sans-serif" }}>{T.cta.note}</p>
+            <p
+              style={{
+                marginTop: 20,
+                fontSize: 12,
+                color: "rgba(243,246,251,0.42)",
+                fontFamily: "'Inter',sans-serif",
+              }}
+            >
+              {T.cta.note}
+            </p>
           </div>
         </section>
 
         {/* FOOTER */}
-        <footer style={{ background: "#050810", padding: "56px 5% 30px", borderTop: `1px solid ${C.surfaceHair}` }}>
+        <footer
+          style={{
+            background: "#050810",
+            padding: "56px 5% 30px",
+            borderTop: `1px solid ${C.surfaceHair}`,
+          }}
+        >
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-            <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 40, marginBottom: 44 }}>
+            <div
+              className="footer-grid"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "2fr 1fr 1fr 1fr",
+                gap: 40,
+                marginBottom: 44,
+              }}
+            >
               <div>
-                <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", width: "fit-content" }}>
-                  <div style={{ width: 48, height: 48, borderRadius: "50%", background: "white", display: "flex", alignItems: "center", justifyContent: "center", border: `2px solid ${C.accent}`, flexShrink: 0 }}>
-                    <img src={logo} alt="logo" style={{ width: 34, height: 34, objectFit: "contain" }} />
+                <a
+                  href="/"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    textDecoration: "none",
+                    width: "fit-content",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: "50%",
+                      background: "white",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: `2px solid ${C.accent}`,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <img
+                      src={logo}
+                      alt="logo"
+                      style={{ width: 34, height: 34, objectFit: "contain" }}
+                    />
                   </div>
-                  <span style={{ fontWeight: 700, fontSize: 18, fontFamily: "'Sora',sans-serif", color: "white" }}>
+                  <span
+                    style={{
+                      fontWeight: 700,
+                      fontSize: 18,
+                      fontFamily: "'Sora',sans-serif",
+                      color: "white",
+                    }}
+                  >
                     Review <span style={{ color: C.accent }}>Ninja</span> Pro
                   </span>
                 </a>
-                <p style={{ fontSize: 13, color: C.textFaint, lineHeight: 1.8, maxWidth: 260, margin: "16px 0 0", fontFamily: "'Inter',sans-serif" }}>{T.footer.tagline}</p>
+                <p
+                  style={{
+                    fontSize: 13,
+                    color: C.textFaint,
+                    lineHeight: 1.8,
+                    maxWidth: 260,
+                    margin: "16px 0 0",
+                    fontFamily: "'Inter',sans-serif",
+                  }}
+                >
+                  {T.footer.tagline}
+                </p>
               </div>
 
               {T.footer.columns.map((col) => (
                 <div key={col.heading}>
-                  <h4 style={{ fontSize: 11, fontWeight: 700, color: C.accent, letterSpacing: 2, textTransform: "uppercase", marginBottom: 16, fontFamily: "'Inter',sans-serif" }}>
+                  <h4
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      color: C.accent,
+                      letterSpacing: 2,
+                      textTransform: "uppercase",
+                      marginBottom: 16,
+                      fontFamily: "'Inter',sans-serif",
+                    }}
+                  >
                     {col.heading}
                   </h4>
                   {col.links.map((l) => (
                     <div key={l} style={{ marginBottom: 10 }}>
-                      <a href={FOOTER_LINK_HREFS[l] || "#"} style={{ fontSize: 13, color: C.textFaint, textDecoration: "none", fontFamily: "'Inter',sans-serif" }}>
+                      <a
+                        href={FOOTER_LINK_HREFS[l] || "#"}
+                        style={{
+                          fontSize: 13,
+                          color: C.textFaint,
+                          textDecoration: "none",
+                          fontFamily: "'Inter',sans-serif",
+                        }}
+                      >
                         {l}
                       </a>
                     </div>
@@ -1350,8 +2241,26 @@ export default function ReviewMasterLanding() {
               ))}
             </div>
 
-            <div style={{ borderTop: `1px solid ${C.surfaceHair}`, paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
-              <p style={{ fontSize: 12, color: "rgba(243,246,251,0.25)", fontFamily: "'Inter',sans-serif" }}>{T.footer.copyright}</p>
+            <div
+              style={{
+                borderTop: `1px solid ${C.surfaceHair}`,
+                paddingTop: 22,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 10,
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 12,
+                  color: "rgba(243,246,251,0.25)",
+                  fontFamily: "'Inter',sans-serif",
+                }}
+              >
+                {T.footer.copyright}
+              </p>
             </div>
           </div>
         </footer>
