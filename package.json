@@ -21,7 +21,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "react-scripts start",
+    "start": "vite",
     "build": "vite build",
     "build:prerender": "vite build && node prerender.js",
     "test": "react-scripts test",
