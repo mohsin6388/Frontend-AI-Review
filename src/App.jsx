@@ -16,6 +16,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUs from "./pages/About.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
 import RefundPolicy from "./pages/RefundPolicy.jsx";
+import Profile from "./pages/Profile.jsx";
 
 import CountrySelectModal from "./components/CountrySelectModal.jsx";
 
@@ -82,6 +83,8 @@ function AppRoutes() {
 
       {/* Legacy public register page (kept for backward compat) */}
       <Route path="/register" element={<RegisterPage />} />
+
+      {/* <Route path="/profile" element={<Profile />} /> */}
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
