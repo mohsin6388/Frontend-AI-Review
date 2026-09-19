@@ -187,179 +187,64 @@
   cursor: pointer !important;
 }
 
-/* DELETE ZONE */
-.profile-danger-zone {
-  width: 100%;
-  max-width: 1180px;
-  margin: 24px auto 0;
-  padding: 26px 30px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  background: #ffffff !important;
-  border: 1px solid #fee2e2 !important;
-  border-radius: 20px;
+/* COMPACT DELETE PROFILE ACTION */
+
+.profile-inline-delete {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-top: 18px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid #edf0f5 !important;
+  text-align: left !important;
 }
 
-@media (max-width: 900px) {
-  .profile-page {
-    padding: 22px;
-  }
-
-  .profile-layout {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 520px) {
-  .profile-page {
-    padding: 14px;
-  }
-
-  .profile-edit-card {
-    padding: 23px 20px !important;
-  }
-
-  .profile-overview-content {
-    padding: 28px 20px !important;
-  }
-
-  .profile-danger-zone {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 23px 20px;
-  }
-
-  .delete-account-button {
-    width: 100%;
-  }
-
-  .profile-save-button {
-    width: 100%;
-  }
-}
-
-/* =========================================
-   DELETE ZONE TEXT VISIBILITY FIX
-========================================= */
-
-.profile-danger-zone,
-.profile-danger-zone * {
-  font-family: "Poppins", sans-serif;
-}
-
-.profile-danger-zone .danger-zone-icon {
-  color: #dc2626 !important;
-  background: #fef2f2 !important;
-}
-
-.profile-danger-zone .danger-zone-text {
-  color: #1e293b !important;
-}
-
-.profile-danger-zone .danger-zone-text .profile-heading-label {
-  color: #dc2626 !important;
-}
-
-.profile-danger-zone .danger-zone-text h2 {
-  color: #1e293b !important;
-  font-size: 18px !important;
+.profile-inline-delete-label {
+  display: block !important;
+  margin-bottom: 2px !important;
+  color: #94a3b8 !important;
+  font-size: 8px !important;
   font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
 }
 
-.profile-danger-zone .danger-zone-text p {
-  color: #64748b !important;
-  font-size: 12px !important;
-  line-height: 1.7 !important;
+.profile-inline-delete p {
+  margin: 0 !important;
+  color: #475569 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
 }
 
-.profile-danger-zone .delete-account-button {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-
+.profile-inline-delete-button {
+  min-width: 72px !important;
+  min-height: 28px !important;
+  padding: 0 10px !important;
+  border: 1px solid #fecaca !important;
+  border-radius: 7px !important;
   background: #ffffff !important;
   color: #dc2626 !important;
-  border: 1px solid #fecaca !important;
-
-  font-size: 12px !important;
+  font-family: inherit !important;
+  font-size: 10px !important;
   font-weight: 600 !important;
-  opacity: 1 !important;
+  cursor: pointer !important;
 }
 
-.profile-danger-zone .delete-account-button:hover {
+.profile-inline-delete-button:hover {
   background: #fef2f2 !important;
   color: #b91c1c !important;
 }
 
-/* =========================================
-   DELETE BUTTON CLICK FIX
-========================================= */
+@media (max-width: 520px) {
+  .profile-inline-delete {
+    margin-top: 16px !important;
+    padding-top: 12px !important;
+  }
 
-.profile-danger-zone {
-  position: relative !important;
-  z-index: 10 !important;
-  pointer-events: auto !important;
-}
-
-.profile-danger-zone * {
-  pointer-events: auto;
-}
-
-.profile-danger-zone .delete-account-button {
-  position: relative !important;
-  z-index: 20 !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  opacity: 1 !important;
-}
-
-/* =========================================
-   FINAL DELETE BUTTON CLICK FIX
-========================================= */
-
-.profile-danger-zone {
-  position: relative !important;
-  z-index: 9999 !important;
-  isolation: isolate !important;
-  pointer-events: auto !important;
-}
-
-.profile-danger-zone::before,
-.profile-danger-zone::after {
-  pointer-events: none !important;
-}
-
-.profile-danger-zone .delete-account-button {
-  position: relative !important;
-  z-index: 99999 !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  width: auto !important;
-  min-width: 140px !important;
-  min-height: 44px !important;
-
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  user-select: none !important;
-
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.profile-danger-zone .delete-account-button:disabled {
-  pointer-events: auto !important;
-  cursor: not-allowed !important;
+  .profile-inline-delete-button {
+    min-width: 68px !important;
+    min-height: 28px !important;
+  }
 }
 
 /* =========================================
@@ -497,5 +382,152 @@
   .cancel-delete-button,
   .confirm-delete-button {
     width: 100% !important;
+  }
+}
+
+/* =========================================
+   RESPONSIVE PROFILE LAYOUT - FINAL
+========================================= */
+
+.profile-page,
+.profile-layout,
+.profile-overview-card,
+.profile-edit-card {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.profile-layout {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr) !important;
+}
+
+.profile-overview-card,
+.profile-edit-card {
+  overflow: hidden !important;
+}
+
+.profile-form-group,
+.profile-form-group input,
+.profile-card-heading,
+.profile-card-heading h2,
+.profile-card-heading p {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 900px) {
+  .profile-page {
+    width: 100% !important;
+    padding: 20px !important;
+    overflow-x: hidden !important;
+  }
+
+  .profile-layout {
+    width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+  }
+
+  .profile-overview-content {
+    padding: 30px 24px !important;
+  }
+
+  .profile-edit-card {
+    padding: 26px 24px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .profile-page {
+    padding: 12px !important;
+  }
+
+  .profile-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .profile-overview-card,
+  .profile-edit-card {
+    width: 100% !important;
+    border-radius: 16px !important;
+  }
+
+  .profile-overview-content {
+    padding: 24px 18px !important;
+  }
+
+  .profile-avatar {
+    width: 76px !important;
+    height: 76px !important;
+    border-radius: 22px !important;
+    font-size: 30px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .profile-overview-content h2 {
+    font-size: 21px !important;
+  }
+
+  .profile-overview-content > p {
+    font-size: 12px !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .profile-info-row {
+    gap: 8px !important;
+    padding: 13px 0 !important;
+  }
+
+  .profile-info-row span,
+  .profile-info-row strong {
+    font-size: 11px !important;
+  }
+
+  .profile-edit-card {
+    padding: 24px 18px !important;
+  }
+
+  .profile-card-heading {
+    margin-bottom: 22px !important;
+  }
+
+  .profile-card-heading h2 {
+    font-size: 22px !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .profile-card-heading p {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+  }
+
+  .profile-form-group input {
+    height: 46px !important;
+    font-size: 12px !important;
+  }
+
+  .profile-form-actions {
+    margin-top: 24px !important;
+  }
+
+  .profile-save-button {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .profile-inline-delete {
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .profile-inline-delete p {
+    font-size: 10px !important;
+  }
+
+  .profile-inline-delete-button {
+    flex-shrink: 0 !important;
   }
 }
