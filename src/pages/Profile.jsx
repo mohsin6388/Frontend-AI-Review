@@ -264,8 +264,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* EDIT PROFILE */}
-
         <div className="profile-edit-card">
           <div className="profile-card-heading">
             <div>

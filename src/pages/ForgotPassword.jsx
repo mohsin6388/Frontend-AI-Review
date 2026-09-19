@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./ForgotPassword.css";
-import { API } from "../utils/api"
+import { API } from "../utils/api";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const OTP_LENGTH = 6;
 
 export default function ForgotPassword({ onBack, onVerified }) {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // ── Step 1: Email ──────────────────────────
   const [email, setEmail] = useState("");
@@ -49,9 +48,9 @@ export default function ForgotPassword({ onBack, onVerified }) {
 
   // ── Email submit ───────────────────────────
   function validateEmail() {
-    if (!email.trim()) return "Email field khali hai";
+    if (!email.trim()) return "Email field is empty";
     if (!EMAIL_REGEX.test(email.trim()))
-      return "Valid email daalo (jaise: abc@gmail.com)";
+      return "Enter a valid email (e.g., abc@gmail.com)";
     return "";
   }
 
@@ -97,9 +96,9 @@ export default function ForgotPassword({ onBack, onVerified }) {
 
   // ── OTP input handling ─────────────────────
   function handleOtpChange(index, value) {
-    if (!/^\d*$/.test(value)) return; // sirf numbers
+    if (!/^\d*$/.test(value)) return; // numbers only
     const updated = [...otp];
-    updated[index] = value.slice(-1); // ek hi digit
+    updated[index] = value.slice(-1); // one digit only
     setOtp(updated);
     setOtpError("");
     if (value && index < OTP_LENGTH - 1) {
@@ -138,7 +137,7 @@ export default function ForgotPassword({ onBack, onVerified }) {
     const code = otp.join("");
 
     if (code.length < OTP_LENGTH) {
-      setOtpError("Poora OTP daalo (6 digits)");
+      setOtpError("Enter the complete OTP (6 digits)");
       return;
     }
 
@@ -163,11 +162,11 @@ export default function ForgotPassword({ onBack, onVerified }) {
 
       if (!response.ok) {
         throw new Error(data.message || "OTP verify failed");
-        } else {
-         navigate("/create-password", {
-           state: { email, resetToken },
-         });
-        }
+      } else {
+        navigate("/create-password", {
+          state: { email, resetToken },
+        });
+      }
     } catch (error) {
       setOtpError(error.message);
       setOtp(Array(OTP_LENGTH).fill(""));
@@ -218,7 +217,7 @@ export default function ForgotPassword({ onBack, onVerified }) {
               <path d="m12 19-7-7 7-7" />
               <path d="M19 12H5" />
             </svg>
-            Wapas jao
+            Go back
           </button>
 
           <div className="fp-icon-wrap" style={{ marginTop: "1rem" }}>
@@ -239,10 +238,10 @@ export default function ForgotPassword({ onBack, onVerified }) {
             </svg>
           </div>
 
-          <h1 className="fp-title">OTP daalo</h1>
+          <h1 className="fp-title">Enter OTP</h1>
           <p className="fp-subtitle">
-            6-digit code bheja hai <strong>{email}</strong> par. Code 10 minute
-            mein expire hoga.
+            A 6-digit code has been sent <strong>{email}</strong> Code will
+            expire in 10 minutes mein expire hoga.
           </p>
 
           <form onSubmit={handleOtpVerify} noValidate>
@@ -309,7 +308,7 @@ export default function ForgotPassword({ onBack, onVerified }) {
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               )}
-              {otpLoading ? "Verify ho raha hai..." : "OTP Verify karo"}
+              {otpLoading ? "Verifying..." : "Verify OTP"}
             </button>
           </form>
 
@@ -319,14 +318,14 @@ export default function ForgotPassword({ onBack, onVerified }) {
           >
             {canResend ? (
               <>
-                Code nahi mila?{" "}
+                Didn't receive the code?{" "}
                 <span className="fp-link" onClick={handleResend}>
-                  Dobara bhejo
+                  Resend
                 </span>
               </>
             ) : (
               <>
-                Dobara bhejne ke liye <strong>{resendTimer}s</strong> wait karo
+                Wait <strong>{resendTimer}s</strong> before resending
               </>
             )}
           </p> */}
@@ -335,7 +334,6 @@ export default function ForgotPassword({ onBack, onVerified }) {
     );
   }
 
-  
   return (
     <div
       style={{
@@ -343,7 +341,6 @@ export default function ForgotPassword({ onBack, onVerified }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        
       }}
     >
       <div className="fp-card">
@@ -366,9 +363,9 @@ export default function ForgotPassword({ onBack, onVerified }) {
           </svg>
         </div>
 
-        <h1 className="fp-title">Password bhool gaye?</h1>
+        <h1 className="fp-title">Forgot password?</h1>
         <p className="fp-subtitle">
-          Apna email daalo, hum aapko 6-digit OTP bhejenge.
+          Enter your email, and we will send you a 6-digit OTP.
         </p>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -447,7 +444,7 @@ export default function ForgotPassword({ onBack, onVerified }) {
                 <path d="M22 2 11 13" />
               </svg>
             )}
-            {loading ? "Bhej rahe hain..." : "OTP Bhejo"}
+            {loading ? "Sending..." : "Send OTP"}
           </button>
         </form>
 
@@ -468,9 +465,7 @@ export default function ForgotPassword({ onBack, onVerified }) {
             <path d="m12 19-7-7 7-7" />
             <path d="M19 12H5" />
           </svg>
-          <Link to={'/login'}>
-          Login par wapas jao
-          </Link>
+          <Link to={"/login"}>Back to login</Link>
         </button>
       </div>
     </div>
