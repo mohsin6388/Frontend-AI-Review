@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import api from "../api";
 import "./MySubscriptions.css";
 
@@ -17,7 +17,7 @@ const formatPlanName = (rawName) => {
   const planType = parts[0]
     ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1)
     : "";
-  const cycle = parts[1] ? (cycleLabels[parts[1]] || parts[1]) : "";
+  const cycle = parts[1] ? cycleLabels[parts[1]] || parts[1] : "";
 
   return `${planType}${cycle ? " " + cycle : ""} Plan`.trim();
 };
@@ -88,7 +88,10 @@ const MySubscriptions = ({ user }) => {
         <div className="no-sub-card">
           <div className="no-sub-icon">📭</div>
           <h2>No Active Subscription</h2>
-          <p>You haven't subscribed to any plan yet. Choose a plan to get started.</p>
+          <p>
+            You haven't subscribed to any plan yet. Choose a plan to get
+            started.
+          </p>
         </div>
       </div>
     );
@@ -106,7 +109,8 @@ const MySubscriptions = ({ user }) => {
     rawDaysRemaining !== null && rawDaysRemaining > 0 && rawDaysRemaining <= 7;
   const isActive = rawDaysRemaining !== null && rawDaysRemaining > 0;
 
-  const daysRemaining = rawDaysRemaining !== null ? Math.max(0, rawDaysRemaining) : null;
+  const daysRemaining =
+    rawDaysRemaining !== null ? Math.max(0, rawDaysRemaining) : null;
 
   return (
     <div className="sub-page">
@@ -118,7 +122,11 @@ const MySubscriptions = ({ user }) => {
                 isExpired ? "expired" : isExpiringSoon ? "warning" : "active"
               }`}
             >
-              {isExpired ? "● Expired" : isExpiringSoon ? "● Expiring Soon" : "● Active"}
+              {isExpired
+                ? "● Expired"
+                : isExpiringSoon
+                  ? "● Expiring Soon"
+                  : "● Active"}
             </span>
             <h1> {displayPlanName}</h1>
           </div>
@@ -139,7 +147,12 @@ const MySubscriptions = ({ user }) => {
 
           <div className="detail-item">
             <h4>Amount Paid</h4>
-            <p>₹{data.amount ? Number(data.amount).toLocaleString("en-IN") : "N/A"}</p>
+            <p>
+              ₹
+              {data.amount
+                ? Number(data.amount).toLocaleString("en-IN")
+                : "N/A"}
+            </p>
           </div>
 
           <div className="detail-item">
@@ -187,14 +200,16 @@ const MySubscriptions = ({ user }) => {
 
         {isExpired && (
           <div className="renew-banner expired">
-            ⚠️ Your plan has expired. Renew now to continue enjoying all features.
+            ⚠️ Your plan has expired. Renew now to continue enjoying all
+            features.
           </div>
         )}
 
         {isExpiringSoon && (
           <div className="renew-banner warning">
-            ⏳ Your plan expires in {daysRemaining} day{daysRemaining === 1 ? "" : "s"}.
-            Renew soon to avoid any interruption.
+            ⏳ Your plan expires in {daysRemaining} day
+            {daysRemaining === 1 ? "" : "s"}. Renew soon to avoid any
+            interruption.
           </div>
         )}
       </div>

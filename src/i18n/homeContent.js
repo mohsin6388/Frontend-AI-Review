@@ -52,8 +52,16 @@ const en = {
     stats: [
       { value: "73%", label: "of all reviews happen on Google", icon: "📊" },
       { value: "93%", label: "of customers trust online reviews", icon: "🤝" },
-      { value: "112+", label: "reviews needed to build real trust", icon: "⭐" },
-      { value: "4.8x", label: "more leads for top-ranked businesses", icon: "📈" },
+      {
+        value: "112+",
+        label: "reviews needed to build real trust",
+        icon: "⭐",
+      },
+      {
+        value: "4.8x",
+        label: "more leads for top-ranked businesses",
+        icon: "📈",
+      },
     ],
   },
 
@@ -138,18 +146,17 @@ const en = {
     ],
   },
 
-
-
-    businesses: {
+  businesses: {
     badge: "TRUSTED BY",
     titleMain: "Businesses That",
     titleHighlight: "Use Review Ninja Pro",
     sub: "From cafes to clinics — real businesses growing with us.",
-   items: [
+    items: [
       {
         name: "The Perch Restaurant",
         tagline: "Fine dining, Kanpur",
-        logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDX43IxLn76NlrX0FbmvGjoZrZ32bhQYGX6ZtohE2Dg&s=10"     },
+        logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDX43IxLn76NlrX0FbmvGjoZrZ32bhQYGX6ZtohE2Dg&s=10",
+      },
       {
         name: "Vaishnavi Hospital",
         tagline: "Healthcare,, Kanpur",
@@ -227,7 +234,6 @@ const en = {
   //        "Priority Support",
   //      ],
 
-        
   //     },
   //   ],
   //   bestSeller: "⭐ BEST SELLER",
@@ -239,8 +245,7 @@ const en = {
   //   ctaCustom: "Contact Sales →",
   // },
 
-
-    pricing: {
+  pricing: {
     badge: "PRICING",
     title: "Simple, Affordable Plans",
     sub: "Pick the plan that fits your business — upgrade anytime.",
@@ -252,13 +257,12 @@ const en = {
       {
         plan: "Starter",
         audience: "For small shops & solo businesses",
-        setupPrice:   { IN: "999",   US: "29",  GB: "25",  AE: "99" },
-        monthlyPrice: { IN: "999",   US: "29",  GB: "25",  AE: "99" },
-        yearlyPrice:  { IN: "9,999", US: "290", GB: "250", AE: "999" },
+        setupPrice: { IN: "249", US: "10", GB: "10", AE: "20" },
+        monthlyPrice: { IN: "249", US: "21", GB: "21", AE: "40" },
+        yearlyPrice: { IN: "2,999", US: "249", GB: "249", AE: "420" },
         features: [
-          "2 Location / Business Profile",
-          "2 Business Review QR Standee",
-          "50 AI Review Generations per Business Location",
+          "1 Location / Business Profile",
+          "100 AI Review Generations per Business Location",
           "AI-Powered Review Generator",
           "Advanced Review Analytics",
         ],
@@ -266,14 +270,13 @@ const en = {
       {
         plan: "Growth / Pro",
         audience: "For established businesses & clinics",
-        setupPrice:   { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
-        monthlyPrice: { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
-        yearlyPrice:  { IN: "19,999", US: "490", GB: "420", AE: "1,790" },
+        setupPrice: { IN: "499", US: "49", GB: "42", AE: "179" },
+        monthlyPrice: { IN: "499", US: "35", GB: "35", AE: "50" },
+        yearlyPrice: { IN: "5,999", US: "420", GB: "420", AE: "600" },
         highlight: true,
         features: [
           "3 Location / Business Profile",
-          "3 Business Review QR Standee",
-          "100 AI Review Generations per Business Location",
+          "150 AI Review Generations monthly",
           "AI-Powered Review Generator",
           "Advanced Review Analytics with sentiment analysis",
         ],
@@ -349,21 +352,14 @@ const en = {
     columns: [
       { heading: "Product", links: ["Features", "How It Works", "Pricing"] },
       { heading: "Company", links: ["About Us", "Contact"] },
-      { heading: "Legal", links: ["Privacy Policy", "Terms & Condition", "Refund Policy"] },
+      {
+        heading: "Legal",
+        links: ["Privacy Policy", "Terms & Condition", "Refund Policy"],
+      },
     ],
     copyright: "© 2026 Review Ninja Pro. Made with ❤️ in India.",
   },
 };
-
-
-
-
-
-
-
-
-
-
 
 const hi = {
   nav: {
@@ -414,10 +410,22 @@ const hi = {
       "decide karne se pehle. Zyada reviews matlab better Google ranking, aur jahan zaroorat hai wahan zyada visibility.",
     cta: "Reviews Lena Shuru Karein →",
     stats: [
-      { value: "73%", label: "saare reviews Google par hi hote hain", icon: "📊" },
-      { value: "93%", label: "customers online reviews par trust karte hain", icon: "🤝" },
+      {
+        value: "73%",
+        label: "saare reviews Google par hi hote hain",
+        icon: "📊",
+      },
+      {
+        value: "93%",
+        label: "customers online reviews par trust karte hain",
+        icon: "🤝",
+      },
       { value: "112+", label: "reviews se real trust banta hai", icon: "⭐" },
-      { value: "4.8x", label: "zyada leads top-ranked businesses ko milte hain", icon: "📈" },
+      {
+        value: "4.8x",
+        label: "zyada leads top-ranked businesses ko milte hain",
+        icon: "📈",
+      },
     ],
   },
 
@@ -502,7 +510,7 @@ const hi = {
     ],
   },
 
-    businesses: {
+  businesses: {
     badge: "TRUSTED BY",
     titleMain: "Businesses Jo",
     titleHighlight: "Review Ninja Pro Use Karte Hain",
@@ -511,7 +519,8 @@ const hi = {
       {
         name: "The Perch Roof Restaurant",
         tagline: "Fine dining, Kanpur",
-        logo: "https://instagram.fknu1-4.fna.fbcdn.net/v/t51.82787-19/515442298_17917409007105815_5825678686345921665_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44NzMuYzIifQ&_nc_ht=instagram.fknu1-4.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gF71Si0u8ECyaIeC-K3blmZ1uhV4xoVclxAQOjTU-YIETT2L-VvEyC5Iw5otDCumprH0mVswJLzuwFOXLra3UvG&_nc_ohc=5-xtE4RrxLkQ7kNvwHM2AuZ&_nc_gid=Om_B4LDJOzf3CvvYdKg9YQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AQJYlDKnzqhLvxDMrmeHT6mYmlXgH1l3UrDd-kv5ixMRmg&oe=6AA35D6E&_nc_sid=7a9f4b"     },
+        logo: "https://instagram.fknu1-4.fna.fbcdn.net/v/t51.82787-19/515442298_17917409007105815_5825678686345921665_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44NzMuYzIifQ&_nc_ht=instagram.fknu1-4.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gF71Si0u8ECyaIeC-K3blmZ1uhV4xoVclxAQOjTU-YIETT2L-VvEyC5Iw5otDCumprH0mVswJLzuwFOXLra3UvG&_nc_ohc=5-xtE4RrxLkQ7kNvwHM2AuZ&_nc_gid=Om_B4LDJOzf3CvvYdKg9YQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AQJYlDKnzqhLvxDMrmeHT6mYmlXgH1l3UrDd-kv5ixMRmg&oe=6AA35D6E&_nc_sid=7a9f4b",
+      },
       {
         name: "Vaishnavi Hospital",
         tagline: "Healthcare,, Kanpur",
@@ -534,7 +543,6 @@ const hi = {
       },
     ],
   },
-
 
   //   pricing: {
   //   badge: "PRICING",
@@ -587,7 +595,6 @@ const hi = {
   //        "Priority Support",
   //      ],
 
-        
   //     },
   //   ],
   //   bestSeller: "⭐ BEST SELLER",
@@ -599,7 +606,7 @@ const hi = {
   //   ctaCustom: "Contact Sales →",
   // },
 
-      pricing: {
+  pricing: {
     badge: "PRICING",
     title: "Simple, Affordable Plans",
     sub: "Apne business ke liye sahi plan chunein — kabhi bhi upgrade karein.",
@@ -611,13 +618,12 @@ const hi = {
       {
         plan: "Starter",
         audience: "For small shops & solo businesses",
-        setupPrice:   { IN: "999",   US: "29",  GB: "25",  AE: "99" },
-        monthlyPrice: { IN: "999",   US: "29",  GB: "25",  AE: "99" },
-        yearlyPrice:  { IN: "9,999", US: "290", GB: "250", AE: "999" },
+        setupPrice: { IN: "249", US: "10", GB: "10", AE: "20" },
+        monthlyPrice: { IN: "249", US: "21", GB: "21", AE: "40" },
+        yearlyPrice: { IN: "2,999", US: "249", GB: "249", AE: "420" },
         features: [
-          "2 Location / Business Profile",
-          "2 Business Review QR Standee",
-          "50 AI Review Generations per Business Location",
+          "1 Location / Business Profile",
+          "100 AI Review Generations per Business Location",
           "AI-Powered Review Generator",
           "Advanced Review Analytics",
         ],
@@ -625,14 +631,13 @@ const hi = {
       {
         plan: "Growth / Pro",
         audience: "For established businesses & clinics",
-        setupPrice:   { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
-        monthlyPrice: { IN: "1,999",  US: "49",  GB: "42",  AE: "179" },
-        yearlyPrice:  { IN: "19,999", US: "490", GB: "420", AE: "1,790" },
+        setupPrice: { IN: "499", US: "49", GB: "42", AE: "179" },
+        monthlyPrice: { IN: "499", US: "35", GB: "35", AE: "50" },
+        yearlyPrice: { IN: "5,999", US: "420", GB: "420", AE: "600" },
         highlight: true,
         features: [
           "3 Location / Business Profile",
-          "3 Business Review QR Standee",
-          "100 AI Review Generations per Business Location",
+          "150 AI Review Generations per Business Location",
           "AI-Powered Review Generator",
           "Advanced Review Analytics with sentiment analysis",
         ],
@@ -664,7 +669,7 @@ const hi = {
     ctaDefault: "Get Started →",
     ctaCustom: "Contact Sales →",
   },
- 
+
   faq: {
     badge: "FAQ",
     title: "Aksar Puche Jane Wale Sawaal",
@@ -697,7 +702,8 @@ const hi = {
     titleLine2Pre: "Customer Se",
     titleHighlight: "Free",
     titleLine2Post: "Kare 15 Review Tak Generate",
-    subtitle: "2,400+ businesses already grow kar rahe hain. Aapka number kab aayega?",
+    subtitle:
+      "2,400+ businesses already grow kar rahe hain. Aapka number kab aayega?",
     primaryBtn: "Free Trial Shuru Karein →",
     secondaryBtn: "Sales Se Baat Karein",
     note: "No credit card required • Cancel anytime • Setup 5 minute mein",
@@ -708,7 +714,10 @@ const hi = {
     columns: [
       { heading: "Product", links: ["Features", "How It Works", "Pricing"] },
       { heading: "Company", links: ["About Us", "Contact"] },
-      { heading: "Legal", links: ["Privacy Policy", "Terms & Condition", "Refund Policy"] },
+      {
+        heading: "Legal",
+        links: ["Privacy Policy", "Terms & Condition", "Refund Policy"],
+      },
     ],
     copyright: "© 2026 Review Ninja Pro. Made with ❤️ in India.",
   },

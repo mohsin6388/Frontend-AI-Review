@@ -1822,39 +1822,6 @@ export default function ReviewMasterLanding() {
           </div>
         </section>
 
-        {/* TESTIMONIALS */}
-        {/* <section style={{ padding: "84px 5%", background: C.ink, position: "relative", overflow: "hidden" }}>
-          <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1 }}>
-            <SectionHeading badge={T.testimonials.badge} title={`${T.testimonials.titleMain} <span style="color:${C.accent}">${T.testimonials.titleHighlight}</span>`} />
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
-              {T.testimonials.items.map((tItem, i) => (
-                <TestiCard key={tItem.name} delay={i * 100} name={tItem.name} biz={tItem.biz} text={tItem.text} />
-              ))}
-            </div>
-          </div>
-        </section> */}
-
-        {/* BUSINESSES USING US — auto horizontal scroller */}
-        {/* <section style={{ padding: "90px 0 4px 0", background: C.inkSoft, position: "relative", overflow: "hidden" }}>
-          <div style={{ maxWidth: 1000, margin: "0 auto 40px", position: "relative", zIndex: 1, padding: "0 5%" }}>
-            <SectionHeading
-              badge={T.businesses.badge}
-              title={`${T.businesses.titleMain} <span style="color:${C.accent}">${T.businesses.titleHighlight}</span>`}
-              sub={T.businesses.sub}
-            />
-          </div>
-
-          <div className="business-scroller-mask" style={{ overflow: "hidden", position: "relative" }}>
-            <div className="business-scroller-track" style={{ display: "flex", gap: 18, width: "max-content" }}>
-              {[...T.businesses.items, ...T.businesses.items].map((b, i) => (
-                <div key={i} style={{ width: 260, flexShrink: 0 }}>
-                  <BusinessLogoCard name={b.name} tagline={b.tagline} logo={b.logo} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section> */}
-
         <section
           style={{
             padding: "90px 0 4px 0",

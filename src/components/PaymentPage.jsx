@@ -1,3 +1,761 @@
+// import React, { useState, useEffect } from "react";
+// import "./PaymentPage.css";
+// import api from "../api";
+
+// // 👇 Apne navbar ki actual height yahan set karo (px me)
+// const NAVBAR_HEIGHT = 64;
+
+// const PLANS = {
+//   starter: {
+//     id: "starter",
+//     name: "Starter",
+//     tagline: "For small shops & solo businesses",
+//     monthlyPrice: 249,
+//     quarterlyPrice: 749, // assumption: 999 x 3 — change if actual discounted price hai
+//     yearlyPrice: 2999,
+//     features: [
+//       "1 Location / Business Profile",
+//       "100 AI Review Generations per Business Location",
+//       "AI-Powered Review Generator",
+//       "Advanced Review Analytics",
+//     ],
+//   },
+//   growth: {
+//     id: "growth",
+//     name: "Growth / Pro",
+//     tagline: "For established businesses & clinics",
+//     monthlyPrice: 499,
+//     quarterlyPrice: 1499, // assumption: 1999 x 3 — change if actual discounted price hai
+//     yearlyPrice: 5999,
+//     popular: true,
+//     features: [
+//       " Location / Business Profile",
+//       "3 Business Review QR Standee",
+//       "100 AI Review Generations per Business Location",
+//       "AI-Powered Review Generator",
+//       "Advanced Review Analytics with sentiment analysis",
+//     ],
+//   },
+// };
+
+// // TEMP: sirf UI testing ke liye — real backend/API ready hote hi isko hata dena
+// // Try karne ke liye: SAVE10, SAVE200, WELCOME50
+// const MOCK_COUPONS = {
+//   SAVE10: { discount_type: "percent", discount_value: 10 },
+//   SAVE200: { discount_type: "flat", discount_value: 200 },
+//   WELCOME50: { discount_type: "flat", discount_value: 50 },
+// };
+
+// const PaymentPage = ({ user }) => {
+//   const [paymentInfo, setPaymentInfo] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [showSuccess, setShowSuccess] = useState(false);
+//   const [paymentError, setPaymentError] = useState("");
+//   const [processingPlan, setProcessingPlan] = useState(null);
+//   const [billingCycle, setBillingCycle] = useState("monthly"); // "monthly" | "yearly" — top toggle, sirf card price display ke liye
+
+//   // ===== popup ke liye state =====
+//   const [showPlanModal, setShowPlanModal] = useState(false);
+//   const [modalPlan, setModalPlan] = useState(null);
+//   const [modalCycle, setModalCycle] = useState("quarterly"); // "quarterly" | "yearly"
+
+//   // ===== coupon ke liye state (TEMP: mock validation, backend baad me lagega) =====
+//   const [couponCode, setCouponCode] = useState("");
+//   const [couponStatus, setCouponStatus] = useState("idle"); // idle | checking | valid | invalid
+//   const [couponMsg, setCouponMsg] = useState("");
+//   const [appliedCoupon, setAppliedCoupon] = useState(null);
+//   // appliedCoupon = { code, discount_type: "percent"|"flat", discount_value, discount_amount }
+
+//   const fetchPaymentStatus = async () => {
+//     setLoading(true);
+//     try {
+//       const { data } = await api.get(`/payment/check-payment/${user.id}`);
+//       setPaymentInfo(data);
+
+//       // Auto-switch toggle to match user's current plan's billing cycle
+//       if (data?.data?.plan_name) {
+//         if (data.data.plan_name.endsWith("_yearly")) {
+//           setBillingCycle("yearly");
+//         } else if (data.data.plan_name.endsWith("_quarterly")) {
+//           // quarterly ke liye top toggle me alag option nahi hai, monthly-view se match kar rahe
+//           setBillingCycle("monthly");
+//         } else if (data.data.plan_name.endsWith("_monthly")) {
+//           setBillingCycle("monthly");
+//         }
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (user?.id) {
+//       fetchPaymentStatus();
+//     }
+//   }, [user]);
+
+//   // popup khulte waqt background scroll lock (behtar UX ke liye)
+//   useEffect(() => {
+//     if (showPlanModal || showSuccess) {
+//       const original = document.body.style.overflow;
+//       document.body.style.overflow = "hidden";
+//       return () => {
+//         document.body.style.overflow = original;
+//       };
+//     }
+//   }, [showPlanModal, showSuccess]);
+
+//   const openPlanModal = (plan) => {
+//     setModalPlan(plan);
+//     if (billingCycle === "yearly") {
+//       setModalCycle("yearly");
+//     } else if (plan.id === "starter") {
+//       setModalCycle("monthly");
+//     } else {
+//       setModalCycle("quarterly");
+//     }
+//     setShowPlanModal(true);
+//   };
+
+//   const resetCoupon = () => {
+//     setCouponCode("");
+//     setCouponStatus("idle");
+//     setCouponMsg("");
+//     setAppliedCoupon(null);
+//   };
+
+//   const closePlanModal = () => {
+//     setShowPlanModal(false);
+//     setModalPlan(null);
+//     resetCoupon();
+//   };
+
+//   // plan ya billing cycle badalne pe purana coupon carry-forward nahi hona chahiye (amount alag ho jayega)
+//   useEffect(() => {
+//     resetCoupon();
+//   }, [modalCycle, modalPlan]);
+
+//   // handlePayment ab planId + cycle + couponCode leta hai
+//   const handlePayment = async (planId, cycle, couponCode) => {
+//     setPaymentError("");
+//     setProcessingPlan(planId);
+
+//     try {
+//       const token = localStorage.getItem("rb_token");
+
+//       // plan_name sent to backend, e.g. "starter_quarterly" or "starter_yearly"
+//       const backendPlanName = `${planId}_${cycle}`;
+
+//       const { data } = await api.post(
+//         "/payment/create-order",
+//         {
+//           user_id: user.id,
+//           plan_name: backendPlanName,
+//           coupon_code: couponCode || null,
+//         },
+//         { headers: { Authorization: `Bearer ${token}` } },
+//       );
+
+//       const options = {
+//         // key: "rzp_test_TZW0dzD6BHG8kK",
+//         key: "rzp_live_TEwIhHLXLXjQto",
+//         amount: data.order.amount,
+//         currency: data.order.currency,
+//         order_id: data.order.id,
+//         name: "Review Ninja Pro",
+//         description: "Subscription Plan",
+
+//         handler: async function (response) {
+//           try {
+//             const verifyRes = await api.post(
+//               "/payment/verify-payment",
+//               response,
+//               { headers: { Authorization: `Bearer ${token}` } },
+//             );
+
+//             if (verifyRes.data?.success) {
+//               setShowSuccess(true);
+//               await fetchPaymentStatus();
+//             } else {
+//               setPaymentError(
+//                 "Payment verify nahi ho paya. Support se contact karein.",
+//               );
+//             }
+//           } catch (err) {
+//             console.log(err);
+//             setPaymentError(
+//               "Payment verify nahi ho paya. Support se contact karein.",
+//             );
+//           } finally {
+//             setProcessingPlan(null);
+//           }
+//         },
+
+//         modal: {
+//           ondismiss: function () {
+//             setProcessingPlan(null);
+//           },
+//         },
+
+//         prefill: { name: user.name, email: user.email },
+//         theme: { color: "#2563eb" },
+//       };
+
+//       const razor = new window.Razorpay(options);
+
+//       razor.on("payment.failed", function (response) {
+//         console.log(response.error);
+//         setPaymentError("Payment fail ho gaya: " + response.error.description);
+//         setProcessingPlan(null);
+//       });
+
+//       razor.open();
+//     } catch (error) {
+//       console.log(error);
+//       setPaymentError("Order banane mein error aaya. Dobara try karein.");
+//       setProcessingPlan(null);
+//     }
+//   };
+
+//   // popup se "Proceed to Pay" click hone par
+//   const handleModalProceed = () => {
+//     if (!modalPlan) return;
+//     const planId = modalPlan.id;
+//     const cycle = modalCycle;
+//     const code = appliedCoupon?.code || null;
+//     closePlanModal();
+//     handlePayment(planId, cycle, code);
+//   };
+
+//   // ===== coupon apply (TEMP: mock check, real API aane pe yahi function replace karna) =====
+//   const handleApplyCoupon = async () => {
+//     if (!couponCode.trim()) return;
+//     setCouponStatus("checking");
+//     setCouponMsg("");
+
+//     try {
+//       const { data } = await api.post("/payment/validate-coupon", {
+//         coupon_code: couponCode.trim(),
+//         plan_name: `${modalPlan.id}_${modalCycle}`,
+//         user_id: user.id,
+//       });
+
+//       if (data.success) {
+//         setAppliedCoupon(data.coupon);
+//         setCouponStatus("valid");
+//         setCouponMsg("Coupon applied!");
+//       }
+//     } catch (error) {
+//       setAppliedCoupon(null);
+//       setCouponStatus("invalid");
+//       setCouponMsg(error.response?.data?.message || "Invalid coupon code");
+//     }
+//   };
+
+//   const handleRemoveCoupon = () => {
+//     resetCoupon();
+//   };
+
+//   // ===== BUG FIX: card ka "current plan" status uss card ke top-toggle cycle ke against check hona chahiye =====
+//   const getCardFullPlanId = (planId) => {
+//     const cycle = billingCycle === "yearly" ? "yearly" : "quarterly";
+//     return `${planId}_${cycle}`;
+//   };
+
+//   const isCardCurrentPlan = (planId) => {
+//     return paymentInfo?.data?.plan_name?.startsWith(`${planId}_`);
+//   };
+
+//   const renderButtonContent = (planId, label) => {
+//     if (processingPlan === planId) {
+//       return (
+//         <>
+//           <span className="btn-spinner" />
+//           Processing...
+//         </>
+//       );
+//     }
+//     if (isCardCurrentPlan(planId)) {
+//       return "✓ Current Plan";
+//     }
+//     return label;
+//   };
+
+//   const getButtonClass = (planId) => {
+//     if (isCardCurrentPlan(planId)) return "buy-btn current-plan";
+//     if (processingPlan === planId) return "buy-btn processing";
+//     return "buy-btn";
+//   };
+
+//   const isButtonDisabled = (planId) => {
+//     return isCardCurrentPlan(planId) || processingPlan === planId;
+//   };
+
+//   if (loading) {
+//     return (
+//       <div
+//         style={{
+//           minHeight: "100vh",
+//           background: "linear-gradient(135deg, #f4f7ff 0%, #eef3ff 100%)",
+//           display: "flex",
+//           alignItems: "center",
+//           justifyContent: "center",
+//         }}
+//       >
+//         <div style={{ textAlign: "center" }}>
+//           <div
+//             style={{
+//               width: 36,
+//               height: 36,
+//               border: "3px solid #e4e8f0",
+//               borderTopColor: "#3d5af1",
+//               borderRadius: "50%",
+//               animation: "spin .7s linear infinite",
+//               margin: "0 auto 12px",
+//             }}
+//           />
+//           <p style={{ color: "#6b7280", fontSize: 14 }}>Loading Plans…</p>
+//           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   const modalPrice =
+//     modalPlan &&
+//     (modalCycle === "monthly"
+//       ? modalPlan.monthlyPrice
+//       : modalCycle === "quarterly"
+//         ? modalPlan.quarterlyPrice
+//         : modalPlan.yearlyPrice);
+
+//   const discountAmount = appliedCoupon?.discount_amount || 0;
+//   const amountAfterDiscount = Math.max((modalPrice || 0) - discountAmount, 0);
+//   const gstAmount = Math.round(amountAfterDiscount * 0.18);
+//   const totalAmount = amountAfterDiscount + gstAmount;
+
+//   return (
+//     <div className="pricing-page animate-fadeIn">
+//       {/* Visible custom scrollbar styling for popups */}
+//       <style>{`
+//         .rn-modal-scroll::-webkit-scrollbar {
+//           width: 8px;
+//         }
+//         .rn-modal-scroll::-webkit-scrollbar-track {
+//           background: #f1f1f4;
+//           border-radius: 8px;
+//         }
+//         .rn-modal-scroll::-webkit-scrollbar-thumb {
+//           background: #b9c0cc;
+//           border-radius: 8px;
+//         }
+//         .rn-modal-scroll::-webkit-scrollbar-thumb:hover {
+//           background: #9aa3b2;
+//         }
+//         .rn-modal-scroll {
+//           scrollbar-width: thin;           /* Firefox */
+//           scrollbar-color: #b9c0cc #f1f1f4; /* Firefox */
+//         }
+//       `}</style>
+
+//       {paymentError && (
+//         <div className="payment-error-banner">{paymentError}</div>
+//       )}
+
+//       <div className="pricing-header">
+//         <h1>Choose Your Plan</h1>
+//         <p>Start collecting more Google reviews with powerful QR tools.</p>
+//       </div>
+
+//       {/* ===== BILLING TOGGLE (card price display ke liye) ===== */}
+//       <div className="billing-toggle">
+//         <button
+//           className={
+//             billingCycle === "monthly" ? "toggle-btn active" : "toggle-btn"
+//           }
+//           onClick={() => setBillingCycle("monthly")}
+//         >
+//           Monthly
+//         </button>
+//         <button
+//           className={
+//             billingCycle === "yearly" ? "toggle-btn active" : "toggle-btn"
+//           }
+//           onClick={() => setBillingCycle("yearly")}
+//         >
+//           Yearly
+//           <span className="save-tag">Save 2 months</span>
+//         </button>
+//       </div>
+
+//       <div className="pricing-grid">
+//         {Object.values(PLANS).map((plan) => {
+//           const price =
+//             billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice;
+
+//           return (
+//             <div
+//               key={plan.id}
+//               className={
+//                 plan.popular ? "pricing-card popular-card" : "pricing-card"
+//               }
+//             >
+//               {plan.popular && (
+//                 <span className="popular-tag">Most Popular</span>
+//               )}
+
+//               <div className="card-top">
+//                 <span className="plan-badge">{plan.name}</span>
+//                 <p className="plan-tagline">{plan.tagline}</p>
+
+//                 <h2>
+//                   ₹{price.toLocaleString("en-IN")}
+//                   <span className="price-period">
+//                     /{billingCycle === "monthly" ? "month" : "year"}
+//                   </span>
+//                 </h2>
+//                 <p className="plan-gst">+ 18% GST</p>
+
+//                 <div className="plan-features">
+//                   {plan.features.map((f, i) => (
+//                     <p key={i}>
+//                       <span className="check-icon">✔</span> {f}
+//                     </p>
+//                   ))}
+//                 </div>
+//               </div>
+
+//               <button
+//                 onClick={() => openPlanModal(plan)}
+//                 className={getButtonClass(plan.id)}
+//                 disabled={isButtonDisabled(plan.id)}
+//               >
+//                 {renderButtonContent(plan.id, "Buy Now")}
+//               </button>
+//             </div>
+//           );
+//         })}
+
+//         {/* ================= ENTERPRISE PLAN ================= */}
+//         <div className="pricing-card">
+//           <div className="card-top">
+//             <span className="plan-badge">Enterprise</span>
+//             <p className="plan-tagline">Chains, franchises & agencies</p>
+
+//             <h2>Custom</h2>
+//             <p className="plan-gst">₹4,999–₹7,999/mo · up to 5 locations</p>
+
+//             <div className="plan-features">
+//               <p>
+//                 <span className="check-icon">✔</span> Multi-Location Business
+//                 Profiles
+//               </p>
+//               <p>
+//                 <span className="check-icon">✔</span> QR Standees for All
+//                 Locations
+//               </p>
+//               <p>
+//                 <span className="check-icon">✔</span> Unlimited AI Review
+//                 Generator
+//               </p>
+//               <p>
+//                 <span className="check-icon">✔</span> Advanced Review Analytics
+//               </p>
+//               <p>
+//                 <span className="check-icon">✔</span> Custom Feature Development
+//               </p>
+//               <p>
+//                 <span className="check-icon">✔</span> Priority Support
+//               </p>
+//             </div>
+//           </div>
+
+//           <button className="buy-btn">
+//             <a
+//               href="https://wa.me/918750200899"
+//               style={{ textDecoration: "none", color: "white" }}
+//             >
+//               Contact Now
+//             </a>
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* ===== PLAN SELECTION POPUP =====
+//           - navbar ke NICHE se start hota hai (top: NAVBAR_HEIGHT)
+//           - navbar ko cover nahi karta
+//           - andar content scrollable hai, scrollbar visible rahega
+//       */}
+//       {showPlanModal && modalPlan && (
+//         <div
+//           className="success-overlay"
+//           onClick={closePlanModal}
+//           style={{
+//             position: "fixed",
+//             top: NAVBAR_HEIGHT,
+//             left: 0,
+//             width: "100vw",
+//             height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+//             background: "rgba(0,0,0,0.5)",
+//             zIndex: 999, // navbar ke z-index se KAM rakhna hai taaki navbar upar dikhe
+//             overflowY: "auto",
+//             display: "flex",
+//             alignItems: "flex-start", // top se thoda gap ke sath modal shuru ho
+//             justifyContent: "center",
+//             padding: "24px 12px",
+//             boxSizing: "border-box",
+//           }}
+//         >
+//           <div
+//             className="plan-modal rn-modal-scroll"
+//             onClick={(e) => e.stopPropagation()}
+//             style={{
+//               boxSizing: "border-box",
+//               maxHeight: `calc(100vh - ${NAVBAR_HEIGHT}px - 48px)`, // top/bottom padding ka bhi hisaab
+//               overflowY: "auto",
+//               overflowX: "hidden",
+//               flexShrink: 0,
+//               position: "relative",
+//               margin: 0,
+//             }}
+//           >
+//             <button className="plan-modal-close" onClick={closePlanModal}>
+//               ✕
+//             </button>
+
+//             <span className="plan-badge">{modalPlan.name}</span>
+//             <p className="plan-tagline" style={{ marginTop: 4 }}>
+//               {modalPlan.tagline}
+//             </p>
+
+//             <div className="plan-features" style={{ margin: "16px 0" }}>
+//               {modalPlan.features.map((f, i) => (
+//                 <p key={i}>
+//                   <span className="check-icon">✔</span> {f}
+//                 </p>
+//               ))}
+//             </div>
+
+//             <hr
+//               style={{
+//                 border: "none",
+//                 borderTop: "1px solid #eee",
+//                 margin: "16px 0",
+//               }}
+//             />
+
+//             {/* dropdown: 1 Month (starter only) / 3 Months / Yearly */}
+//             <label className="plan-modal-label">Select Billing Cycle</label>
+//             <select
+//               value={modalCycle}
+//               onChange={(e) => setModalCycle(e.target.value)}
+//               className="plan-modal-select"
+//             >
+//               {modalPlan.id === "starter" && (
+//                 <option value="monthly">
+//                   1 Month — ₹{modalPlan.monthlyPrice.toLocaleString("en-IN")}
+//                 </option>
+//               )}
+//               <option value="quarterly">
+//                 3 Months — ₹{modalPlan.quarterlyPrice.toLocaleString("en-IN")}
+//               </option>
+//               <option value="yearly">
+//                 Yearly — ₹{modalPlan.yearlyPrice.toLocaleString("en-IN")}
+//               </option>
+//             </select>
+
+//             {/* ===== COUPON SECTION (TEMP: mock validation, backend baad me lagega) ===== */}
+//             <div
+//               className="coupon-box"
+//               style={{
+//                 margin: "16px 0",
+//                 width: "100%",
+//                 boxSizing: "border-box",
+//               }}
+//             >
+//               <label className="plan-modal-label">Have a coupon?</label>
+//               <div
+//                 style={{
+//                   display: "flex",
+//                   flexWrap: "wrap",
+//                   gap: 8,
+//                   width: "100%",
+//                   boxSizing: "border-box",
+//                 }}
+//               >
+//                 <input
+//                   type="text"
+//                   value={couponCode}
+//                   onChange={(e) => {
+//                     setCouponCode(e.target.value.toUpperCase());
+//                     if (couponStatus !== "idle") {
+//                       setCouponStatus("idle");
+//                       setCouponMsg("");
+//                     }
+//                   }}
+//                   placeholder="Enter coupon code"
+//                   className="plan-modal-input"
+//                   disabled={couponStatus === "checking" || !!appliedCoupon}
+//                   style={{
+//                     flex: "1 1 160px",
+//                     minWidth: 0,
+//                     maxWidth: "100%",
+//                     boxSizing: "border-box",
+//                     padding: "10px 12px",
+//                     borderRadius: 8,
+//                     border: "1px solid #d1d5db",
+//                     fontSize: 14,
+//                     color: "#000",
+//                   }}
+//                 />
+//                 {appliedCoupon ? (
+//                   <button
+//                     className="buy-btn"
+//                     style={{
+//                       background: "#ef4444",
+//                       flex: "0 0 auto",
+//                       boxSizing: "border-box",
+//                       whiteSpace: "nowrap",
+//                       padding: "10px 16px",
+//                       width: "auto",
+//                       margin: 0,
+//                     }}
+//                     onClick={handleRemoveCoupon}
+//                   >
+//                     Remove
+//                   </button>
+//                 ) : (
+//                   <button
+//                     className="buy-btn"
+//                     style={{
+//                       flex: "0 0 auto",
+//                       boxSizing: "border-box",
+//                       whiteSpace: "nowrap",
+//                       padding: "10px 16px",
+//                       width: "auto",
+//                       margin: 0,
+//                     }}
+//                     onClick={handleApplyCoupon}
+//                     disabled={couponStatus === "checking" || !couponCode.trim()}
+//                   >
+//                     {couponStatus === "checking" ? "Checking..." : "Apply"}
+//                   </button>
+//                 )}
+//               </div>
+
+//               {couponMsg && (
+//                 <p
+//                   style={{
+//                     fontSize: 13,
+//                     marginTop: 6,
+//                     color: couponStatus === "valid" ? "#16a34a" : "#dc2626",
+//                   }}
+//                 >
+//                   {couponStatus === "valid" ? "✓ " : "✕ "}
+//                   {couponMsg}
+//                 </p>
+//               )}
+//             </div>
+
+//             {/* price breakdown */}
+//             <div className="plan-modal-summary">
+//               <div className="plan-modal-row">
+//                 <span>Plan Amount</span>
+//                 <span>₹{modalPrice?.toLocaleString("en-IN")}</span>
+//               </div>
+
+//               {appliedCoupon && (
+//                 <div className="plan-modal-row" style={{ color: "#16a34a" }}>
+//                   <span>Coupon ({appliedCoupon.code})</span>
+//                   <span>− ₹{discountAmount.toLocaleString("en-IN")}</span>
+//                 </div>
+//               )}
+
+//               <div className="plan-modal-row">
+//                 <span>GST (18%)</span>
+//                 <span>₹{gstAmount.toLocaleString("en-IN")}</span>
+//               </div>
+//               <div className="plan-modal-row plan-modal-total">
+//                 <span>Total Amount</span>
+//                 <span>
+//                   ₹{totalAmount.toLocaleString("en-IN")}
+//                   <span className="price-period">
+//                     {modalCycle === "monthly"
+//                       ? " / month"
+//                       : modalCycle === "quarterly"
+//                         ? " / 3 months"
+//                         : " / year"}
+//                   </span>
+//                 </span>
+//               </div>
+//             </div>
+
+//             <button
+//               onClick={handleModalProceed}
+//               className="buy-btn"
+//               disabled={processingPlan === modalPlan.id}
+//               style={{ width: "100%", marginTop: 16 }}
+//             >
+//               {processingPlan === modalPlan.id
+//                 ? "Processing..."
+//                 : "Proceed to Pay"}
+//             </button>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* ===== SUCCESS POPUP ===== same treatment: navbar ke niche, scrollable ===== */}
+//       {showSuccess && (
+//         <div
+//           className="success-overlay"
+//           style={{
+//             position: "fixed",
+//             top: NAVBAR_HEIGHT,
+//             left: 0,
+//             width: "100vw",
+//             height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+//             background: "rgba(0,0,0,0.5)",
+//             zIndex: 999,
+//             overflowY: "auto",
+//             display: "flex",
+//             alignItems: "flex-start",
+//             justifyContent: "center",
+//             padding: "24px 12px",
+//             boxSizing: "border-box",
+//           }}
+//         >
+//           <div
+//             className="success-modal rn-modal-scroll"
+//             style={{
+//               boxSizing: "border-box",
+//               maxHeight: `calc(100vh - ${NAVBAR_HEIGHT}px - 48px)`,
+//               overflowY: "auto",
+//               margin: 0,
+//             }}
+//           >
+//             <div className="success-icon">✓</div>
+//             <h3>Payment Successful</h3>
+//             <p>
+//               Aapka plan activate ho gaya hai. Confirmation email bhej di gayi
+//               hai.
+//             </p>
+//             <button
+//               onClick={() => setShowSuccess(false)}
+//               className="success-close-btn"
+//             >
+//               Great!
+//             </button>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default PaymentPage;
+
 import React, { useState, useEffect } from "react";
 import "./PaymentPage.css";
 import api from "../api";
@@ -5,38 +763,72 @@ import api from "../api";
 // 👇 Apne navbar ki actual height yahan set karo (px me)
 const NAVBAR_HEIGHT = 64;
 
+// ===== Har plan + billing cycle ke hisaab se locations aur reviews =====
+// Starter : monthly → 1 loc / 100 | quarterly → 2 loc / 300 | yearly → 2 loc / 1200
+// Growth  : quarterly → 3 loc / 450 | yearly → 3 loc / 1800  (monthly nahi hai)
 const PLANS = {
   starter: {
     id: "starter",
     name: "Starter",
     tagline: "For small shops & solo businesses",
-    monthlyPrice: 999,
-    quarterlyPrice: 2997, // assumption: 999 x 3 — change if actual discounted price hai
-    yearlyPrice: 9999,
-    features: [
-      "2 Location / Business Profile",
-      "2 Business Review QR Standee",
-      "50 AI Review Generations per Business Location",
-      "AI-Powered Review Generator",
-      "Advanced Review Analytics",
-    ],
+    monthlyPrice: 249,
+    quarterlyPrice: 749, // assumption: 999 x 3 — change if actual discounted price hai
+    yearlyPrice: 2999,
+    limits: {
+      monthly: { locations: 1, reviews: 100 },
+      quarterly: { locations: 2, reviews: 300 },
+      yearly: { locations: 2, reviews: 1200 },
+    },
   },
   growth: {
     id: "growth",
     name: "Growth / Pro",
     tagline: "For established businesses & clinics",
-    monthlyPrice: 1999,
-    quarterlyPrice: 5997, // assumption: 1999 x 3 — change if actual discounted price hai
-    yearlyPrice: 19999,
+    monthlyPrice: 499,
+    quarterlyPrice: 1499, // assumption: 1999 x 3 — change if actual discounted price hai
+    yearlyPrice: 5999,
     popular: true,
-    features: [
-      "3 Location / Business Profile",
-      "3 Business Review QR Standee",
-      "100 AI Review Generations per Business Location",
-      "AI-Powered Review Generator",
-      "Advanced Review Analytics with sentiment analysis",
-    ],
+    limits: {
+      quarterly: { locations: 3, reviews: 450 },
+      yearly: { locations: 3, reviews: 1800 },
+    },
   },
+};
+
+// Card ya popup me kaunsa cycle default dikhna chahiye
+// (openPlanModal wali same logic: yearly → yearly, starter → monthly, baaki → quarterly)
+const getDefaultCycle = (plan, topToggleCycle) => {
+  if (topToggleCycle === "yearly") return "yearly";
+  if (plan.id === "starter") return "monthly";
+  return "quarterly";
+};
+
+// Selected cycle ke hisaab se features list banata hai
+const getPlanFeatures = (plan, cycle) => {
+  const limit = plan.limits[cycle] || plan.limits.quarterly;
+  const locationText = `${limit.locations} ${
+    limit.locations === 1 ? "Location" : "Locations"
+  } / Business Profile${limit.locations === 1 ? "" : "s"}`;
+  const reviewsText = `${limit.reviews.toLocaleString(
+    "en-IN",
+  )} AI Review Generations`;
+
+  if (plan.id === "starter") {
+    return [
+      locationText,
+      reviewsText,
+      "AI-Powered Review Generator",
+      "Advanced Review Analytics",
+    ];
+  }
+
+  // growth
+  return [
+    locationText,
+    reviewsText,
+    "AI-Powered Review Generator",
+    "Advanced Review Analytics with sentiment analysis",
+  ];
 };
 
 // TEMP: sirf UI testing ke liye — real backend/API ready hote hi isko hata dena
@@ -58,7 +850,7 @@ const PaymentPage = ({ user }) => {
   // ===== popup ke liye state =====
   const [showPlanModal, setShowPlanModal] = useState(false);
   const [modalPlan, setModalPlan] = useState(null);
-  const [modalCycle, setModalCycle] = useState("quarterly"); // "quarterly" | "yearly"
+  const [modalCycle, setModalCycle] = useState("quarterly"); // "monthly" (starter only) | "quarterly" | "yearly"
 
   // ===== coupon ke liye state (TEMP: mock validation, backend baad me lagega) =====
   const [couponCode, setCouponCode] = useState("");
@@ -110,13 +902,7 @@ const PaymentPage = ({ user }) => {
 
   const openPlanModal = (plan) => {
     setModalPlan(plan);
-    if (billingCycle === "yearly") {
-      setModalCycle("yearly");
-    } else if (plan.id === "starter") {
-      setModalCycle("monthly");
-    } else {
-      setModalCycle("quarterly");
-    }
+    setModalCycle(getDefaultCycle(plan, billingCycle));
     setShowPlanModal(true);
   };
 
@@ -146,7 +932,7 @@ const PaymentPage = ({ user }) => {
     try {
       const token = localStorage.getItem("rb_token");
 
-      // plan_name sent to backend, e.g. "starter_quarterly" or "starter_yearly"
+      // plan_name sent to backend, e.g. "starter_monthly", "starter_quarterly" or "growth_yearly"
       const backendPlanName = `${planId}_${cycle}`;
 
       const { data } = await api.post(
@@ -396,6 +1182,13 @@ const PaymentPage = ({ user }) => {
           const price =
             billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice;
 
+          // card ke features bhi cycle ke hisaab se badlenge
+          // (growth me monthly nahi hai, isliye monthly-view me quarterly wale features dikhenge)
+          const cardFeatures = getPlanFeatures(
+            plan,
+            getDefaultCycle(plan, billingCycle),
+          );
+
           return (
             <div
               key={plan.id}
@@ -420,7 +1213,7 @@ const PaymentPage = ({ user }) => {
                 <p className="plan-gst">+ 18% GST</p>
 
                 <div className="plan-features">
-                  {plan.features.map((f, i) => (
+                  {cardFeatures.map((f, i) => (
                     <p key={i}>
                       <span className="check-icon">✔</span> {f}
                     </p>
@@ -531,9 +1324,10 @@ const PaymentPage = ({ user }) => {
               {modalPlan.tagline}
             </p>
 
+            {/* features ab selected billing cycle ke hisaab se badlenge */}
             <div className="plan-features" style={{ margin: "16px 0" }}>
-              {modalPlan.features.map((f, i) => (
-                <p key={i}>
+              {getPlanFeatures(modalPlan, modalCycle).map((f, i) => (
+                <p key={`${modalCycle}-${i}`}>
                   <span className="check-icon">✔</span> {f}
                 </p>
               ))}
@@ -660,7 +1454,7 @@ const PaymentPage = ({ user }) => {
               )}
             </div>
 
-            {/* price breakdown */}
+            {/* price breakdown (GST included) */}
             <div className="plan-modal-summary">
               <div className="plan-modal-row">
                 <span>Plan Amount</span>
